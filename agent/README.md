@@ -1,27 +1,37 @@
 # Penthos Agent Core
 
-The Agent Core separates the small Penthos model from expensive
-or privileged capabilities.
+The Penthos Agent Core separates the model from the environment in
+which it operates.
 
-Current foundations:
+Current capabilities:
 
-- Tool registry
-- Persistent memory
-- Project filesystem
-- Web search adapter
-- Web page fetching
-- Project boundary protection
-
-Planned:
-
-- model tool-calling protocol
-- shell execution sandbox
-- Git tools
+- tool registry
+- persistent memory
+- repository indexing
+- project context
+- filesystem operations
 - code search
-- browser automation
-- test/build execution
-- tool-result compression
-- planning/reasoning loop
-- failure recovery
-- permission system
-- MCP compatibility
+- Git inspection
+- web search
+- web fetching
+- command execution
+- verification helpers
+- permission checks
+- bounded autonomous coding loop
+
+The intended coding-agent cycle is:
+
+1. Understand
+2. Inspect
+3. Plan
+4. Implement
+5. Verify
+6. Diagnose
+7. Repair
+8. Verify again
+9. Report
+
+The model is not given unrestricted machine access.
+
+Before public deployment, command execution must run inside a
+proper isolated sandbox with resource limits and secret protection.
