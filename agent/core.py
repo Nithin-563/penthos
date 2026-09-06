@@ -9,6 +9,7 @@ from tools.web import fetch_url, search_web
 from tools.shell import Shell
 from tools.code_search import CodeSearch
 from tools.git import GitTools
+from sandbox import tool as sandbox_tool
 
 
 SYSTEM_PROMPT = """You are Penthos, an open-source coding AI.
@@ -27,7 +28,8 @@ Core strengths:
 - agentic software engineering
 
 You have tools for projects, shell commands, code search, Git,
-web research, and repository intelligence.
+web research, repository intelligence, and isolated sandboxed test
+execution.
 
 Before making significant coding decisions, inspect the relevant
 existing project context.
@@ -44,6 +46,11 @@ For coding tasks:
 6. Diagnose failures.
 7. Fix them.
 8. Verify again.
+
+When verifying generated code or tests, prefer the `run_tests` tool, which
+executes inside a disposable, network-isolated Docker sandbox with resource
+limits and no access to host secrets. Do not run generated code directly on
+the host machine.
 
 Do not claim that a tool was used unless it actually returned a result.
 
@@ -182,6 +189,23 @@ class PenthosAgent:
                 description="Search Penthos persistent project and conversation memory.",
                 function=self.repository.search_memory,
             )
+        )
+
+        self.tools.register(
+            Tool(
+                name="run_tests",
+                description=(
+                    "Run generated code/tests inside an isolated, disposable "
+                    "Docker sandbox. Accepts: language (python, node, or "
+                    "typescript), files ({filename: contents}), and command "
+                    "(entrypoint argv, e.g. ['python', '-m', 'pytest', '-q']). "
+                    "The sandbox has no network access, host secrets, or host "
+                    "filesystem, and the container is removed after each run."
+                ),
+                function=sandbox_tool.run_tests,
+                requires_confirmation=True,
+            )
+        )
 
     def tool_descriptions(self):
         return [

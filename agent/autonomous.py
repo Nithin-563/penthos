@@ -60,6 +60,28 @@ class AutonomousCodingEngine:
             command=command,
         )
 
+    def run_tests_in_sandbox(
+        self,
+        language: str,
+        files: dict,
+        command: list | None = None,
+    ):
+        """Run generated code/tests inside the isolated sandbox.
+
+        This routes through the model-facing `run_tests` tool, which is the
+        only sandbox surface the engine is allowed to drive. Docker controls
+        (network, mounts, env, limits, timeout, privileges) are fixed by
+        Penthos and never under model or engine control. The existing
+        permission system remains untouched and in force for every other tool.
+        """
+
+        return self.agent.execute_tool(
+            "run_tests",
+            language=language,
+            files=files,
+            command=command,
+        )
+
     def execute(
         self,
         request: str,

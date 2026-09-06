@@ -18,6 +18,7 @@ Current capabilities:
 - verification helpers
 - permission checks
 - bounded autonomous coding loop
+- isolated Docker sandbox for test execution
 
 The intended coding-agent cycle is:
 
@@ -25,7 +26,7 @@ The intended coding-agent cycle is:
 2. Inspect
 3. Plan
 4. Implement
-5. Verify
+5. Verify (in the sandbox)
 6. Diagnose
 7. Repair
 8. Verify again
@@ -33,5 +34,8 @@ The intended coding-agent cycle is:
 
 The model is not given unrestricted machine access.
 
-Before public deployment, command execution must run inside a
-proper isolated sandbox with resource limits and secret protection.
+The `run_tests` tool executes generated code and tests inside a disposable,
+network-isolated Docker container that never sees the host filesystem,
+Docker socket, or host environment variables. Host-side command execution
+via `shell_exec` remains permission-gated, but for generated untrusted code
+the sandbox is the only supported execution path.
