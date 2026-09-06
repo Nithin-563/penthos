@@ -2,6 +2,8 @@
 
 from agent.tools import Tool, ToolRegistry
 from agent.memory import Memory
+from agent.repository import RepositoryIntelligence
+
 from tools.filesystem import ProjectFilesystem
 from tools.web import fetch_url, search_web
 from tools.shell import Shell
@@ -24,43 +26,47 @@ Core strengths:
 - performance
 - agentic software engineering
 
-You have tools for inspecting and modifying projects, executing
-commands, searching code, inspecting Git, and researching the web.
+You have tools for projects, shell commands, code search, Git,
+web research, and repository intelligence.
 
-Use tools when they provide information you cannot reliably know.
+Before making significant coding decisions, inspect the relevant
+existing project context.
+
+Use repository intelligence to avoid repeatedly scanning files
+that have not changed.
 
 For coding tasks:
-1. Inspect relevant existing code.
-2. Understand the root cause or requirement.
-3. Make the smallest correct change.
-4. Run relevant verification.
-5. If verification fails, diagnose and fix it.
-6. Verify again.
-7. Report what actually happened.
+1. Understand the request.
+2. Inspect relevant existing code.
+3. Identify the smallest correct change.
+4. Implement it.
+5. Run relevant verification.
+6. Diagnose failures.
+7. Fix them.
+8. Verify again.
 
-Do not claim that a command, test, search, or file operation happened
-unless the corresponding tool actually returned a result.
+Do not claim that a tool was used unless it actually returned a result.
 
 Do not unnecessarily rewrite projects.
 
-Respond naturally. Do not force headings, JSON, numbered lists,
-or rigid structures unless they genuinely improve the answer.
+Respond naturally. Do not force headings, numbered lists, JSON,
+or rigid formatting unless they genuinely improve the answer.
 
-Never expose secrets, credentials, private keys, or environment
-variables containing sensitive values.
+Never expose secrets, credentials, private keys, API keys, or
+sensitive environment variables.
 """
 
 
 class PenthosAgent:
     def __init__(self, project_root="."):
         self.memory = Memory()
+        self.repository = RepositoryIntelligence(project_root)
         self.filesystem = ProjectFilesystem(project_root)
         self.shell = Shell(project_root)
         self.code_search = CodeSearch(project_root)
         self.git = GitTools(project_root)
 
         self.tools = ToolRegistry()
-
         self._register_tools()
 
     def _register_tools(self):
@@ -145,6 +151,37 @@ class PenthosAgent:
                 function=fetch_url,
             )
         )
+
+        self.tools.register(
+            Tool(
+                name="index_repository",
+                description="Index the current repository for efficient future inspection.",
+                function=self.repository.index_repository,
+            )
+        )
+
+        self.tools.register(
+            Tool(
+                name="project_context",
+                description="Return compact information about the current repository.",
+                function=self.repository.project_context,
+            )
+        )
+
+        self.tools.register(
+            Tool(
+                name="changed_files",
+                description="Find files that changed since the previous repository index.",
+                function=self.repository.changed_files,
+            )
+        )
+
+        self.tools.register(
+            Tool(
+                name="search_memory",
+                description="Search Penthos persistent project and conversation memory.",
+                function=self.repository.search_memory,
+            )
 
     def tool_descriptions(self):
         return [
