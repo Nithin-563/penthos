@@ -1,24 +1,41 @@
 {
   "id": "string",
-  "category": "coding | debugging | reasoning | software_engineering | agentic | security",
+  "category": "coding | debugging | reasoning | software_engineering | agentic | security | general_chat",
   "difficulty": "easy | medium | hard | expert",
   "language": "string",
   "prompt": "string",
   "context": "string",
   "solution": "string",
+  "code": "string (optional)",
+  "files": "{filename: content} (optional)",
   "tests": [
     {
       "input": "string",
       "expected": "string"
     }
   ],
+  "test_command": ["string", "(optional; entrypoint argv for sandbox execution)"],
   "verification": {
     "required": true,
-    "status": "pending | passed | failed"
+    "status": "pending | passed | failed | not_required",
+    "command": ["string", "(optional)"],
+    "exit_code": 0,
+    "stdout": "string",
+    "stderr": "string",
+    "timed_out": false,
+    "verified_at": "string",
+    "verifier_version": "string"
   },
   "metadata": {
     "source": "human | synthetic | transformed",
     "created_at": "string",
-    "license": "string"
-  }
+    "license": "string",
+    "provenance": {
+      "type": "human | synthetic | transformed",
+      "teacher": "string (optional)",
+      "generated_at": "string (optional)"
+    },
+    "fingerprint": "string (optional; sha256, deterministic)"
+  },
+  "split": "train | validation | test (optional; assigned at export)"
 }
