@@ -1,0 +1,20 @@
+model: Qwen/Qwen3-4B-MLX-4bit
+
+training:
+  method: lora
+  stage: development
+
+data:
+  verified_dataset: datasets/verified
+
+evaluation:
+  baseline: evaluation/baseline/tasks.json
+  results: evaluation/results
+
+goals:
+  - coding
+  - debugging
+  - reasoning
+  - software_engineering
+  - agentic_behavior
+  - security

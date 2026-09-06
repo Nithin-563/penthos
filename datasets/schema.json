@@ -1,0 +1,24 @@
+{
+  "id": "string",
+  "category": "coding | debugging | reasoning | software_engineering | agentic | security",
+  "difficulty": "easy | medium | hard | expert",
+  "language": "string",
+  "prompt": "string",
+  "context": "string",
+  "solution": "string",
+  "tests": [
+    {
+      "input": "string",
+      "expected": "string"
+    }
+  ],
+  "verification": {
+    "required": true,
+    "status": "pending | passed | failed"
+  },
+  "metadata": {
+    "source": "human | synthetic | transformed",
+    "created_at": "string",
+    "license": "string"
+  }
+}
