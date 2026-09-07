@@ -24,7 +24,7 @@ pip install gradio mlx-lm
 # Record a short demo
 python -c "
 from mlx_lm import load, generate
-model, tok = load('Qwen/Qwen3-4B-MLX-4bit')
+model, tok = load('mlx-community/Qwen2.5-Coder-7B-Instruct-4bit')
 prompt = tok.apply_chat_template([{'role':'system','content':'You are Penthos.'},{'role':'user','content':'Write a Python function to check if a number is prime.'}], tokenize=False, add_generation_prompt=True)
 print(generate(model, tok, prompt=prompt, max_tokens=512))
 " > demo_output.txt
@@ -78,8 +78,8 @@ create a **GPU** notebook (Runtime → Change runtime type → T4 GPU).
 ```python
 from huggingface_hub import snapshot_download
 snapshot_download(
-    "Qwen/Qwen3-4B",
-    local_dir="models/qwen3-4b",
+    "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit",
+    local_dir="models/qwen2.5-coder-7b",
     local_dir_use_symlinks=False,
 )
 ```
@@ -134,9 +134,9 @@ python inference/chat.py
 | Option | GPU Required | Model Size | Quality |
 |--------|-------------|------------|---------|
 | HF Spaces (static demo) | No | N/A | Pre-recorded |
-| Google Colab (free) | T4 (16 GB) | 4-bit Qwen3-4B (~2.5 GB) | Full |
-| Docker | No | 4-bit Qwen3-4B (~2.5 GB) | Full |
-| Bare Metal (macOS) | Apple Silicon (≥16 GB) | 4-bit Qwen3-4B (~2.5 GB) | Full |
+| Google Colab (free) | T4 (16 GB) | 4-bit Qwen2.5-Coder-7B (~4.3 GB) | Full |
+| Docker | No | 4-bit Qwen2.5-Coder-7B (~4.3 GB) | Full |
+| Bare Metal (macOS) | Apple Silicon (≥16 GB) | 4-bit Qwen2.5-Coder-7B (~4.3 GB) | Full |
 
 ## Troubleshooting
 

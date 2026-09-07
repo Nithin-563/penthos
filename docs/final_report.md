@@ -14,15 +14,19 @@ models at a fraction of their cost.
 
 | Property | Value |
 | --- | --- |
-| Architecture | Dense decoder-only, GQA (32 Q-heads / 8 KV-heads), 36 layers |
-| Total parameters | 4.0B (3.6B non-embedding) |
+| Architecture | Dense decoder-only, GQA, 28 layers |
+| Total parameters | 7.6B |
 | Context length | 32,768 native; 131,072 with YaRN |
 | Weights format | MLX 4-bit quantized |
-| On-disk size | ~2.0 GB |
-| Runtime memory | ~2-3 GB at normal chat lengths; ~6-10 GB during long-sequence LoRA training |
+| On-disk size | ~4.3 GB |
+| Runtime memory | ~4-6 GB at normal chat lengths; ~2-3 GB at idle |
 | Hardware tested | Apple Silicon, 16 GB unified memory (MLX) |
 | Vocab | Same as base; identity surfaced purely through Penthos's own system prompt and tooling |
 | Public identity | Penthos by Deoid, created by K Nithin Reddy (never presents as the base or any provider) |
+
+> The experiment tables in section 2 record the earlier 4.0B Qwen3 base; the
+> shipping base is now the code-specialized 7.6B Qwen2.5-Coder build — see
+> "Post-report: the model upgrade (PenthosEval)" at the end of this document.
 
 Decoding defaults: temperature 0.3 / top-p 0.9 in the interactive chat,
 greedy (temperature 0.0) in the benchmark. Thinking (chain-of-thought) is on
@@ -72,12 +76,14 @@ voting / RLHF-style tuning on sandbox-verified outcomes), not more distillation.
 
 ## 3. Context: how a 4B-scale model compares to the frontier
 
-The base architecture behind Penthos (Qwen3-4B) publishes strong small-model
-results; the 2507 thinking chip reports, e.g., MMLU-Pro 74.3, GPQA 66.7,
-AIME25 82.7, and 5.9 on Humanity's Last Exam. The current frontier models land
-roughly at MMLU-Pro ~89-90, GPQA ~93-94, and AIME25 ~100. So a 4B model fits on
-a laptop and costs nothing to run, but there is a real capability gap to the
-frontier that a 4B-parameter class simply has to be honest about. Penthos's
+The 4B-era base architecture behind Penthos (Qwen3-4B) publishes strong
+small-model results; the 2507 thinking chip reports, e.g., MMLU-Pro 74.3,
+GPQA 66.7, AIME25 82.7, and 5.9 on Humanity's Last Exam. The current frontier
+models land roughly at MMLU-Pro ~89-90, GPQA ~93-94, and AIME25 ~100. A 4B
+model fits on a laptop and costs nothing to run, but there is a real capability
+gap to the frontier that a 4B-parameter class simply has to be honest about.
+The post-report swap to the 7.6B code-specialized base closes part of that gap
+for coding specifically (see the PenthosEval results at the end). Penthos's
 edge is being *good enough*, private, keyless, fully open, and improvable; its
 benchmark line is trending up as the data pipeline gets healthier.
 
@@ -86,7 +92,7 @@ benchmark line is trending up as the data pipeline gets healthier.
 Penthos is an MLX 4-bit model, so the simplest and truly free path is a Mac
 with Apple Silicon (which is what the repo targets). For providers that don't
 run MLX, the recommended port is a GGUF export (via `mlx_lm.convert`, which the
-MLX ecosystem provides); a 4B Q4 GGUF runs on any of the free tiers below.
+MLX ecosystem provides); a 7B Q4 GGUF runs on any of the free tiers below.
 
 | Option | Type | Cost | Notes |
 | --- | --- | --- | --- |
@@ -101,7 +107,7 @@ zero external dependency and no data leaving the machine.
 
 ## 5. Storage & run instructions
 
-First run downloads ~2.0 GB once (cached locally); after that everything is
+First run downloads ~4.3 GB once (cached locally); after that everything is
 offline. `inference/chat.py` is the chatting entry point,
 `inference/agent_chat.py` adds the tool-driving agent loop
 (files/shell/git/code-search/web/sandboxed tests), and
