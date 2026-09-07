@@ -30,6 +30,20 @@ class ProjectFilesystem:
     def read_file(self, path: str):
         return self._safe(path).read_text(encoding="utf-8")
 
+    def read_readme(self):
+        candidates = ["README.md", "README.rst", "README.txt", "ReadMe.md", "README", "readme.md"]
+        for name in candidates:
+            target = self.root / name
+            if target.is_file():
+                try:
+                    return (
+                        f"# PROJECT README ({name})\n"
+                        + target.read_text(encoding="utf-8")[:20000]
+                    )
+                except OSError:
+                    continue
+        return "No README file found in the project root."
+
     def write_file(self, path: str, content: str):
         target = self._safe(path)
         target.parent.mkdir(parents=True, exist_ok=True)

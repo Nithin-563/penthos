@@ -30,7 +30,12 @@ from agent.protocol import (
     tool_result,
 )
 from agent.tools import validate_arguments
-from inference.loop_kit import auto_save_code, continue_penth_blocks, trim_context
+from inference.loop_kit import (
+    auto_save_code,
+    continue_penth_blocks,
+    maybe_wrap_code_prompt,
+    trim_context,
+)
 from inference.prompt import (
     COMPANY,
     CREATOR,
@@ -280,7 +285,7 @@ while True:
         continue
 
     print()
-    run_tool_calls(messages, query)
+    run_tool_calls(messages, maybe_wrap_code_prompt(query))
 
     output = messages[-1]["content"] if messages else ""
     if not output.strip():

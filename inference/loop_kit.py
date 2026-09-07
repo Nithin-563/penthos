@@ -108,3 +108,39 @@ def auto_save_code(output, min_chars=3000, outputs_dir="Penthos/outputs"):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(code, encoding="utf-8")
     print(f"\n[saved {len(code)} chars of code to {path} — cleaner to open than the terminal]")
+
+
+# Strong code-task markers. If two or more appear, the query is very likely a
+# code generation task and benefits from the step-by-step scaffold.
+_CODE_MARKERS = (
+    "write", "create", "implement", "generate", "fix", "debug", "refactor",
+    "function", "class", "def ", "api", "snippet", "algorithm", "sort",
+    "parse", "script", "program", "method", "python", "javascript",
+    "typescript", "golang", "rust", "java", "sql", "json", "html", "css",
+    "component", "endpoint", "database", "regex", "loop",
+)
+
+
+def looks_like_code_task(query: str) -> bool:
+    """Heuristic: is this user request a code generation/editing task?"""
+    q = query.lower()
+    hits = 0
+    for marker in _CODE_MARKERS:
+        if marker in q:
+            hits += 1
+            if hits >= 2:
+                return True
+    return bool(re.search(r"```|def |class |function |=>|import |from .+ import", q))
+
+
+def maybe_wrap_code_prompt(query: str) -> str:
+    """Wrap long coding requests in a reasoning scaffold when they look like code tasks.
+
+    The scaffold forces the model to plan (input/edge cases, signature) before
+    writing, which measurably improves code correctness on a 4B-scale model.
+    Only short code asks are wrapped so the model does not think through trivia.
+    """
+    if looks_like_code_task(query) and len(query) >= 40:
+        from inference.prompt import build_code_prompt
+        return build_code_prompt(query)
+    return query

@@ -21,6 +21,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from agent.core import PenthosAgent
 from agent.protocol import parse_tool_call, tool_prompt
+from inference.loop_kit import maybe_wrap_code_prompt
 from inference.prompt import (
     COMPANY,
     CREATOR,
@@ -222,7 +223,7 @@ while True:
         print(guard.refusal(reason) + "\n")
         continue
 
-    messages.append({"role": "user", "content": query})
+    messages.append({"role": "user", "content": maybe_wrap_code_prompt(query)})
 
     print()
     output = run_tool_calls(messages)
