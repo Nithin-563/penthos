@@ -1,0 +1,18 @@
+```python
+def caesar(s: str, shift: int) -> str:
+    def shift_char(c: str) -> str:
+        if 'a' <= c <= 'z':
+            return chr((ord(c) - ord('a') + shift) % 26 + ord('a'))
+        elif 'A' <= c <= 'Z':
+            return chr((ord(c) - ord('A') + shift) % 26 + ord('A'))
+        else:
+            return c
+
+    return ''.join(shift_char(c) for c in s)
+
+# Example usage:
+# print(caesar("abc", 3))  # Output: "def"
+# print(caesar("xyz", 1))  # Output: "yza"
+# print(caesar("Hello, World!", 3))  # Output: "Khoor, Zruog!"
+# print(caesar("abc", -1))  # Output: "zab"
+```<|im_end|>

@@ -1,0 +1,14 @@
+```python
+import re
+from collections import Counter
+from typing import List, Tuple
+
+def top_words(text: str, n: int) -> List[Tuple[str, int]]:
+    words = re.findall(r'\b[a-zA-Z0-9]+\b', text.lower())
+    word_counts = Counter(words)
+    most_common = word_counts.most_common(n)
+    return sorted(most_common, key=lambda x: (-x[1], x[0]))
+
+# Example usage:
+# print(top_words("the cat and the dog", 2))  # Output: [('the', 2), ('and', 1)]
+```<|im_end|>

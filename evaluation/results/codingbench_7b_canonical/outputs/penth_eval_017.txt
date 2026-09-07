@@ -1,0 +1,14 @@
+```python
+from typing import List
+from collections import defaultdict
+
+def group_anagrams(words: List[str]) -> List[List[str]]:
+    anagrams = defaultdict(list)
+    for word in words:
+        sorted_word = ''.join(sorted(word))
+        anagrams[sorted_word].append(word)
+    return sorted([sorted(group) for group in anagrams.values()])
+
+# Example usage:
+# print(group_anagrams(["eat","tea","tan","ate","nat","bat"]))
+```<|im_end|>

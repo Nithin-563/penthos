@@ -64,8 +64,9 @@ python3 -m venv .venv
 .venv/bin/python inference/agent_chat.py    # chat + tools + sandbox
 ```
 
-First run downloads the ~2.2 GB 4-bit model weights once, then everything is
-local. The chat accepts `/quit`, `/reset`, and `/tools`.
+First run downloads the ~4 GB 4-bit model weights once, then everything is
+local. Override the base model any time with `PENTHOS_MODEL=... python inference/chat.py`.
+The chat accepts `/quit`, `/reset`, and `/tools`.
 
 ## Host it yourself
 
@@ -82,18 +83,17 @@ into train/valid/test, and the LoRA config in `training/configs/` fine-tunes it.
 
 Experiments so far (on the verified 26-task subset, thinking on):
 
-- B — base model with thinking enabled: **23/26** (the shipping configuration).
+- B — base model with thinking enabled: **23/26** (the previous shipping config).
 - C — LoRA on a too-small batch of records: **14/26**.
 - E — LoRA on the full self-distilled dataset: **14/26**.
 - E-2 — LoRA with lower learning rate: **14/26**.
 - E-3 — LoRA on a cleaned mix with thinking exemplars: **16/26**, recovering
   reasoning and security categories.
 
-Conclusion, honestly: the base model still beats every LoRA attempt so far on
-long freeform generation. The distilled datasets are good data, but the
-fine-tuned adapters collapse on the narrative tasks. Closing the gap needs a
-verifier/RLHF approach, not more of the same distillation — details in
-[`docs/final_report.md`](docs/final_report.md).
+Conclusion, honestly: the LoRA attempts on the 4B base did not beat their
+teacher on long freeform generation, and fine-tuning the 4B could not close the
+gap to a 7B code-specialized base. The winning move was the model switch — see
+the PenthosEval table above. Details in [`docs/final_report.md`](docs/final_report.md).
 
 ## How it's measured
 
@@ -101,6 +101,25 @@ verifier/RLHF approach, not more of the same distillation — details in
 algorithm problems, debugging, reasoning, security, general chat, and
 software engineering. Each task is graded either by executing the model's code
 in an isolated sandbox or by rubric. Results are kept in `evaluation/results/`.
+
+**PenthosEval** (`evaluation/codingbench/tasks.jsonl`) is a dedicated,
+HumanEval-style coding benchmark — 24 original function-writing problems with
+hidden pytest suites, executed in the sandbox. It is designed to measure the
+part that matters most: can the model turn a plain prompt into code that
+actually passes tests?
+
+## The base model
+
+Penthos scores its coding ability on PenthosEval:
+
+| Base model | PenthosEval (24) |
+| --- | ---: |
+| Qwen3-4B (previous default) | **14/24 (58%)** |
+| Qwen2.5-Coder-7B-Instruct-4bit (shipping) | **18/24 (75%)** |
+
+The switch to a code-specialized 7B base was a real, measured gain: +4 tasks
+passing hidden tests, on the identical harness. It fits comfortably in 16 GB
+Unified Memory and runs locally.
 
 ## Roadmap
 

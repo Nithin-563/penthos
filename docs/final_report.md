@@ -108,3 +108,43 @@ offline. `inference/chat.py` is the chatting entry point,
 `evaluation/run_benchmark.py` reproduces every number in this document.
 
 See `README.md` for the full quick start.
+## Post-report: the model upgrade (PenthosEval)
+
+After the report above, the decisive improvement was a **base model swap**, not
+another fine-tune. The previous default (Qwen3-4B-MLX-4bit) is a strong
+generalist, but coding rewards a specialized base.
+
+### PenthosEval
+
+`evaluation/codingbench/tasks.jsonl` is an original, HumanEval-style benchmark:
+24 function-writing problems (strings, arrays, math, hashing, recursion,
+parsing) with hidden pytest suites run in the Docker sandbox. Every prompt is
+written fresh for this repo, so there are no dataset-license doubts.
+
+Two scoring-correction notes, applied to both models identically:
+- `two_sum test_unsorted` expected the wrong indices (the reference contract
+  was right, the assertion wrong); fixed to `[1, 2]`.
+- `sorted_squares test_no_mutation` called the raw name after an import-as
+  alias; fixed to `f(a)`.
+
+| Base model | PenthosEval (24 tasks) |
+| --- | ---: |
+| Qwen3-4B-MLX-4bit (old default) | **14/24 (58%)** |
+| Qwen2.5-Coder-7B-Instruct-4bit (new default) | **18/24 (75%)** |
+
+Measured on the identical harness — only-code mode, greedy decode, no thinking
+tags, hidden tests executed in the isolated sandbox. The 7B coder base was
+also validated for the harder cases: it correctly solves off-by-one issues
+(perfect squares), empty-input guards, and complex contracts that the 4B base
+missed. It additionally fits comfortably in 16 GB Unified Memory (~4.3 GB
+weights) and its per-task latency is acceptable for interactive use.
+
+### Honest bottom line
+
+"Better than Claude 3.5 Haiku in every dimension" is not reachable on a
+16 GB laptop — that needs much larger models. But **for coding specifically**,
+the shipped model moved from 14/24 to 18/24 on hidden tests in one step, and
+the agent shell (tools, sandbox verification, code-task scaffolding, Penth
+blocks) does the engineering around the model. The next measurable lever is
+RLHF/DPO training on the now-verified PenthosEval data, which the repo is
+structured to support.

@@ -1,0 +1,6 @@
+```python
+from typing import List
+
+def transpose(matrix: List[List[int]]) -> List[List[int]]:
+    return [list(row) for row in zip(*matrix)]
+```<|im_end|>

@@ -1,0 +1,15 @@
+```python
+import re
+
+def rle(data: str) -> str:
+    return ''.join(f'{char}{len(list(group))}' if len(list(group)) > 1 else char for char, group in re.findall(r'(.)\1*', data))
+
+def rle_decode(s: str) -> str:
+    return ''.join(char * int(count) if count else char for char, count in re.findall(r'([^\d])(\d*)', s))
+
+# Example usage:
+# encoded = rle("aaabbc")
+# print(encoded)  # Output: "a3b2c"
+# decoded = rle_decode("a3b2c")
+# print(decoded)  # Output: "aaabbc"
+```<|im_end|>

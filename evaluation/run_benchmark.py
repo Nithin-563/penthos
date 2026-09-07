@@ -34,14 +34,11 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-# Loader identifier for the local weights (functional handle for mlx_lm.load).
-# The evaluated model is presented to the user as Penthos.
-MODEL = "Qwen/Qwen3-4B-MLX-4bit"
-
-from inference.prompt import PENTHOS_SYSTEM_PROMPT  # noqa: E402
+from inference.prompt import MODEL, PENTHOS_SYSTEM_PROMPT, apply_chat  # noqa: E402
 
 TASKS_JSON = REPO_ROOT / "evaluation" / "baseline" / "tasks.json"
 VERIFIED_JSONL = REPO_ROOT / "datasets" / "verified" / "verified.jsonl"
+CODINGBENCH_JSONL = REPO_ROOT / "evaluation" / "codingbench" / "tasks.jsonl"
 RESULTS_DIR = REPO_ROOT / "evaluation" / "results"
 
 # Per-record benchmark rubrics for the non-code records in datasets/verified.
@@ -195,6 +192,27 @@ def build_suite(
             }
             tasks.append(task)
 
+    if "codingbench" in sources:
+        for record in read_jsonl(CODINGBENCH_JSONL):
+            grading = {
+                "type": "sandbox_test",
+                "language": "python",
+                "main_file": "solution.py",
+                "other_files": {"test_solution.py": record["tests"]},
+                "command": ["python", "-m", "pytest", "-q"],
+            }
+            task = {
+                "id": record["id"],
+                "category": record["category"],
+                "difficulty": record["difficulty"],
+                "language": record["language"],
+                "source": "codingbench",
+                "prompt": record["prompt"],
+                "solution": record.get("solution", ""),
+                "grading": grading,
+            }
+            tasks.append(task)
+
     if categories:
         tasks = [t for t in tasks if t["category"] in categories]
     if ids:
@@ -214,14 +232,13 @@ def build_prompt(tokenizer, task: dict, system_prompt: str, thinking: bool) -> s
         if grading.get("contract"):
             prompt_text = prompt_text + "\n\n" + grading["contract"]
         prompt_text = prompt_text + CODE_DIRECTIVE
-    return tokenizer.apply_chat_template(
+    return apply_chat(
         [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": prompt_text},
         ],
-        tokenize=False,
-        add_generation_prompt=True,
-        enable_thinking=thinking,
+        tokenizer,
+        thinking=thinking,
     )
 
 
@@ -337,7 +354,10 @@ def grade_executable(task: dict, output: str, docker_binary: str) -> dict:
 
     grading = task["grading"]
     files = dict(grading["other_files"])
-    files[grading["main_file"]] = _extract_code(output)
+    # Strip any chain-of-thought the model emitted before extracting the code,
+    # so thinking-enabled runs still produce clean executable files.
+    direct = clean_completion(output)
+    files[grading["main_file"]] = _extract_code(direct)
 
     payload = {
         "language": grading["language"],
@@ -467,7 +487,7 @@ def _write_summary_md(out_dir: Path, meta: dict, results: list[dict], summary: d
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run the Penthos model benchmark.")
     parser.add_argument("--sources", nargs="*", default=["baseline", "verified"],
-                        choices=["baseline", "verified"])
+                        choices=["baseline", "verified", "codingbench"])
     parser.add_argument("--categories", default=None,
                         help="comma-separated category filter")
     parser.add_argument("--ids", default=None,
