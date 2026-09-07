@@ -67,6 +67,11 @@ python3 -m venv .venv
 First run downloads the ~2.2 GB 4-bit model weights once, then everything is
 local. The chat accepts `/quit`, `/reset`, and `/tools`.
 
+## Host it yourself
+
+Step-by-step guides for running Penthos on Hugging Face Spaces, Google Colab
+(free T4 GPU), Docker, or bare-metal macOS are in [`docs/hosting.md`](docs/hosting.md).
+
 ## Training Penthos further
 
 This repository contains a full fine-tuning path with no data-license doubts:
@@ -75,11 +80,20 @@ rows, actually runs or rubrics each one, keeps the correct generations, and
 writes them out as training data. `scripts/make_mlx_data.py` splits the result
 into train/valid/test, and the LoRA config in `training/configs/` fine-tunes it.
 
-Experiments so far:
+Experiments so far (on the verified 26-task subset, thinking on):
 
-- B — base model with thinking enabled: **23/26** on the verified suite.
-- C — LoRA on a too-small batch of records: **14/26** and a clear lesson in
-  catastrophic forgetting. The proper distillation dataset is the current work.
+- B — base model with thinking enabled: **23/26** (the shipping configuration).
+- C — LoRA on a too-small batch of records: **14/26**.
+- E — LoRA on the full self-distilled dataset: **14/26**.
+- E-2 — LoRA with lower learning rate: **14/26**.
+- E-3 — LoRA on a cleaned mix with thinking exemplars: **16/26**, recovering
+  reasoning and security categories.
+
+Conclusion, honestly: the base model still beats every LoRA attempt so far on
+long freeform generation. The distilled datasets are good data, but the
+fine-tuned adapters collapse on the narrative tasks. Closing the gap needs a
+verifier/RLHF approach, not more of the same distillation — details in
+[`docs/final_report.md`](docs/final_report.md).
 
 ## How it's measured
 

@@ -181,8 +181,11 @@ def fetch_url(url: str, max_bytes: int = 2_000_000) -> str:
         headers={"User-Agent": USER_AGENT},
     )
 
-    with urlopen(request, timeout=20) as response:
-        data = response.read(max_bytes)
+    try:
+        with urlopen(request, timeout=20) as response:
+            data = response.read(max_bytes)
+    except Exception as exc:
+        return f"WARNING: could not fetch the URL ({exc.__class__.__name__}). Try a different URL."
 
     raw = data.decode("utf-8", errors="replace")
     return _clean_text(raw)

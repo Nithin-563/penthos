@@ -3,6 +3,7 @@
 from agent.tools import Tool, ToolRegistry
 from agent.memory import Memory
 from agent.repository import RepositoryIntelligence
+from agent.protocol import arg_schema
 
 from tools.filesystem import ProjectFilesystem
 from tools.web import fetch_url, search_web
@@ -222,6 +223,7 @@ class PenthosAgent:
             {
                 "name": tool.name,
                 "description": tool.description,
+                "arguments": arg_schema(tool.function),
             }
             for tool in self.tools.list()
         ]

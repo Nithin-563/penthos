@@ -16,13 +16,18 @@ class Shell:
         if not command.strip():
             raise ValueError("Command cannot be empty")
 
+        try:
+            timeout = min(int(timeout), 120)
+        except (TypeError, ValueError):
+            timeout = DEFAULT_TIMEOUT
+
         result = subprocess.run(
             command,
             shell=True,
             cwd=self.root,
             capture_output=True,
             text=True,
-            timeout=min(timeout, 120),
+            timeout=timeout,
             env={
                 "PATH": "/usr/bin:/bin:/usr/local/bin:/opt/homebrew/bin",
                 "HOME": str(self.root),
