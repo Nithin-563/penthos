@@ -1,0 +1,67 @@
+<think>
+
+</think>
+
+The bug in the provided React component is an **infinite render loop**. This occurs because the `setCount(count + 1)` line is **not inside the effect hook** or a function that is re-run on each render. As a result, the state is being updated directly in the render function, which causes the component to re-render repeatedly without stopping.
+
+In React, state updates must be done inside a function that is re-run on each render (like a function component body, an effect hook, or a callback). When you update state directly in the render function, it triggers an infinite loop because the component keeps re-rendering to reflect the new state.
+
+---
+
+### ✅ Corrected Component
+
+Here is the corrected version of the `Counter` component:
+
+```jsx
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  // This effect will run after the initial render and after each update
+  useEffect(() => {
+    setCount(count + 1);
+  }, [count]);
+
+  return <div>{count}</div>;
+}
+```
+
+---
+
+### 🧪 Explanation of the Fix
+
+- **Effect Hook**: The `useEffect` hook is used to perform side effects after the initial render and after updates. In this case, it's used to increment the `count` state.
+- **Dependency Array**: The `useEffect` hook includes `[count]` in the dependency array. This means the effect will re-run whenever `count` changes, which is the desired behavior.
+- **No Direct State Update in Render**: The state is no longer updated directly in the render function, which prevents the infinite loop.
+
+---
+
+### 🧪 Alternative Fix (Without Effect Hook)
+
+If you prefer not to use the `useEffect` hook, you can use a function inside the render function to update the state:
+
+```jsx
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  const incrementCount = () => {
+    setCount(count + 1);
+  };
+
+  return (
+    <div>
+      {count}
+      <button onClick={incrementCount}>Increment</button>
+    </div>
+  );
+}
+```
+
+In this version, the state is updated via a function that is called when the button is clicked, which avoids the infinite loop.
+
+---
+
+### 📌 Summary
+
+- **Bug**: Direct state update in the render function caused an infinite render loop.
+- **Fix**: Use the `useEffect` hook to manage side effects or use a function to update state in a controlled way.
+- **Corrected Code**: Provided above.

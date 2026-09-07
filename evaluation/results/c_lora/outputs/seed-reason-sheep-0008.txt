@@ -1,0 +1,5 @@
+<think>
+
+</think>
+
+9 sheep are left. The phrase 'all but 9 die' means exactly 9 sheep survive; the starting count of 17 is only there to mislead.

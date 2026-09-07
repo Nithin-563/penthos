@@ -1,0 +1,54 @@
+{
+  "dataset_version": "1.0.0",
+  "pipeline_version": "1.0.0",
+  "schema_version": "1.1.0",
+  "generated_at": "2026-09-06T15:18:13+00:00",
+  "total_candidates": 51,
+  "malformed_count": 1,
+  "unsafe_count": 1,
+  "verified_count": 42,
+  "rejected_count": 9,
+  "duplicate_count": 2,
+  "counts_by_category": {
+    "agentic": 3,
+    "coding": 15,
+    "debugging": 6,
+    "security": 5,
+    "software_engineering": 5,
+    "reasoning": 5,
+    "general_chat": 3
+  },
+  "counts_by_language": {
+    "(none)": 20,
+    "python": 21,
+    "typescript": 1
+  },
+  "counts_by_difficulty": {
+    "hard": 8,
+    "medium": 20,
+    "easy": 14
+  },
+  "counts_by_split": {
+    "train": 33,
+    "validation": 4,
+    "test": 5
+  },
+  "rejection_reasons": {
+    "tests_failed": 2,
+    "malformed_record": 1,
+    "unsafe_candidate": 1,
+    "timeout": 1,
+    "unsupported_language": 1,
+    "invalid_command": 1,
+    "duplicate": 2
+  },
+  "verification_statistics": {
+    "not_required": 23,
+    "passed": 19
+  },
+  "split_leakage_check": {
+    "passed": true,
+    "distinct_fingerprints": 42,
+    "total_fingerprints": 42
+  }
+}

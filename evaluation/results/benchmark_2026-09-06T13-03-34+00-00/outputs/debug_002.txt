@@ -1,0 +1,19 @@
+1. **Check Production Logs**: Review server logs for 500 error details. Look for stack traces, error messages, or specific triggers.
+
+2. **Replicate the Issue**: Use a tool like `curl` or Postman to mimic the production request locally. Confirm if the same error occurs.
+
+3. **Environment Differences**: Compare local vs. production environments. Check for differences in `process.env`, database connections, or file paths.
+
+4. **Database & External Services**: Verify if production databases or external APIs are down or misconfigured. Use tools like `pg_prewarm` or `pg_dump` to debug database issues.
+
+5. **Node.js Version**: Ensure production uses the same Node.js version as local. Use `nvm` or `npx` to enforce consistency.
+
+6. **Memory & Performance**: Use `pm2` or `node --inspect` to check for memory leaks or unhandled promises.
+
+7. **Environment Variables**: Validate all environment variables in production. Use `dotenv` or `process.env` to log and verify values.
+
+8. **Static Files**: If using static files, check `public/` or `dist/` for missing files or incorrect paths.
+
+9. **Error Handling**: Add `uncaughtException` and `unhandledPromiseRejection` listeners to capture silent errors.
+
+10. **Rollback**: If the issue is new, roll back to a known-working version to isolate the cause.

@@ -1,0 +1,31 @@
+<think>
+
+</think>
+
+An AI coding agent, like Penthos, should prevent API keys and other secrets from being exposed while inspecting and modifying a repository through several key strategies:
+
+1. **Secret Scanning and Detection**: 
+   - Implement secret scanning tools to automatically detect and flag any API keys, passwords, or other sensitive information in the codebase. Tools like GitHub's Secret Scanning or GitLab's Secret Detection can be integrated to identify and alert on potential secret exposure.
+
+2. **Environment Variables**: 
+   - Use environment variables to store sensitive information rather than hardcoding them in the source code. This approach keeps secrets out of the version-controlled repository and reduces the risk of exposure.
+
+3. **Code Review and Analysis**: 
+   - Perform thorough code reviews and static analysis to ensure that no secrets are inadvertently included in the code. Tools like SonarQube or Checkmarx can be used to enforce policies against secret usage.
+
+4. **Access Control and Permissions**: 
+   - Restrict access to the repository and its contents to only those who need it. This minimizes the chance of unauthorized access and exposure of secrets.
+
+5. **Secure Coding Practices**: 
+   - Enforce secure coding practices that prohibit the use of secrets in configuration files, logs, or any other non-secure locations. This includes using encrypted storage for secrets and ensuring that any secrets used are only in the necessary scope.
+
+6. **Automated Testing and Linting**: 
+   - Integrate automated testing and linting tools that check for the presence of secrets in the codebase. These tools can be configured to run as part of the continuous integration (CI) pipeline to catch issues early.
+
+7. **Encryption and Secure Storage**: 
+   - Use encryption for any secrets stored in the repository or in the database. This ensures that even if the data is compromised, it remains unreadable without the decryption key.
+
+8. **Audit and Monitoring**: 
+   - Maintain an audit trail of all changes made to the repository, including any modifications to secrets. This helps in tracking who accessed or modified secrets and when, which is crucial for incident response.
+
+By implementing these strategies, an AI coding agent can significantly reduce the risk of exposing API keys and other secrets while working with a repository. It is essential to combine these practices with a proactive approach to security and continuous monitoring to maintain the integrity and safety of the codebase.

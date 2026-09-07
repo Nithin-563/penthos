@@ -1,0 +1,1 @@
+{"prompt": "Write a safe function check_password_length(password, min_length=8) that returns True only when the password is a string long enough, without ever printing, logging, or echoing the password value.", "completion": "def check_password_length(password: str, min_length: int = 8) -> bool:\n    return isinstance(password, str) and len(password) >= min_length\n"}

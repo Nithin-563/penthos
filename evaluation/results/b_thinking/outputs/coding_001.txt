@@ -1,0 +1,91 @@
+<think>
+Okay, I need to write a TypeScript function that finds the first duplicate in an array. Let me think about how to approach this.
+
+First, the problem is to find the first element that appears more than once in the array. So, for example, in [1,2,3,2,4], the first duplicate is 2. The function should return that element.
+
+What's the best way to do this? Well, one straightforward approach is to iterate through the array and keep track of elements we've seen. As we go through each element, we check if it's already in our set. If it is, return it. Otherwise, add it to the set. This way, the first duplicate found is the answer.
+
+But wait, what about the time and space complexity? The time complexity would be O(n) because we're doing a single pass through the array. For each element, we check in the set, which is O(1) average case. So overall O(n). Space complexity is O(n) because in the worst case, we might store all elements in the set before finding a duplicate.
+
+But maybe there's a way to do it with O(1) space? Like using the array indices themselves. For example, if the array elements are within a certain range, we can mark elements as visited by negating their value. But that's only possible if the elements are positive integers and the array is large enough. However, the problem doesn't specify any constraints on the elements, so maybe the first approach is safer.
+
+The user didn't mention any constraints, so the first approach with a set is probably acceptable. Let me code that.
+
+So the function would look like this:
+
+function firstDuplicate(arr: number[]): number {
+    const seen = new Set<number>();
+    for (const num of arr) {
+        if (seen.has(num)) {
+            return num;
+        }
+        seen.add(num);
+    }
+    return -1; // or undefined, but since the problem says "find the first duplicate", maybe it's guaranteed to exist?
+}
+
+Wait, but what if there's no duplicate? The problem says "find the first duplicate", so maybe the function should return -1 or undefined in that case. But the problem statement might assume that there is at least one duplicate. However, the function should handle that case.
+
+But the user didn't specify, so the function should return -1 or something. Let's go with -1.
+
+Now, the time complexity is O(n) as discussed. Space is O(n) in the worst case.
+
+But wait, what if the array is very large? Well, the problem says to write the function, so this approach is acceptable.
+
+Let me test some examples.
+
+Test case 1: [1,2,3,2,4] → returns 2. Correct.
+
+Test case 2: [1,2,3,4,5] → returns -1.
+
+Test case 3: [3,3,4,5] → returns 3.
+
+Yes, that works.
+
+So the code is as above. Now, the explanation: time is O(n), space O(n).
+
+But wait, in TypeScript, the function is written with the correct types. The function is called firstDuplicate, takes an array of numbers, returns a number.
+
+Yes. So that's the code.
+
+Another possible approach is using a hash map, but that's essentially the same as using a Set. So the code is correct.
+
+So the final answer is the function with the explanation.
+</think>
+
+Here's a TypeScript function to find the first duplicate in an array, along with its time and space complexity analysis.
+
+### ✅ Final Code
+```typescript
+function firstDuplicate(arr: number[]): number {
+    const seen = new Set<number>();
+    for (const num of arr) {
+        if (seen.has(num)) {
+            return num;
+        }
+        seen.add(num);
+    }
+    return -1; // No duplicate found
+}
+```
+
+---
+
+### 📈 Time and Space Complexity
+
+- **Time Complexity**: **O(n)**  
+  We iterate through the array once, and each lookup in the `Set` is O(1) on average. This ensures linear time relative to the input size.
+
+- **Space Complexity**: **O(n)**  
+  In the worst case, the `Set` stores all unique elements before a duplicate is found. This results in O(n) space usage.
+
+---
+
+### 🧪 Example Usage
+```typescript
+console.log(firstDuplicate([1, 2, 3, 2, 4])); // Output: 2
+console.log(firstDuplicate([1, 2, 3, 4, 5])); // Output: -1
+console.log(firstDuplicate([3, 3, 4, 5]));    // Output: 3
+```
+
+This solution is efficient, concise, and leverages TypeScript's type system for clarity and safety.

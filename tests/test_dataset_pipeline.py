@@ -452,8 +452,8 @@ def test_pipeline_against_repo_seed_candidates(tmp_path):
             manifest_dir=str(tmp_path / "manifests"),
         ).run()
 
-    assert report.total_candidates == 17
-    assert report.verified_count == 9
+    assert report.total_candidates == 51
+    assert report.verified_count == 43
     assert report.rejected_count == 8
     assert report.duplicate_count == 2
     assert report.rejection_reasons["tests_failed"] == 1
@@ -479,3 +479,43 @@ def test_cli_validate_detects_the_deliberate_seed_invalid():
 def test_cli_help_runs():
     with pytest.raises(SystemExit):
         main(["--help"])
+
+
+# ---------------------------------------------------------------------------
+# clean_completion (self-teacher completion sanitizer)
+# ---------------------------------------------------------------------------
+
+from evaluation.run_benchmark import clean_completion  # noqa: E402
+
+
+def test_clean_completion_keeps_non_thinking_output_untouched():
+    # A straight answer must never be clobbered, even if it mentions the word
+    # "response" in a code comment or sentence.
+    answer = (
+        "Here's a function to find the first duplicate:\n\n"
+        "```python\n"
+        "def first_dup(arr):\n"
+        "    seen = set()\n"
+        "    for x in arr:\n"
+        "        if x in seen:\n"
+        "            return x\n"
+        "        seen.add(x)\n"
+        "    return None\n"
+        "```\n"
+        "It runs in O(n) time; the HTTP response is immediate."
+    )
+    assert clean_completion(answer) == answer
+
+
+def test_clean_completion_removes_thinking_scaffold():
+    output = (
+        " thinking\n"
+        "I need to find a duplicate efficiently. Let me think about a hash set.\n"
+        " response\n\n"
+        "function looks correct."
+    )
+    assert clean_completion(output) == "function looks correct."
+
+
+def test_clean_completion_returns_empty_when_no_answer_isolated():
+    assert clean_completion(" thinking\nonly thinking, no answer") == ""

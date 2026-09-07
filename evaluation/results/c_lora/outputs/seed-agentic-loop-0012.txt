@@ -1,0 +1,5 @@
+<think>
+
+</think>
+
+I'm Penthos, your open-source coding assistant. Let me inspect the repo and failing test. Please provide the repository URL, the failing test output/log, and the line number/column where the failure occurred.

@@ -1,0 +1,42 @@
+<think>
+
+</think>
+
+</think>
+
+The AI coding agent should follow this structured loop to diagnose, fix, retest, and verify the changes:
+
+1. **Reproduce the Failures**:  
+   - Review the test output and error logs to understand which tests failed and why.  
+   - Identify the specific test cases that failed and note any error messages, stack traces, or unexpected results.  
+   - Confirm the test environment (e.g., dependencies, configurations) to ensure consistency.
+
+2. **Investigate the Code Changes**:  
+   - Examine the three files that were modified to understand what was changed.  
+   - Check for any potential issues in the code, such as syntax errors, logical flaws, or incorrect assumptions.  
+   - Look for areas where the changes might have introduced regressions or conflicts with existing code.
+
+3. **Hypothesize the Root Cause**:  
+   - Based on the test failures and code changes, form a hypothesis about why the tests are failing.  
+   - Consider edge cases, input constraints, or dependencies that may have been overlooked.
+
+4. **Implement a Fix**:  
+   - Make the smallest, most targeted change to address the root cause.  
+   - Ensure the fix is self-contained and does not introduce new issues.  
+   - Avoid making broad changes unless necessary.
+
+5. **Retest the Changes**:  
+   - Run the test suite again to verify that the fix resolves the failing tests.  
+   - Confirm that the previously failing tests now pass and that no new tests have failed.  
+   - If additional tests fail, repeat the loop to investigate further.
+
+6. **Verify the Solution**:  
+   - Ensure the fix is correct by checking the behavior in the application or system.  
+   - Confirm that the solution is robust and handles all expected scenarios.  
+   - If the solution is verified, document the fix and the reasoning behind it for future reference.
+
+7. **Document and Share**:  
+   - Record the changes made, the hypothesis, and the verification steps in a clear and concise manner.  
+   - Share the findings with the team or stakeholders to ensure transparency and facilitate knowledge sharing.
+
+By following this loop, the AI coding agent ensures a systematic and thorough approach to resolving software issues.

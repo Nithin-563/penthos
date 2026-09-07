@@ -1,0 +1,86 @@
+<think>
+
+</think>
+
+</think>
+
+I'll implement a TypeScript debounce function with correct typing, explain edge cases, and provide an example.
+
+### Debounce Function Implementation
+
+A debounce function is used to limit the rate at which a function is executed. It ensures that a function is called only after a certain period of time has elapsed since the last call.
+
+Here's the implementation:
+
+```typescript
+/**
+ * Debounce a function so it's executed after a certain period of time
+ * has elapsed since the last call.
+ *
+ * @param func - The function to debounce
+ * @param delay - The delay in milliseconds
+ * @returns A new function that debounces the original function
+ */
+function debounce<T extends (...args: any[]) => void>(
+  func: T,
+  delay: number
+): (...args: any[]) => void {
+  let timeout: NodeJS.Timeout | null = null;
+
+  return function (...args: any[]) {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+
+    timeout = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+```
+
+### Type Safety
+
+- The function is generic (`<T extends (...args: any[]) => void>`) to allow any function type.
+- The returned function also has the same type as the original function, ensuring type safety.
+
+### Edge Cases
+
+1. **Immediate Execution**:
+   - If the delay is 0, the function will execute immediately, but the next call will cancel the previous one.
+
+2. **Multiple Calls**:
+   - If the function is called multiple times before the delay has expired, the previous timeout is cleared, and a new one is set.
+
+3. **Concurrent Calls**:
+   - If the function is called while the previous timeout is still active, the previous timeout is canceled, and the new one is scheduled.
+
+4. **No Delay**:
+   - If the delay is 0, the function will execute immediately, but the next call will cancel the previous one.
+
+### Example Usage
+
+```typescript
+function logMessage(message: string) {
+  console.log(`Message: ${message}`);
+}
+
+// Debounce the logMessage function with a 1000ms delay
+const debouncedLog = debounce(logMessage, 1000);
+
+// Simulate multiple calls
+debouncedLog("First call");
+debouncedLog("Second call"); // This will not execute immediately
+debouncedLog("Third call"); // This will also not execute immediately
+
+// After 1000ms, the last call will execute
+```
+
+### Explanation
+
+- The first call to `debouncedLog("First call")` schedules the function to run after 1000ms.
+- The second call cancels the previous timeout and schedules a new one.
+- The third call also cancels the previous timeout and schedules a new one.
+- After 1000ms from the third call, the function `logMessage("Third call")` will be executed.
+
+This implementation ensures that the function is called only after the specified delay has passed since the last call, making it useful for scenarios like form input validation, search filters, and other real-time event handling.

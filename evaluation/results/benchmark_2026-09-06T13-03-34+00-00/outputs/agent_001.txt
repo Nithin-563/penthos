@@ -1,0 +1,7 @@
+1. **Identify failed tests**: Run `test --list` to see which 7 tests failed.  
+2. **Re-run failed tests**: Use `test -f <test-name>` to re-run the specific failing tests.  
+3. **Review code changes**: Check the 3 modified files for logic errors, syntax issues, or incorrect API usage.  
+4. **Debug**: Use `print` or a debugger to trace the root cause of the failures.  
+5. **Fix**: Correct the code based on the debug results.  
+6. **Retest**: Run the 7 failed tests again to confirm fixes.  
+7. **Verify**: Ensure all tests pass and the code behaves as expected in production.

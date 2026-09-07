@@ -1,0 +1,76 @@
+<think>
+
+</think>
+
+To detect a cycle in a singly linked list, **Floyd's Tortoise and Hare algorithm** is a classic approach. It uses two pointers, one moving at twice the speed of the other, to determine if a cycle exists. Here's a breakdown of the algorithm, its correctness, and its comparison with other approaches.
+
+---
+
+### **Floyd's Tortoise-and-Hare Algorithm**
+
+#### **How it works:**
+- **Tortoise pointer** moves one step at a time.
+- **Hare pointer** moves two steps at a time.
+- If there is a cycle, the two pointers will eventually meet (i.e., point to the same node), indicating a cycle.
+- If there is no cycle, the hare will reach the end of the list before the tortoise.
+
+#### **Pseudocode:**
+```python
+def has_cycle(head):
+    slow = head
+    fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            return True
+    return False
+```
+
+---
+
+### **Why it terminates and detects cycles correctly:**
+
+1. **Termination:**
+   - The algorithm terminates when either:
+     - The **hare pointer** reaches the end of the list (i.e., `fast` or `fast.next` is `None`), or
+     - The **tortoise and hare pointers meet** (i.e., `slow == fast`).
+   - In the case of no cycle, the hare will eventually reach the end, and the loop will exit.
+   - In the case of a cycle, the pointers will eventually meet, and the loop will exit.
+
+2. **Cycle detection:**
+   - If there is a cycle, the two pointers will eventually meet because they are moving at different speeds. This is a consequence of the **pigeonhole principle**.
+   - The **meeting point** is guaranteed to be within the cycle, and the presence of a meeting point confirms the existence of a cycle.
+
+---
+
+### **Space Complexity Comparison:**
+
+| Approach               | Space Complexity |
+|-----------------------|------------------|
+| **Floyd's algorithm** | **O(1)**         |
+| **Hash-set approach** | **O(n)**         |
+
+- **Floyd's algorithm** uses only two pointers, so it requires **constant space**.
+- **Hash-set approach** stores all visited nodes in a hash set, which requires **O(n)** space in the worst case.
+
+---
+
+### **Time Complexity:**
+
+| Approach               | Time Complexity |
+|-----------------------|-----------------|
+| **Floyd's algorithm** | **O(n)**        |
+| **Hash-set approach** | **O(n)**        |
+
+- Both approaches have **linear time complexity** in the worst case.
+- **Floyd's algorithm** is more space-efficient and is preferred in environments with limited memory.
+
+---
+
+### **Summary:**
+
+- **Floyd's Tortoise-and-Hare algorithm** is a **space-efficient** and **time-efficient** way to detect cycles in a singly linked list.
+- It uses **O(1)** space and **O(n)** time.
+- The **hash-set approach** is **easier to understand** and **more readable**, but it uses **O(n)** space.
+- Floyd's algorithm is a **classic and elegant** solution that leverages the properties of linked lists and the pigeonhole principle.

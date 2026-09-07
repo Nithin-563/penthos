@@ -1,0 +1,10 @@
+I’d start by reviewing the repository structure to understand the components:  
+1. **Authentication**: Check `auth/` for login, logout, and token management. Look for `useAuth` hooks or API endpoints in `api/`.  
+2. **API Server**: Inspect `server/` for routing, middleware, and database integration. Look for `index.ts` or `app.ts` to see how routes are defined.  
+3. **Database**: Review `database/` for schema files (e.g., `schema.prisma`) and migration scripts. Check for ORM setup (e.g., Prisma, TypeORM).  
+4. **React Frontend**: Explore `components/` and `pages/` to identify UI logic. Look for `useEffect` hooks for data fetching and `useContext` for state management.  
+5. **Environment Variables**: Check `.env` files for API URLs, secrets, and database credentials.  
+6. **Dependencies**: Run `npm ls` to identify libraries (e.g., Axios, Redux, React Query) and their versions.  
+7. **Testing**: Look for `__tests__` or `test/` directories to understand test coverage.  
+8. **Logs/Errors**: Check for existing error logs or CI/CD pipelines (e.g., GitHub Actions) to identify recurring issues.  
+Finally, run `tsc --build` to ensure type safety and `npm run dev` to test the frontend and API locally.

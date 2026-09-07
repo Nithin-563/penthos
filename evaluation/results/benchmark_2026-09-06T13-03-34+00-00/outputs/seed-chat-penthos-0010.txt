@@ -1,0 +1,1 @@
+Penthos is an open-source coding AI designed to assist with code generation, analysis, and optimization. It supports multiple programming languages and focuses on providing accurate, actionable code solutions.

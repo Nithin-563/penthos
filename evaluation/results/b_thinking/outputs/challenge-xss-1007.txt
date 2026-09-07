@@ -1,0 +1,113 @@
+<think>
+Okay, I need to implement a Python function called sanitize_html that takes a string and returns a sanitized version where certain characters are escaped. The specific characters to escape are &, <, >, " and ' in that order, with & having priority. The user mentioned that a hidden test file will import this function and verify that a script tag is fully escaped. So, the main goal is to ensure that these characters are properly escaped in the input text.
+
+First, I should think about how to escape these characters. The order matters here. For example, if the input is "&<>", the & should be escaped first, then the < and >. But the problem says the order is & first, then the others. Wait, the problem says "escape &, <, >, " and ' (in that safety order, & first)". So the priority is & first, then the others. But how does that affect the escaping? Maybe it's just the order in which we process the characters. But in reality, when escaping HTML, the standard approach is to replace each of these characters with their respective HTML entities. So & becomes &amp; and so on.
+
+But the question is about the order of escaping. Wait, maybe the user is referring to the order in which the characters are processed. For example, if a string has both & and <, should we process & first? But in HTML escaping, the order doesn't matter because each character is replaced individually. However, the problem specifies that & is first in the safety order. So perhaps the function should first replace & with &amp; and then the others. But that's not necessary because in HTML, the order of escaping doesn't affect the final output. However, the problem might be referring to the order in which the characters are processed. For example, if a string has & followed by <, then processing & first would ensure that the & is escaped before the <. But in reality, when you escape each character individually, the order doesn't matter. So maybe the problem is just a way to specify which characters to escape, not the order of processing.
+
+But the problem says "escape &, <, >, " and ' (in that safety order, & first)". So the order is & first, then the others. So the function should first replace & with &amp;, then replace < with &lt;, then > with &gt;, then " with &quot;, and ' with &apos;. But in Python, when you replace characters, the order might matter if there's overlapping. For example, if you replace & first, then the other characters. But in this case, each of these characters is unique, so the order shouldn't affect the outcome. However, the problem might be expecting that the function processes the characters in the order given, so that & is handled first, then the others.
+
+But the actual way to escape HTML is to replace each of these characters with their respective entities. So the function can be implemented by iterating through each character in the input string and replacing them if they are in the set { '&', '<', '>', '"', '\'' }.
+
+But how to do that in Python? One approach is to use the html module's escape function. However, the problem might not want to use that, as it's possible that the user is expecting a manual implementation. But the problem says to implement the function, so perhaps using the html module is acceptable. However, the user might not have that module available, but in Python, the html module is part of the standard library. So using html.escape would be the correct approach. However, the problem says to escape the characters in the order & first. But the html.escape function would handle all of them, but the order in which they are processed is not an issue because each character is replaced individually.
+
+Wait, but the problem says "escape &, <, >, " and ' (in that safety order, & first)". So maybe the function is supposed to replace & first, then the others. But in reality, the order of replacement doesn't matter. However, the problem might be expecting that the function replaces & first, then the others. But in Python, the html.escape function would handle all of them, so perhaps that's the way to go.
+
+But the problem says to implement the function, so perhaps the user wants a manual approach. Let me think. The function needs to replace each of these characters with their respective HTML entities. So, for example, & becomes &amp;, < becomes &lt;, > becomes &gt;, " becomes &quot;, and ' becomes &apos;. So the function can be written by iterating through each character and replacing them if they are in the set.
+
+But how to do that in Python. One way is to use a string replacement. However, since the characters are not overlapping, we can process them in any order. But the problem says that the order is & first. So perhaps the function should first replace & with &amp;, then replace < with &lt;, then > with &gt;, then " with &quot;, and ' with &apos;. But in Python, the order of replacement would not affect the final result because each character is replaced once. So, for example, if the input is "&<", replacing & first would result in "&amp;<", then replacing < would result in "&amp;&lt;".
+
+But the html.escape function would do all of this in one go. So perhaps the correct approach is to use the html module's escape function. However, the problem might not want to use that, but the user says to implement the function. So, perhaps the correct way is to use the html module's escape function. But the problem says that the hidden test file will import the function and verify that a script tag is fully escaped. So, for example, if the input is "<script>", the output should be "<script>" with all characters escaped. But the html.escape function would escape the < and >, so the output would be "&lt;script&gt;".
+
+But the problem says that the order is & first. However, the html.escape function would handle all of them, so perhaps that's the correct approach. However, the user might be expecting a manual implementation. Let me think again.
+
+Alternatively, the function can be written by replacing each character in the order specified. So first replace & with &amp;, then < with &lt;, then > with &gt;, then " with &quot;, and ' with &apos;. But in Python, the order of replacement would not affect the outcome because each character is replaced once. So, for example, if the input is "&<", replacing & first would result in "&amp;<", then replacing < would result in "&amp;&lt;".
+
+But the problem says that the order is & first. So perhaps the function should process the characters in that order. However, the html.escape function would do that automatically. So, perhaps the correct approach is to use the html.escape function. But the problem says to implement the function, so maybe the user wants a manual approach.
+
+Alternatively, the function can be written by using a series of replace calls. For example:
+
+def sanitize_html(text):
+    text = text.replace('&', '&amp;')
+    text = text.replace('<', '&lt;')
+    text = text.replace('>', '&gt;')
+    text = text.replace('"', '&quot;')
+    text = text.replace("'", '&apos;')
+    return text
+
+But this would process the characters in the order specified. However, the problem says that the order is & first, then the others. So this approach would handle that. But in reality, the order of replacement doesn't matter because each character is replaced once. However, the problem might be expecting this approach.
+
+But the problem says that the hidden test will check that a script tag is fully escaped. For example, if the input is "<script>", the output should be "&lt;script&gt;".
+
+But using the html.escape function would do that. So, the function could be written as:
+
+import html
+
+def sanitize_html(text):
+    return html.escape(text)
+
+But the problem says to implement the function, so perhaps the user wants a manual approach. However, the problem says that the hidden test will verify that a script tag is fully escaped. So, the function should return the correct escaped string.
+
+But the problem says that the order is & first. However, the html.escape function would handle all the characters, so the order is not an issue. Therefore, using the html module's escape function is the correct approach.
+
+But the problem says to implement the function, so perhaps the user wants a manual implementation. However, the problem might not have the html module available, but in Python, it's part of the standard library. So, the correct answer is to use the html.escape function.
+
+But the problem says to implement the function, so the user might be expecting a manual approach. However, the problem says that the hidden test will check that a script tag is fully escaped. So, the function should return the correct escaped string.
+
+Therefore, the correct approach is to use the html.escape function. However, the problem says to implement the function, so perhaps the user wants a manual implementation. But the problem says that the hidden test will verify the function, so the function must return the correct escaped string.
+
+In conclusion, the correct way is to use the html.escape function. So the code would be:
+
+import html
+
+def sanitize_html(text: str) -> str:
+    return html.escape(text)
+
+But the problem says to implement the function, so perhaps the user wants a manual approach. However, the problem says that the hidden test will check that a script tag is fully escaped. So, the function must return the correct escaped string.
+
+But the problem says that the order is & first. However, the html.escape function would handle all the characters, so the order is not an issue. Therefore, the correct answer is to use the html.escape function.
+
+But the problem says to implement the function, so the user might not want to use the html module. Therefore, the correct approach is to manually replace each character in the order specified. So, the function would be:
+
+def sanitize_html(text: str) -> str:
+    text = text.replace('&', '&amp;')
+    text = text.replace('<', '&lt;')
+    text = text.replace('>', '&gt;')
+    text = text.replace('"', '&quot;')
+    text = text.replace("'", '&apos;')
+    return text
+
+But this would process the characters in the order specified. However, the problem says that the order is & first, then the others. So this approach would handle that. However, the problem says that the hidden test will check that a script tag is fully escaped. So, for example, the input "<script>" would be replaced as follows:
+
+First, & is replaced (but there's none), then < becomes &lt;, then > becomes &gt;, then " and ' are not present. So the output would be "&lt;script&gt;".
+
+But the html.escape function would do the same. So, the function is correct either way.
+
+But the problem says to implement the function, so the user might expect a manual approach. Therefore, the correct code is the manual replacement.
+
+But the problem says that the hidden test will verify that a script tag is fully escaped. So, the function must return the correct escaped string. Therefore, the manual approach is correct.
+
+So, the final code is:
+
+def sanitize_html(text: str) -> str:
+    text = text.replace('&', '&amp;')
+    text = text.replace('<', '&lt;')
+    text = text.replace('>', '&gt;')
+    text = text.replace('"', '&quot;')
+    text = text.replace("'", '&apos;')
+    return text
+
+But the problem says that the order is & first. However, in the manual approach, the order is & first, then the others. So this is correct.
+
+But the problem says that the hidden test will check that a script tag is fully escaped. So, the function should return the correct escaped string. Therefore, this code would work.
+
+But the problem says that the function should be in the main, and the hidden test will import it. So the code is as written.
+</think>
+
+def sanitize_html(text: str) -> str:
+    text = text.replace('&', '&amp;')
+    text = text.replace('<', '&lt;')
+    text = text.replace('>', '&gt;')
+    text = text.replace('"', '&quot;')
+    text = text.replace("'", '&apos;')
+    return text

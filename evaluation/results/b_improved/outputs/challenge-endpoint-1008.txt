@@ -1,0 +1,128 @@
+<think>
+Okay, let's see. The user wants to add a new read-only API endpoint to an existing Express + Prisma setup. They need a step-by-step guide on how to implement and verify it. Let me break this down.
+
+First, I need to figure out which files to inspect. The main components here are the Express server, Prisma schema, and any existing tests. So, the first step is to check the existing Express code where routes are defined. That's probably in a file like 'server.js' or 'index.js' in the Express app. Then, the Prisma schema file, which is usually 'prisma/schema.prisma', to see if the new endpoint requires new database tables or models. Also, the existing tests in the test directory, maybe in 'test/integration' or 'test/unit', to ensure the new endpoint doesn't break existing functionality.
+
+Next, adding the route. In Express, routes are typically defined in a separate file, like 'routes/api.js' or something similar. So, I'd create a new route there, maybe under a 'users' or 'posts' endpoint, depending on what's needed. The route should handle GET requests, since it's read-only. The endpoint might need to query the database using Prisma, so I'll need to write a function that uses Prisma's client to fetch the data.
+
+Then, the Prisma schema. If the new endpoint requires a new table, I need to add that to the schema.prisma. For example, if it's a 'posts' table, I'd add a model with fields like id, title, content, etc. Then, run the Prisma migration to update the database schema.
+
+Testing is crucial. I should write unit tests for the new route to ensure it returns the correct data. Also, integration tests to check that the endpoint works with the database. Maybe using Supertest to send a GET request and check the response.
+
+Verification in a sandbox would involve setting up a local environment, applying the migrations, running the tests, and making sure the new endpoint is accessible and returns the expected data. Also, checking that the existing tests still pass after the changes.
+
+Wait, but the user mentioned a React frontend. Maybe the new API endpoint is used by the frontend, so I should check if there's a corresponding component or API call in the frontend code that needs updating. But the question is about the backend, so maybe that's beyond the scope here.
+
+Also, need to make sure that the new endpoint is properly documented, maybe in the API docs. But the user didn't mention that, so maybe it's not necessary.
+
+Another thing: the new endpoint should be read-only, so no POST or other methods. So, the route handler should only handle GET requests.
+
+So, the steps are:
+
+1. Inspect existing code: Express server, Prisma schema, tests.
+2. Add new route in Express, using Prisma to query data.
+3. Update Prisma schema if needed, run migrations.
+4. Write tests for the new endpoint.
+5. Verify in a sandbox by running the server, applying migrations, running tests, and checking the endpoint's response.
+
+I need to make sure each step is clear and that the user knows which files to look at. Also, the verification process should be thorough, checking both the code and the tests.
+</think>
+
+To add a new read-only API endpoint to an Express + Prisma project, follow these steps:
+
+---
+
+### **1. Inspect Existing Code**
+- **Express Server**:  
+  Check `server.js` or `index.js` (where the Express app is initialized) to identify where routes are registered. Look for a `routes/` directory (common pattern).
+- **Prisma Schema**:  
+  Open `prisma/schema.prisma` to confirm existing models and ensure the new endpoint doesn’t require new tables (if any).
+- **Tests**:  
+  Review test files in `test/integration/` or `test/unit/` to avoid breaking existing functionality.
+
+---
+
+### **2. Add the Route**
+- **Create a Route File**:  
+  In `routes/api/`, create a new file (e.g., `users.js`) for the new endpoint.  
+  Example:  
+  ```js
+  const express = require('express');
+  const prisma = require('./prisma'); // Assume this is configured
+
+  const router = express.Router();
+
+  router.get('/users', async (req, res) => {
+    const users = await prisma.user.findMany();
+    res.json(users);
+  });
+
+  module.exports = router;
+  ```
+
+- **Register the Route**:  
+  Add the router to the Express app in `server.js` (e.g., `app.use('/api', require('./routes/api/users'));`).
+
+---
+
+### **3. Update Prisma Schema (if needed)**
+- If the endpoint requires a new table (e.g., `User`), add it to `prisma/schema.prisma`:  
+  ```prisma
+  model User {
+    id Int @id @default(autoincrement)
+    name String
+    email String @unique
+  }
+  ```
+- Run `npx prisma migrate dev --name add-user` to apply the migration.
+
+---
+
+### **4. Write Tests**
+- **Unit Test**:  
+  Test the route logic in `test/unit/api/users.test.js`:  
+  ```js
+  const request = require('supertest');
+  const app = require('./server');
+
+  describe('GET /api/users', () => {
+    it('returns all users', async () => {
+      const res = await request(app).get('/api/users');
+      expect(res.status).toBe(200);
+      expect(res.body).toBeAnArray();
+    });
+  });
+  ```
+
+- **Integration Test**:  
+  Verify the endpoint works with the database in `test/integration/api/users.test.js` using Supertest.
+
+---
+
+### **5. Verify in Isolated Sandbox**
+1. **Local Setup**:  
+   - Clone the repo and install dependencies (`npm install`).  
+   - Apply migrations: `npx prisma migrate dev --name add-user`.  
+   - Start the server: `node server.js`.  
+
+2. **Test the Endpoint**:  
+   - Run tests: `npx jest`.  
+   - Manually test:  
+     ```bash
+     curl http://localhost:3000/api/users
+     ```
+     Ensure it returns the expected data (e.g., a list of users).
+
+3. **Confirm Success**:  
+   - All tests pass.  
+   - The endpoint is accessible and returns correct data.  
+   - No existing tests fail.  
+
+---
+
+### **Key Notes**
+- **Security**: Ensure the endpoint is protected if needed (e.g., via middleware).  
+- **Documentation**: Add the endpoint to API docs (e.g., Swagger) if applicable.  
+- **Minimal Changes**: Avoid modifying existing routes or models unless required.  
+
+This approach ensures the new endpoint is safe, tested, and integrates seamlessly with the existing system.

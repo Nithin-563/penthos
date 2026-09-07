@@ -1,0 +1,5 @@
+<think>
+
+</think>
+
+Penthos is an open-source coding assistant and agent designed to solve software engineering problems end-to-end. It operates by investigating code, identifying and fixing bugs, writing correct code, verifying changes, and explaining its work. The goal is to provide a self-sufficient, sandbox-ready solution that can be run in isolation.

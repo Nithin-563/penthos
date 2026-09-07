@@ -2,41 +2,65 @@
   {
     "id": "coding_001",
     "category": "coding",
-    "prompt": "Write a TypeScript function that finds the first duplicate in an array. Include the final code and explain time and space complexity."
+    "difficulty": "medium",
+    "prompt": "Write a TypeScript function that finds the first duplicate in an array. Include the final code and explain time and space complexity.",
+    "rubric": ["set", "o(n)", "space"],
+    "rubric_min": 3
   },
   {
     "id": "debug_001",
     "category": "debugging",
-    "prompt": "Find and fix the bug in this React component that causes an infinite render loop:\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  setCount(count + 1);\n  return <div>{count}</div>;\n}\n\nExplain the bug and provide the corrected component."
+    "difficulty": "medium",
+    "prompt": "Find and fix the bug in this React component that causes an infinite render loop:\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  setCount(count + 1);\n  return <div>{count}</div>;\n}\n\nExplain the bug and provide the corrected component.",
+    "rubric": ["setcount", "useeffect", "infinite"],
+    "rubric_min": 3
   },
   {
     "id": "reasoning_001",
     "category": "reasoning",
-    "prompt": "You have an array of 1,000,000 integers. You need to find whether any two values sum to a target. Compare a brute-force solution with an efficient solution and explain the tradeoffs."
+    "difficulty": "medium",
+    "prompt": "You have an array of 1,000,000 integers. You need to find whether any two values sum to a target. Compare a brute-force solution with an efficient solution and explain the tradeoffs.",
+    "rubric": ["o(n)", "hash", "memory"],
+    "rubric_min": 2
   },
   {
     "id": "repo_001",
     "category": "software_engineering",
-    "prompt": "You inherit a TypeScript repository with authentication, an API server, a database, and a React frontend. Describe how you would safely investigate the repository before modifying code."
+    "difficulty": "medium",
+    "prompt": "You inherit a TypeScript repository with authentication, an API server, a database, and a React frontend. Describe how you would safely investigate the repository before modifying code.",
+    "rubric": ["git", "test", "secret", "structure"],
+    "rubric_min": 3
   },
   {
     "id": "agent_001",
     "category": "agentic",
-    "prompt": "An AI coding agent changed three files, ran the test suite, and 7 tests failed. Describe the exact loop the agent should follow to diagnose, fix, retest, and verify the changes."
+    "difficulty": "hard",
+    "prompt": "An AI coding agent changed three files, ran the test suite, and 7 tests failed. Describe the exact loop the agent should follow to diagnose, fix, retest, and verify the changes.",
+    "rubric": ["test", "fix", "verify"],
+    "rubric_min": 3
   },
   {
     "id": "security_001",
     "category": "security",
-    "prompt": "Explain how an AI coding agent should prevent API keys and other secrets from being exposed while inspecting and modifying a repository."
+    "difficulty": "medium",
+    "prompt": "Explain how an AI coding agent should prevent API keys and other secrets from being exposed while inspecting and modifying a repository.",
+    "rubric": [".env", "log", "scan", "detect"],
+    "rubric_min": 2
   },
   {
     "id": "coding_002",
     "category": "coding",
-    "prompt": "Implement a TypeScript debounce function with correct typing. Explain edge cases and provide an example."
+    "difficulty": "medium",
+    "prompt": "Implement a TypeScript debounce function with correct typing. Explain edge cases and provide an example.",
+    "rubric": ["settimeout", "cleartimeout", "delay"],
+    "rubric_min": 2
   },
   {
     "id": "debug_002",
     "category": "debugging",
-    "prompt": "A Node.js API works locally but returns 500 errors in production. Give a systematic debugging process that avoids guessing."
+    "difficulty": "hard",
+    "prompt": "A Node.js API works locally but returns 500 errors in production. Give a systematic debugging process that avoids guessing.",
+    "rubric": ["log", "replicat", "environment", "memory"],
+    "rubric_min": 3
   }
 ]

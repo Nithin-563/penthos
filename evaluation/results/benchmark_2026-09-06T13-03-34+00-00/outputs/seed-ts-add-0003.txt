@@ -1,0 +1,9 @@
+// add.ts
+function add(a: number, b: number): number {
+  return a + b;
+}
+
+// add.tsx
+import { add } from './add';
+
+console.log(add(2, 3)); // Output: 5

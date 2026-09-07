@@ -1,0 +1,5 @@
+<think>
+
+</think>
+
+The task is to determine if any two elements in an array of 1,000,000 integers sum to a target value. I'll compare the brute-force and an efficient solution, and explain the tradeoffs between them.

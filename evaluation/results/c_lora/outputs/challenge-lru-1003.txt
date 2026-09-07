@@ -1,0 +1,32 @@
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = {}
+        self.size = 0
+        self.order = []
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        self._move_to_end(key)
+        return self.cache[key]
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            self.cache[key] = value
+            self._move_to_end(key)
+            return
+        if self.size >= self.capacity:
+            self._evict()
+        self.cache[key] = value
+        self.order.append(key)
+        self.size += 1
+
+    def _move_to_end(self, key: int) -> None:
+        self.order.remove(key)
+        self.order.append(key)
+
+    def _evict(self) -> None:
+        if self.order:
+            lru_key = self.order.pop(0)
+            del self.cache[lru_key]

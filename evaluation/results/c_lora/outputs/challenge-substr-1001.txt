@@ -1,0 +1,10 @@
+def length_of_longest_substring(s: str) -> int:
+    seen = {}
+    start = 0
+    best = 0
+    for i, ch in enumerate(s):
+        if ch in seen and seen[ch] >= start:
+            start = seen[ch] + 1
+        seen[ch] = i
+        best = max(best, i - start + 1)
+    return best

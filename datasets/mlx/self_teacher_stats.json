@@ -1,0 +1,328 @@
+{
+  "generated_at": "2026-09-06T16:47:29+00:00",
+  "model": "Qwen/Qwen3-4B-MLX-4bit",
+  "temp": 0.7,
+  "samples_per_task": 3,
+  "tasks": 51,
+  "rows_total": 165,
+  "rows_distilled": 145,
+  "rows_gold": 20,
+  "rows_by_category": {
+    "coding": 58,
+    "debugging": 30,
+    "reasoning": 18,
+    "software_engineering": 18,
+    "agentic": 12,
+    "security": 20,
+    "general_chat": 9
+  },
+  "per_task": {
+    "coding_001": {
+      "category": "coding",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "debug_001": {
+      "category": "debugging",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 2
+    },
+    "reasoning_001": {
+      "category": "reasoning",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "repo_001": {
+      "category": "software_engineering",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "agent_001": {
+      "category": "agentic",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "security_001": {
+      "category": "security",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "coding_002": {
+      "category": "coding",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "debug_002": {
+      "category": "debugging",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "seed-agentic-loop-0012": {
+      "category": "agentic",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "challenge-substr-1001": {
+      "category": "coding",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "challenge-merge-1002": {
+      "category": "coding",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "challenge-revwords-1004": {
+      "category": "debugging",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "challenge-flatten-1005": {
+      "category": "debugging",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "challenge-passcmp-1006": {
+      "category": "security",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "challenge-xss-1007": {
+      "category": "security",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "challenge-endpoint-1008": {
+      "category": "software_engineering",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "seed-python-add-0001": {
+      "category": "coding",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "seed-python-fizzbuzz-0002": {
+      "category": "coding",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 1
+    },
+    "seed-ts-add-0003": {
+      "category": "coding",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "seed-debug-max-0005": {
+      "category": "debugging",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "ff-debug-lifecycle-1101": {
+      "category": "debugging",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-debug-traceback-1102": {
+      "category": "debugging",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-debug-bisect-1103": {
+      "category": "debugging",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-reason-trains-1104": {
+      "category": "reasoning",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-sec-hardcoded-1106": {
+      "category": "security",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 2
+    },
+    "ff-sec-passwords-1107": {
+      "category": "security",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-se-endpoint-1108": {
+      "category": "software_engineering",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-se-review-1109": {
+      "category": "software_engineering",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-se-refactor-1110": {
+      "category": "software_engineering",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-se-prisma-1111": {
+      "category": "software_engineering",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-agent-ci-1112": {
+      "category": "agentic",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-agent-triage-1113": {
+      "category": "agentic",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-chat-use-1114": {
+      "category": "general_chat",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-chat-learn-1115": {
+      "category": "general_chat",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-code-bigo-1117": {
+      "category": "coding",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ex-reverse-1202": {
+      "category": "coding",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "ex-groupby-1205": {
+      "category": "coding",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "ex-minstack-1206": {
+      "category": "coding",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "ex-debug-sum-1208": {
+      "category": "debugging",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "ex-issorted-1203": {
+      "category": "coding",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "seed-reason-sheep-0008": {
+      "category": "reasoning",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "seed-reason-ml-0009": {
+      "category": "reasoning",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "seed-sec-passlen-0006": {
+      "category": "security",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "ex-even-1201": {
+      "category": "coding",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "ex-fib-1204": {
+      "category": "coding",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "ex-anagram-1207": {
+      "category": "coding",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 4
+    },
+    "challenge-lru-1003": {
+      "category": "coding",
+      "type": "sandbox",
+      "samples": 4,
+      "passed": 1
+    },
+    "challenge-cycle-1009": {
+      "category": "reasoning",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-reason-sort-1105": {
+      "category": "reasoning",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "ff-code-contract-1116": {
+      "category": "coding",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    },
+    "seed-chat-penthos-0010": {
+      "category": "general_chat",
+      "type": "freeform",
+      "samples": 3,
+      "passed": 3
+    }
+  },
+  "elapsed_s": 5093.6
+}

@@ -1,0 +1,32 @@
+<think>
+Okay, the user is asking about the exact loop an AI coding agent should follow when three files were changed, leading to 7 test failures. Let me break down the steps based on the principles mentioned.
+
+First, I need to recall the debugging process. The agent should start by reproducing the issue. That means running the test suite again to confirm the failures. Then, they need to understand which tests are failing. Maybe the agent should look at the test output to see which specific tests are failing. 
+
+Next, the agent should form a hypothesis. Since three files were changed, the agent should check each file to see what's been modified. Maybe there's a bug in one of the files that's causing the tests to fail. The agent should then make the smallest possible change to address the issue, like fixing a logic error or a typo.
+
+After making the change, the agent needs to re-run the tests to verify if the problem is resolved. If the tests still fail, the agent should investigate further, maybe check other parts of the code or look for other possible causes. 
+
+But the user mentioned 7 tests failed, so the agent should prioritize the most critical ones first. Maybe some tests are failing because of a specific function or module. The agent should also check if the changes introduced any new issues. 
+
+Wait, the agent should also ensure that the code is self-contained and compilable. So, after making changes, the agent should make sure that the code doesn't have any syntax errors or other issues. 
+
+Also, the agent should add test coverage if possible. If the failing tests are due to a new feature, the agent should write tests to cover that scenario. 
+
+In the end, the agent should report the outcome precisely, confirming whether the tests passed or if there are still issues. The loop should be: observe the test failures, act by making changes, verify by re-running tests, and then ensure the solution is correct and verified.
+</think>
+
+The agent should follow this loop:  
+
+1. **Reproduce**: Run the test suite again to confirm the 7 failing tests (note exact test names/failures).  
+2. **Investigate**:  
+   - Check the 3 modified files for code changes.  
+   - Identify which test failures are most critical (e.g., core functionality vs. edge cases).  
+   - Use debuggers, logs, or unit tests to isolate the root cause.  
+3. **Hypothesize**: Form a hypothesis (e.g., a logic error, race condition, or missing dependency).  
+4. **Act**: Make the smallest possible change to fix the issue (e.g., correct a bug, update a dependency, or adjust logic).  
+5. **Verify**: Re-run the test suite to confirm the 7 failures are resolved.  
+6. **Validate**: Ensure the fix doesn’t break other functionality (e.g., check passing tests).  
+7. **Document**: Report the fix, the tests that passed/failed, and any new test cases added.  
+
+Repeat the loop if new issues arise.

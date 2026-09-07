@@ -1,0 +1,18 @@
+<think>
+
+</think>
+
+The API returns 500 errors in production but works locally, indicating an environment-specific issue. Follow this structured debugging process to isolate and fix the root cause:
+
+### 1. **Reproduce the Failure in Production**
+   - Confirm the error reproduces in the production sandbox (e.g., using a staging tenant or a forked repo with the same database and secrets).
+   - Inspect the error log: confirm the exact 500 response, the request payload, and the failing operation (e.g., database query, authentication, or third-party API call).
+
+### 2. **Compare Environments**
+   - Verify the difference between the local and production configurations:
+     - Check if the same test suite passes in the sandbox and fails in the repo/pry branch with the same test: `git checkout -b fix-500-pry; jest; jest -v`.
+     - Confirm the database schema matches: run migrations in the repo and compare with the production database (e.g., using a diff tool).
+     - Inspect the same request in the repo and the sandbox: use a tool like Postman or `curl -v` to echo the request and response headers and body before and after the error.
+
+### 3. **Inspect the Failing Route/Service**
+   - Confirm the failing route: add logging before and after the request in the repo and the sandbox. Use the same test; the repo should log the failing operation, and the sandbox should log the same. Compare the logs to confirm the operation name, the request, and the error.

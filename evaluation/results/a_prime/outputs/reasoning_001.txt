@@ -1,0 +1,17 @@
+**Brute-force solution:**  
+Check all pairs $ (i, j) $ where $ i < j $, calculating $ \text{arr}[i] + \text{arr}[j] $ against the target.  
+- **Time complexity:** $ O(n^2) $, which for $ n = 1,000,000 $ is $ 10^{12} $ operations — impractical.  
+- **Space complexity:** $ O(1) $ (no extra data structures).  
+- **Tradeoff:** Very slow for large $ n $, but uses minimal memory.
+
+**Efficient solution (hash set):**  
+Iterate through the array, for each element $ x $, check if $ \text{target} - x $ exists in the set.  
+- **Time complexity:** $ O(n) $, linear time.  
+- **Space complexity:** $ O(n) $ for the hash set.  
+- **Tradeoff:** Faster for large $ n $, but uses $ O(n) $ memory.  
+
+**Alternative (sorted array + two pointers):**  
+Sort the array, then use two pointers to find pairs.  
+- **Time complexity:** $ O(n \log n) $ for sorting, $ O(n) $ for scanning.  
+- **Space complexity:** $ O(1) $ (if sorted in place).  
+- **Tradeoff:** Better than brute-force but worse than hash set for very large $ n $.

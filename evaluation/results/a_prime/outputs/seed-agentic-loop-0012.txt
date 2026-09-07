@@ -1,0 +1,7 @@
+1. **Inspect**: Identify the failing test in the repository. Locate the test file and determine which method is failing. Check the error message for clues about the issue.
+
+2. **Modify**: Edit the implementation code that the test is targeting. Fix the logic or data structure that's causing the test to fail.
+
+3. **Verify**: Run the test in a sandbox environment to confirm the fix works. Ensure no other tests are affected and that the fix passes all relevant checks.
+
+4. **Report**: Provide a clear summary of the issue, the fix applied, and confirmation that the test now passes. Suggest any further steps if needed.

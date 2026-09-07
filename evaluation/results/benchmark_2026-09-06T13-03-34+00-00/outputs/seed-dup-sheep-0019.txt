@@ -1,0 +1,10 @@
+The question says: "A farmer has 17 sheep. All but 9 die. How many sheep are left?"
+
+**Answer:** 9 sheep are left.
+
+**Reasoning:**  
+- The farmer starts with 17 sheep.  
+- "All but 9 die" means 17 - 9 = 8 sheep die.  
+- The remaining sheep are the 9 that did not die.  
+
+So, **9 sheep are left**.

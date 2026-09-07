@@ -1,0 +1,63 @@
+<think>
+Okay, the user wants to know how to safely investigate a TypeScript repository before making any changes. Let me break down the steps I'd take.
+
+First, I need to understand the structure of the repository. So, I should start by looking at the directory layout. The user mentioned there's an API server, database, and React frontend. That means the repo probably has separate folders for each. I should check the README or any documentation to get an overview.
+
+Next, I should look at the dependencies. Using tools like `npm ls` or `yarn list` will show the package versions. Also, checking the `package.json` file will give me the project's name, version, and dependencies. This helps in knowing what's required and what's up to date.
+
+The build system is important too. If it's a React app, maybe there's a `package.json` with a `scripts` section for build and dev commands. I should verify the build tools like Webpack or Vite, and the environment variables setup. Also, checking the `.env` files for configuration details.
+
+Testing is crucial. I need to look at the test structure. If there are Jest or Mocha tests, I should check the test files and their organization. The test coverage report will show which parts are tested. Also, the test environment setup, like using `jest.config.js` or `setupTests.js`, is important for understanding how tests are run.
+
+The codebase itself should be reviewed. For the API server, checking the routing, middleware, and database interactions. The React frontend would have components, hooks, and state management. I should look for any obvious issues, like deprecated libraries or code that's not well-documented.
+
+Security is another aspect. I need to check for any security vulnerabilities. Tools like `snyk` or `npm audit` can help here. Also, looking at environment variables to ensure secrets aren't committed.
+
+I should also check the version control history. Looking at commits, branches, and tags can show the project's history and any recent changes. This helps in understanding the context of the current codebase.
+
+Finally, I need to make sure that any changes I make don't break existing functionality. By understanding the tests and the code structure, I can hypothesize potential issues and verify changes with tests. This approach ensures that modifications are safe and verified.
+</think>
+
+I would investigate the repository systematically by:
+
+1. **Understanding the architecture**:
+   - Review directory structure (e.g., `api/`, `db/`, `frontend/`, `utils/`)
+   - Check `README.md` and `CONTRIBUTING.md` for project overview
+   - Identify API endpoints in `api/routes/` (if using Express) or `api/src/` (if using Next.js)
+
+2. **Dependency analysis**:
+   - Run `npm ls` or `yarn list` to see package versions
+   - Check `package.json` for required/optional dependencies
+   - Verify `tsconfig.json` for type definitions and compiler options
+
+3. **Build system verification**:
+   - Check `package.json` scripts for build/test commands
+   - Confirm build tools (Webpack, Vite, etc.) and configuration files
+   - Validate environment variables in `.env` files
+
+4. **Test framework investigation**:
+   - Locate test files (e.g., `__tests__/`, `test/`, `__test__/`)
+   - Check test coverage reports (e.g., `coverage/lcov-report/`)
+   - Verify test setup files (e.g., `jest.config.js`, `setupTests.js`)
+
+5. **Codebase review**:
+   - Check for type safety with TypeScript (type definitions, type guards)
+   - Look for common patterns (e.g., Redux, Zustand, Context API)
+   - Identify any deprecated or experimental code
+
+6. **Security verification**:
+   - Run `npm audit` to check for vulnerabilities
+   - Check for secret management (e.g., environment variables, encrypted storage)
+   - Verify CORS/CSRF protections in API server
+
+7. **Version control context**:
+   - Review recent commits in Git history
+   - Check for ongoing PRs/branches in version control
+   - Verify tag history for releases
+
+8. **Environment confirmation**:
+   - Check for Docker/Kubernetes configuration files
+   - Verify database connection strings and schema migrations
+   - Confirm API server configuration (e.g., `config/server.js`)
+
+This approach ensures I understand the system's architecture, dependencies, and test coverage before making any changes, minimizing the risk of introducing regressions. I would then use this understanding to hypothesize potential issues and verify changes with targeted tests.

@@ -1,0 +1,558 @@
+{
+  "meta": {
+    "model": "Qwen/Qwen3-4B-MLX-4bit",
+    "mlx_lm_version": "0.31.3",
+    "temp": 0.0,
+    "max_tokens": 2048,
+    "system_prompt": "You are Penthos, an open-source coding AI. Answer the user's question directly and concretely. Prefer precise, actionable content over generalities. Do not be overly long.",
+    "generated_at": "2026-09-06T13-03-34+00-00"
+  },
+  "summary": {
+    "total": 17,
+    "passed": 10,
+    "failed": 7,
+    "unscored": 0,
+    "by_category": {
+      "coding": {
+        "total": 5,
+        "passed": 3,
+        "failed": 2,
+        "pass_rate": 0.6
+      },
+      "debugging": {
+        "total": 3,
+        "passed": 2,
+        "failed": 1,
+        "pass_rate": 0.67
+      },
+      "reasoning": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "pass_rate": 1.0
+      },
+      "software_engineering": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "pass_rate": 0.0
+      },
+      "agentic": {
+        "total": 2,
+        "passed": 1,
+        "failed": 1,
+        "pass_rate": 0.5
+      },
+      "security": {
+        "total": 2,
+        "passed": 1,
+        "failed": 1,
+        "pass_rate": 0.5
+      },
+      "general_chat": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "pass_rate": 0.0
+      }
+    },
+    "by_source": {
+      "baseline": {
+        "total": 8,
+        "passed": 3,
+        "failed": 5,
+        "pass_rate": 0.38
+      },
+      "verified": {
+        "total": 9,
+        "passed": 7,
+        "failed": 2,
+        "pass_rate": 0.78
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "coding_001",
+      "category": "coding",
+      "difficulty": "medium",
+      "language": null,
+      "source": "baseline",
+      "prompt": "Write a TypeScript function that finds the first duplicate in an array. Include the final code and explain time and space complexity.",
+      "output": "Here's a TypeScript function that finds the **first duplicate** in an array:\n\n```ts\nfunction firstDuplicate(arr: number[]): number {\n    const seen = new Set<number>();\n    for (const num of arr) {\n        if (seen.has(num)) {\n            return num;\n        }\n        seen.add(num);\n    }\n    return -1; // No duplicate found\n}\n```\n\n### Explanation:\n\n- **Time Complexity:** O(n) — We iterate through the array once.\n- **Space Complexity:** O(n) — In the worst case, we store all elements in the set.\n\nThis function returns the **first duplicate** number encountered, or `-1` if none exists.",
+      "tokens": 139,
+      "elapsed_s": 2.87,
+      "pass": true,
+      "grade": {
+        "type": "freeform",
+        "pass": true,
+        "score": 1.0,
+        "rubric": [
+          "set",
+          "o(n)",
+          "space"
+        ],
+        "rubric_hits": [
+          "set",
+          "o(n)",
+          "space"
+        ],
+        "rubric_missed": [],
+        "review_required": true
+      }
+    },
+    {
+      "id": "debug_001",
+      "category": "debugging",
+      "difficulty": "medium",
+      "language": null,
+      "source": "baseline",
+      "prompt": "Find and fix the bug in this React component that causes an infinite render loop:\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  setCount(count + 1);\n  return <div>{count}</div>;\n}\n\nExplain the bug and provide the corrected component.",
+      "output": "The bug is that `setCount(count + 1)` is called directly in the function body, which causes an infinite render loop. This is because `setCount` is an asynchronous updater, and calling it directly in the function body triggers an immediate re-render, leading to an infinite loop.\n\n**Corrected Component:**\n```js\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  \n  useEffect(() => {\n    setCount(count + 1);\n  }, []);\n  \n  return <div>{count}</div>;\n}\n```\n\n**Explanation:**  \n- `useEffect` is used to perform the state update after the initial render.\n- The empty dependency array `[]` ensures the effect runs only once, preventing infinite loops.",
+      "tokens": 155,
+      "elapsed_s": 2.92,
+      "pass": true,
+      "grade": {
+        "type": "freeform",
+        "pass": true,
+        "score": 1.0,
+        "rubric": [
+          "setcount",
+          "useeffect",
+          "infinite"
+        ],
+        "rubric_hits": [
+          "setcount",
+          "useeffect",
+          "infinite"
+        ],
+        "rubric_missed": [],
+        "review_required": true
+      }
+    },
+    {
+      "id": "reasoning_001",
+      "category": "reasoning",
+      "difficulty": "medium",
+      "language": null,
+      "source": "baseline",
+      "prompt": "You have an array of 1,000,000 integers. You need to find whether any two values sum to a target. Compare a brute-force solution with an efficient solution and explain the tradeoffs.",
+      "output": "**Brute-force solution:**  \nCheck all pairs $ (i, j) $ where $ i < j $, calculating $ \\text{arr}[i] + \\text{arr}[j] $ against the target.  \n- **Time complexity:** $ O(n^2) $, which for $ n = 1,000,000 $ is $ 10^{12} $ operations — impractical.  \n- **Space complexity:** $ O(1) $ (no extra data structures).  \n- **Tradeoff:** Very slow for large $ n $, but uses minimal memory.\n\n**Efficient solution (hash set):**  \nIterate through the array, for each element $ x $, check if $ \\text{target} - x $ exists in the set.  \n- **Time complexity:** $ O(n) $, linear time.  \n- **Space complexity:** $ O(n) $ for the hash set.  \n- **Tradeoff:** Faster for large $ n $, but uses $ O(n) $ memory.  \n\n**Alternative (sorted array + two pointers):**  \nSort the array, then use two pointers to find pairs.  \n- **Time complexity:** $ O(n \\log n) $ for sorting, $ O(n) $ for scanning.  \n- **Space complexity:** $ O(1) $ (if sorted in place).  \n- **Tradeoff:** Better than brute-force but worse than hash set for very large $ n $.",
+      "tokens": 308,
+      "elapsed_s": 5.65,
+      "pass": true,
+      "grade": {
+        "type": "freeform",
+        "pass": true,
+        "score": 1.0,
+        "rubric": [
+          "o(n)",
+          "hash",
+          "memory"
+        ],
+        "rubric_hits": [
+          "o(n)",
+          "hash",
+          "memory"
+        ],
+        "rubric_missed": [],
+        "review_required": true
+      }
+    },
+    {
+      "id": "repo_001",
+      "category": "software_engineering",
+      "difficulty": "medium",
+      "language": null,
+      "source": "baseline",
+      "prompt": "You inherit a TypeScript repository with authentication, an API server, a database, and a React frontend. Describe how you would safely investigate the repository before modifying code.",
+      "output": "I’d start by reviewing the repository structure to understand the components:  \n1. **Authentication**: Check `auth/` for login, logout, and token management. Look for `useAuth` hooks or API endpoints in `api/`.  \n2. **API Server**: Inspect `server/` for routing, middleware, and database integration. Look for `index.ts` or `app.ts` to see how routes are defined.  \n3. **Database**: Review `database/` for schema files (e.g., `schema.prisma`) and migration scripts. Check for ORM setup (e.g., Prisma, TypeORM).  \n4. **React Frontend**: Explore `components/` and `pages/` to identify UI logic. Look for `useEffect` hooks for data fetching and `useContext` for state management.  \n5. **Environment Variables**: Check `.env` files for API URLs, secrets, and database credentials.  \n6. **Dependencies**: Run `npm ls` to identify libraries (e.g., Axios, Redux, React Query) and their versions.  \n7. **Testing**: Look for `__tests__` or `test/` directories to understand test coverage.  \n8. **Logs/Errors**: Check for existing error logs or CI/CD pipelines (e.g., GitHub Actions) to identify recurring issues.  \nFinally, run `tsc --build` to ensure type safety and `npm run dev` to test the frontend and API locally.",
+      "tokens": 305,
+      "elapsed_s": 5.62,
+      "pass": false,
+      "grade": {
+        "type": "freeform",
+        "pass": false,
+        "score": 0.75,
+        "rubric": [
+          "git",
+          "test",
+          "secret",
+          "read"
+        ],
+        "rubric_hits": [
+          "git",
+          "test",
+          "secret"
+        ],
+        "rubric_missed": [
+          "read"
+        ],
+        "review_required": true
+      }
+    },
+    {
+      "id": "agent_001",
+      "category": "agentic",
+      "difficulty": "hard",
+      "language": null,
+      "source": "baseline",
+      "prompt": "An AI coding agent changed three files, ran the test suite, and 7 tests failed. Describe the exact loop the agent should follow to diagnose, fix, retest, and verify the changes.",
+      "output": "1. **Identify failed tests**: Run `test --list` to see which 7 tests failed.  \n2. **Re-run failed tests**: Use `test -f <test-name>` to re-run the specific failing tests.  \n3. **Review code changes**: Check the 3 modified files for logic errors, syntax issues, or incorrect API usage.  \n4. **Debug**: Use `print` or a debugger to trace the root cause of the failures.  \n5. **Fix**: Correct the code based on the debug results.  \n6. **Retest**: Run the 7 failed tests again to confirm fixes.  \n7. **Verify**: Ensure all tests pass and the code behaves as expected in production.",
+      "tokens": 148,
+      "elapsed_s": 2.85,
+      "pass": false,
+      "grade": {
+        "type": "freeform",
+        "pass": false,
+        "score": 0.5,
+        "rubric": [
+          "test",
+          "isolate",
+          "rerun",
+          "fix"
+        ],
+        "rubric_hits": [
+          "test",
+          "fix"
+        ],
+        "rubric_missed": [
+          "isolate",
+          "rerun"
+        ],
+        "review_required": true
+      }
+    },
+    {
+      "id": "security_001",
+      "category": "security",
+      "difficulty": "medium",
+      "language": null,
+      "source": "baseline",
+      "prompt": "Explain how an AI coding agent should prevent API keys and other secrets from being exposed while inspecting and modifying a repository.",
+      "output": "An AI coding agent should prevent API keys and secrets from being exposed by:\n\n1. **Scanning for secrets** during code inspection using tools like `grep` or `find` with regex patterns for common secret formats (e.g., `AWS_ACCESS_KEY_ID`, `GITHUB_TOKEN`).\n\n2. **Blacklisting known secret types** in its code analysis to flag and block any occurrence of them in the repository.\n\n3. **Automating secret detection** with integrations to CI/CD tools (e.g., GitHub Actions, GitLab CI) to enforce secret-unsafe practices.\n\n4. **Restricting access to sensitive files** (e.g., `.env`, `config.json`) by only allowing inspection of non-sensitive files unless explicitly permitted.\n\n5. **Logging and alerting** on any detected secrets to notify maintainers of potential exposure risks.",
+      "tokens": 173,
+      "elapsed_s": 3.29,
+      "pass": false,
+      "grade": {
+        "type": "freeform",
+        "pass": false,
+        "score": 0.5,
+        "rubric": [
+          "gitignore",
+          ".env",
+          "rotate",
+          "log"
+        ],
+        "rubric_hits": [
+          ".env",
+          "log"
+        ],
+        "rubric_missed": [
+          "gitignore",
+          "rotate"
+        ],
+        "review_required": true
+      }
+    },
+    {
+      "id": "coding_002",
+      "category": "coding",
+      "difficulty": "medium",
+      "language": null,
+      "source": "baseline",
+      "prompt": "Implement a TypeScript debounce function with correct typing. Explain edge cases and provide an example.",
+      "output": "Here's a TypeScript debounce function with correct typing, edge case handling, and an example:\n\n```ts\ntype DebouncedFn = (args: any) => void;\n\nfunction debounce<T>(fn: (args: T) => void, delay: number): DebouncedFn {\n  let timeout: NodeJS.Timeout | null = null;\n\n  return function (args: T) {\n    if (timeout) {\n      clearTimeout(timeout);\n    }\n    timeout = setTimeout(() => {\n      fn(args);\n    }, delay);\n  };\n}\n```\n\n### Edge Cases:\n- **Immediate execution**: If `delay` is 0, the function executes immediately.\n- **Multiple calls**: If the function is called multiple times before the delay, it cancels the previous call.\n- **Non-function inputs**: The function expects a callable `fn` and a number `delay`.\n\n### Example:\n\n```ts\nconst logMessage = debounce((msg: string) => {\n  console.log(`Debounced message: ${msg}`);\n}, 500);\n\n// Simulate multiple rapid calls\nlogMessage(\"A\");\nlogMessage(\"B\");\nlogMessage(\"C\");\n```\n\n**Output**:\n```\nDebounced message: C\n```\n\nOnly the last call (`\"C\"`) is executed after 500ms, as previous calls are canceled.",
+      "tokens": 273,
+      "elapsed_s": 5.07,
+      "pass": false,
+      "grade": {
+        "type": "freeform",
+        "pass": false,
+        "score": 0.67,
+        "rubric": [
+          "settimeout",
+          "cleartimeout",
+          "timer"
+        ],
+        "rubric_hits": [
+          "settimeout",
+          "cleartimeout"
+        ],
+        "rubric_missed": [
+          "timer"
+        ],
+        "review_required": true
+      }
+    },
+    {
+      "id": "debug_002",
+      "category": "debugging",
+      "difficulty": "hard",
+      "language": null,
+      "source": "baseline",
+      "prompt": "A Node.js API works locally but returns 500 errors in production. Give a systematic debugging process that avoids guessing.",
+      "output": "1. **Check Production Logs**: Review server logs for 500 error details. Look for stack traces, error messages, or specific triggers.\n\n2. **Replicate the Issue**: Use a tool like `curl` or Postman to mimic the production request locally. Confirm if the same error occurs.\n\n3. **Environment Differences**: Compare local vs. production environments. Check for differences in `process.env`, database connections, or file paths.\n\n4. **Database & External Services**: Verify if production databases or external APIs are down or misconfigured. Use tools like `pg_prewarm` or `pg_dump` to debug database issues.\n\n5. **Node.js Version**: Ensure production uses the same Node.js version as local. Use `nvm` or `npx` to enforce consistency.\n\n6. **Memory & Performance**: Use `pm2` or `node --inspect` to check for memory leaks or unhandled promises.\n\n7. **Environment Variables**: Validate all environment variables in production. Use `dotenv` or `process.env` to log and verify values.\n\n8. **Static Files**: If using static files, check `public/` or `dist/` for missing files or incorrect paths.\n\n9. **Error Handling**: Add `uncaughtException` and `unhandledPromiseRejection` listeners to capture silent errors.\n\n10. **Rollback**: If the issue is new, roll back to a known-working version to isolate the cause.",
+      "tokens": 297,
+      "elapsed_s": 5.51,
+      "pass": false,
+      "grade": {
+        "type": "freeform",
+        "pass": false,
+        "score": 0.75,
+        "rubric": [
+          "log",
+          "stack",
+          "reproduce",
+          "environment"
+        ],
+        "rubric_hits": [
+          "log",
+          "stack",
+          "environment"
+        ],
+        "rubric_missed": [
+          "reproduce"
+        ],
+        "review_required": true
+      }
+    },
+    {
+      "id": "seed-agentic-loop-0012",
+      "category": "agentic",
+      "difficulty": "hard",
+      "language": null,
+      "source": "verified",
+      "prompt": "Given a repository with a failing test, use the agent loop to inspect, modify, verify in the sandbox, and report the fix.",
+      "output": "1. **Inspect**: Identify the failing test in the repository. Locate the test file and determine which method is failing. Check the error message for clues about the issue.\n\n2. **Modify**: Edit the implementation code that the test is targeting. Fix the logic or data structure that's causing the test to fail.\n\n3. **Verify**: Run the test in a sandbox environment to confirm the fix works. Ensure no other tests are affected and that the fix passes all relevant checks.\n\n4. **Report**: Provide a clear summary of the issue, the fix applied, and confirmation that the test now passes. Suggest any further steps if needed.",
+      "tokens": 129,
+      "elapsed_s": 2.52,
+      "pass": true,
+      "grade": {
+        "type": "freeform",
+        "pass": true,
+        "score": 1.0,
+        "rubric": [
+          "fix",
+          "test",
+          "report"
+        ],
+        "rubric_hits": [
+          "fix",
+          "test",
+          "report"
+        ],
+        "rubric_missed": [],
+        "review_required": true
+      }
+    },
+    {
+      "id": "seed-python-add-0001",
+      "category": "coding",
+      "difficulty": "easy",
+      "language": "python",
+      "source": "verified",
+      "prompt": "Write a function add(a, b) that returns the sum of two integers. Then verify it with pytest tests covering positive, negative, and zero inputs.",
+      "output": "def add(a, b):\n    return a + b\n\ndef test_add():\n    assert add(2, 3) == 5\n    assert add(-1, 1) == 0\n    assert add(0, 0) == 0",
+      "tokens": 54,
+      "elapsed_s": 1.58,
+      "pass": true,
+      "grade": {
+        "type": "sandbox_test",
+        "pass": true,
+        "verified": true,
+        "verified_elapsed": 0.43,
+        "exit_code": 0,
+        "timed_out": false,
+        "expected_output": null,
+        "output_matched": true,
+        "stdout_truncated": "...                                                                      [100%]\n3 passed in 0.00s\n",
+        "stderr_truncated": ""
+      }
+    },
+    {
+      "id": "seed-python-fizzbuzz-0002",
+      "category": "coding",
+      "difficulty": "easy",
+      "language": "python",
+      "source": "verified",
+      "prompt": "Implement fizzbuzz(n): return a list of strings from 1 to n where multiples of 3 become 'Fizz', multiples of 5 become 'Buzz', and multiples of both become 'FizzBuzz'.",
+      "output": "def fizzbuzz(n):\n    return ['FizzBuzz' if i % 3 == 0 and i % 5 == 0 else 'Fizz' if i % 3 == 0 else 'Buzz' if i % 5 == 0 else str(i) for i in range(1, n+1)]",
+      "tokens": 66,
+      "elapsed_s": 1.81,
+      "pass": true,
+      "grade": {
+        "type": "sandbox_test",
+        "pass": true,
+        "verified": true,
+        "verified_elapsed": 0.41,
+        "exit_code": 0,
+        "timed_out": false,
+        "expected_output": null,
+        "output_matched": true,
+        "stdout_truncated": "..                                                                       [100%]\n2 passed in 0.00s\n",
+        "stderr_truncated": ""
+      }
+    },
+    {
+      "id": "seed-ts-add-0003",
+      "category": "coding",
+      "difficulty": "easy",
+      "language": "typescript",
+      "source": "verified",
+      "prompt": "Write a TypeScript function add(a: number, b: number): number and run it through tsx to confirm it returns the correct sum.",
+      "output": "// add.ts\nfunction add(a: number, b: number): number {\n  return a + b;\n}\n\n// add.tsx\nimport { add } from './add';\n\nconsole.log(add(2, 3)); // Output: 5",
+      "tokens": 50,
+      "elapsed_s": 1.59,
+      "pass": false,
+      "grade": {
+        "type": "sandbox_test",
+        "pass": false,
+        "verified": true,
+        "verified_elapsed": 0.47,
+        "exit_code": 1,
+        "timed_out": false,
+        "expected_output": "5",
+        "output_matched": false,
+        "stdout_truncated": "",
+        "stderr_truncated": " addChunk (node:internal/streams/readable:561:12)\n    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)\n    at Readable.push (node:internal/streams/readable:392:5)\n    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23) {\n  name: 'TransformError'\n}\n\nNode.js v20.20.2\n"
+      }
+    },
+    {
+      "id": "seed-debug-max-0005",
+      "category": "debugging",
+      "difficulty": "easy",
+      "language": "python",
+      "source": "verified",
+      "prompt": "The function maximum(a, b) is supposed to return the larger of two numbers, but the original implementation returned the wrong value. Fix maximum so the tests pass.",
+      "output": "def maximum(a, b):\n    return a if a > b else b",
+      "tokens": 15,
+      "elapsed_s": 0.92,
+      "pass": true,
+      "grade": {
+        "type": "sandbox_test",
+        "pass": true,
+        "verified": true,
+        "verified_elapsed": 0.42,
+        "exit_code": 0,
+        "timed_out": false,
+        "expected_output": null,
+        "output_matched": true,
+        "stdout_truncated": ".                                                                        [100%]\n1 passed in 0.00s\n",
+        "stderr_truncated": ""
+      }
+    },
+    {
+      "id": "seed-dup-sheep-0019",
+      "category": "reasoning",
+      "difficulty": "easy",
+      "language": null,
+      "source": "verified",
+      "prompt": "A farmer has 17 sheep. All but 9 die. How many sheep are left? Explain your reasoning.",
+      "output": "The question says: \"A farmer has 17 sheep. All but 9 die. How many sheep are left?\"\n\n**Answer:** 9 sheep are left.\n\n**Reasoning:**  \n- The farmer starts with 17 sheep.  \n- \"All but 9 die\" means 17 - 9 = 8 sheep die.  \n- The remaining sheep are the 9 that did not die.  \n\nSo, **9 sheep are left**.",
+      "tokens": 95,
+      "elapsed_s": 1.94,
+      "pass": true,
+      "grade": {
+        "type": "freeform",
+        "pass": true,
+        "score": 1.0,
+        "rubric": [
+          "9"
+        ],
+        "rubric_hits": [
+          "9"
+        ],
+        "rubric_missed": [],
+        "review_required": true
+      }
+    },
+    {
+      "id": "seed-reason-ml-0009",
+      "category": "reasoning",
+      "difficulty": "medium",
+      "language": null,
+      "source": "verified",
+      "prompt": "Explain the difference between supervised and unsupervised learning, and give one example task for each.",
+      "output": "**Supervised learning** uses labeled data to train models to predict outcomes. Example: **Email spam detection** (input: email text, output: spam or not spam).  \n**Unsupervised learning** finds patterns in unlabeled data. Example: **Customer segmentation** (grouping customers based on behavior without predefined labels).",
+      "tokens": 66,
+      "elapsed_s": 1.41,
+      "pass": true,
+      "grade": {
+        "type": "freeform",
+        "pass": true,
+        "score": 1.0,
+        "rubric": [
+          "supervised",
+          "unsupervised",
+          "labeled",
+          "unlabeled"
+        ],
+        "rubric_hits": [
+          "supervised",
+          "unsupervised",
+          "labeled",
+          "unlabeled"
+        ],
+        "rubric_missed": [],
+        "review_required": true
+      }
+    },
+    {
+      "id": "seed-sec-passlen-0006",
+      "category": "security",
+      "difficulty": "medium",
+      "language": "python",
+      "source": "verified",
+      "prompt": "Write a safe function check_password_length(password, min_length=8) that returns True only when the password is a string long enough, without ever printing, logging, or echoing the password value.",
+      "output": "def check_password_length(password, min_length=8):\n    return isinstance(password, str) and len(password) >= min_length",
+      "tokens": 25,
+      "elapsed_s": 1.03,
+      "pass": true,
+      "grade": {
+        "type": "sandbox_test",
+        "pass": true,
+        "verified": true,
+        "verified_elapsed": 0.4,
+        "exit_code": 0,
+        "timed_out": false,
+        "expected_output": null,
+        "output_matched": true,
+        "stdout_truncated": "..                                                                       [100%]\n2 passed in 0.00s\n",
+        "stderr_truncated": ""
+      }
+    },
+    {
+      "id": "seed-chat-penthos-0010",
+      "category": "general_chat",
+      "difficulty": "easy",
+      "language": null,
+      "source": "verified",
+      "prompt": "What is Penthos?",
+      "output": "Penthos is an open-source coding AI designed to assist with code generation, analysis, and optimization. It supports multiple programming languages and focuses on providing accurate, actionable code solutions.",
+      "tokens": 36,
+      "elapsed_s": 0.88,
+      "pass": false,
+      "grade": {
+        "type": "freeform",
+        "pass": false,
+        "score": 0.25,
+        "rubric": [
+          "open-source",
+          "agent",
+          "sandbox",
+          "training"
+        ],
+        "rubric_hits": [
+          "open-source"
+        ],
+        "rubric_missed": [
+          "agent",
+          "sandbox",
+          "training"
+        ],
+        "review_required": true
+      }
+    }
+  ]
+}

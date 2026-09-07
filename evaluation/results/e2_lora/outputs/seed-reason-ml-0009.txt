@@ -1,0 +1,11 @@
+<think>
+
+</think>
+
+Supervised and unsupervised learning are two primary types of machine learning, differing in the nature of the data they use and the goals they aim to achieve.
+
+**Supervised Learning** involves training a model on a labeled dataset, where each example is paired with an output label. The goal is to learn a mapping from inputs to outputs. This approach is used when the task has clear, defined outcomes. A common example is **email spam detection**, where the model is trained on a dataset of emails labeled as "spam" or "not spam." The model learns patterns from the labeled data to classify new, unseen emails accurately.
+
+**Unsupervised Learning**, on the other hand, deals with unlabeled data, where the goal is to discover hidden patterns or structures within the data. It is used when the task does not have predefined labels. A typical example is **customer segmentation**, where a business might use unsupervised learning to group customers into distinct segments based on purchasing behavior, demographics, or other features. This helps in understanding different customer groups without prior knowledge of the groupings.
+
+In summary, supervised learning is used for prediction tasks with labeled data, while unsupervised learning is used for exploration tasks with unlabeled data.

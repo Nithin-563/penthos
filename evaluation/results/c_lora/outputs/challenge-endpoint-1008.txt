@@ -1,0 +1,5 @@
+<think>
+
+</think>
+
+defect: 'inadequate_inspection' in 'step-by-step_authentication_fix' logic.

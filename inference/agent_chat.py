@@ -1,6 +1,7 @@
 """Interactive Penthos agent chat.
 
-Connects the local Qwen3-4B model to the Penthos Agent Core.
+Connects the local Penthos model to the Penthos Agent Core with the shared
+Penthos system prompt and chain-of-thought enabled.
 """
 
 from mlx_lm import load, stream_generate
@@ -8,22 +9,26 @@ from mlx_lm.generate import make_sampler
 
 from agent.core import SYSTEM_PROMPT
 from agent.loop import AgentLoop
+from inference.prompt import (
+    ENABLE_THINKING,
+    MAX_TOKENS,
+    MODEL,
+    TEMP,
+    TOP_P,
+)
 
 
-MODEL = "Qwen/Qwen3-4B-MLX-4bit"
-
-MAX_TOKENS = 2048
 MAX_TOOL_CALLS = 8
 
 model, tokenizer = load(MODEL)
 agent = AgentLoop(".")
 
-messages = [
-    {
-        "role": "system",
-        "content": SYSTEM_PROMPT,
-    }
-]
+SYSTEM_MESSAGE = {
+    "role": "system",
+    "content": SYSTEM_PROMPT,
+}
+
+messages = [dict(SYSTEM_MESSAGE)]
 
 
 def generate(messages):
@@ -31,12 +36,12 @@ def generate(messages):
         messages,
         tokenize=False,
         add_generation_prompt=True,
-        enable_thinking=False,
+        enable_thinking=ENABLE_THINKING,
     )
 
     sampler = make_sampler(
-        temp=0.2,
-        top_p=0.9,
+        temp=TEMP,
+        top_p=TOP_P,
     )
 
     output = ""
@@ -55,7 +60,7 @@ def generate(messages):
     return output
 
 
-print("Penthos Agent")
+print("Penthos by Deoid · created by K Nithin Reddy")
 print("Type /quit to exit.")
 print("Type /tools to inspect available tools.")
 print("Type /reset to clear conversation.")
@@ -75,12 +80,7 @@ while True:
         break
 
     if user_input == "/reset":
-        messages = [
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT,
-            }
-        ]
+        messages = [dict(SYSTEM_MESSAGE)]
         print("Conversation reset.")
         continue
 

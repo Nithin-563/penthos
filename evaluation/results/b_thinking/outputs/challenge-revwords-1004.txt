@@ -1,0 +1,44 @@
+<think>
+Okay, I need to fix the reverse_words function so that it reverses the order of the words instead of reversing each word's letters. The current code splits the string into words, reverses each word (using [::-1]), and then joins them with spaces. But the problem is that each word's letters are being reversed, not the order of the words.
+
+So, the goal is to reverse the order of the words, but leave each word's letters as they are. For example, given "the sky is blue", the words are ["the", "sky", "is", "blue"], and reversing their order should give ["blue", "is", "sky", "the"], which when joined with spaces becomes "blue is sky the".
+
+The current code is using word[::-1], which reverses each word. So to fix this, I need to split the string into words, reverse the list of words, then join them with spaces.
+
+Wait, but how to split the string into words correctly? The split() method by default splits on any whitespace, so that's okay. Then, reverse the list of words. Then join with spaces.
+
+So the corrected function would be:
+
+def reverse_words(s: str) -> str:
+    return " ".join(reversed(s.split()))
+
+Wait, but reversed(s.split()) returns a reverse iterator. When you join, you need to convert it to a list or just use it directly. But in Python, when you join with a reversed iterator, it works as expected. Let me test this.
+
+For example, "the sky is blue" split into ["the", "sky", "is", "blue"], reversed gives ["blue", "is", "sky", "the"], joined with spaces gives "blue is sky the".
+
+Another test case: "hello world" becomes "world hello".
+
+What about runs of spaces? The split() method will handle that, as it splits on any whitespace, so multiple spaces between words are treated as a single separator. So the function should handle that.
+
+So the corrected code is to split the string into words, reverse the list of words, then join with spaces.
+
+So the original code was returning " ".join(word[::-1] for word in s.split()), which reverses each word. The fix is to reverse the list of words instead.
+
+So the corrected function is:
+
+def reverse_words(s: str) -> str:
+    return " ".join(reversed(s.split()))
+
+But wait, reversed(s.split()) returns a reversed iterator. When you pass that to join, it's okay. Let me check.
+
+Yes, for example, list(reversed(s.split())) would be the reversed list. So the code should work.
+
+So the main change is to replace the list comprehension with reversed(s.split()).
+
+So the corrected function is as above. Then, the tests should pass.
+
+So the answer is to write that function in the main code.
+</think>
+
+def reverse_words(s: str) -> str:
+    return " ".join(reversed(s.split()))

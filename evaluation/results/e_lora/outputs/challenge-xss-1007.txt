@@ -1,0 +1,13 @@
+import html
+import re
+
+def sanitize_html(text: str) -> str:
+    return html.escape(text)
+
+if __name__ == "__main__":
+    import importlib
+    import sys
+    import os
+
+    test_module = importlib.import_module("hidden_test")
+    test_module.test(sanitize_html)

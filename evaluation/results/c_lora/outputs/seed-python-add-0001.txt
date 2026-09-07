@@ -1,0 +1,5 @@
+# sum_of_two.py
+import pytest
+
+def add(a, b):
+    return a + b

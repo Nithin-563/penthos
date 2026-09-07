@@ -1,0 +1,111 @@
+<think>
+Okay, I need to implement the merge_sorted function in Python that merges two already-sorted lists into one sorted list. The function should handle empty lists and negative values as well. Let me think about how to approach this.
+
+First, the function needs to take two lists, a and b, which are already sorted. The goal is to merge them into a single sorted list. The classic approach is the merge step from the merge sort algorithm. So, I can use two pointers, one for each list, and compare the elements, adding the smaller one to the result.
+
+But wait, what about the edge cases? If one of the lists is empty, the function should just return the other list. Also, if both are empty, return an empty list. Also, the lists can have negative numbers, but since they're already sorted, the same logic applies.
+
+Let me outline the steps:
+
+Initialize an empty result list. Then, have two pointers, i and j, starting at 0. Compare a[i] and b[j]. Append the smaller one to the result and increment the corresponding pointer. Repeat until one of the lists is exhausted. Then, append the remaining elements from the other list.
+
+But how to handle the case when one list is longer than the other? For example, if a has more elements left after b is done, add those to the result.
+
+Let me think about the code structure.
+
+Start with an empty list. Then, while i < len(a) and j < len(b), compare a[i] and b[j]. Append the smaller one, increment the pointer. Then, after one of the lists is exhausted, append the remaining elements from the other list.
+
+Wait, but what if the lists are not of the same length? For example, if a is longer, then after processing all elements of b, we need to add the remaining elements of a.
+
+Yes. So, the code would look something like this:
+
+def merge_sorted(a, b):
+    result = []
+    i = 0
+    j = 0
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]:
+            result.append(a[i])
+            i += 1
+        else:
+            result.append(b[j])
+            j += 1
+    # Now, append the remaining elements from a or b
+    while i < len(a):
+        result.append(a[i])
+        i += 1
+    while j < len(b):
+        result.append(b[j])
+        j += 1
+    return result
+
+But wait, what if the lists are empty? Let's test some cases.
+
+Test case 1: a is empty, b is [1,2,3]. Then, the function should return [1,2,3]. The code would start with i=0, j=0. Since i is 0, but len(a) is 0, the first while loop doesn't run. Then, append the remaining elements from a (none) and from b (all elements). So yes.
+
+Another test case: a is [1,3,5], b is empty. Then, the code would append all elements of a, and nothing from b. Correct.
+
+Another case: a is [1,2,3], b is [4,5,6]. The merged list is [1,2,3,4,5,6]. The code would compare each element, and since a's elements are smaller, append them first, then the rest of b.
+
+What about when there are negative numbers? For example, a is [-5, -3], b is [-2, 0]. The code would compare -5 and -2, append -5, then -3 and -2, append -3, then -2 and 0, append -2, then 0. So the merged list is [-5, -3, -2, 0], which is correct.
+
+But wait, what if the lists have elements that are the same? Like a is [1,2,3], b is [2,3,4]. The code would compare 1 and 2, append 1. Then 2 and 2, append 2. Then 2 and 3, append 2. Then 3 and 3, append 3. Then 3 and 4, append 3. Then 4 is left. So the merged list is [1,2,2,3,3,4]. Which is correct.
+
+But wait, the problem says that the lists are already sorted. So the code is correct.
+
+But what about when the lists are not sorted? Well, the problem states that the inputs are already sorted, so the code doesn't need to handle that.
+
+So this code should work. Now, the function needs to be written as per the problem's request. Also, the user says that the hidden test file will import it from main, so the function must be in the correct module.
+
+But the user says to output only the complete source code for the requested file. So the function is to be written as a standalone function.
+
+Wait, the problem says "Implement merge_sorted(a: list, b: list) -> list in Python..." So the function is to be written as a standalone function.
+
+So the code should be:
+
+def merge_sorted(a: list, b: list) -> list:
+    result = []
+    i = j = 0
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]:
+            result.append(a[i])
+            i += 1
+        else:
+            result.append(b[j])
+            j += 1
+    while i < len(a):
+        result.append(a[i])
+        i += 1
+    while j < len(b):
+        result.append(b[j])
+        j += 1
+    return result
+
+Yes, that's the code. Let me check for possible errors.
+
+What if a is empty and b is empty? Then, the result is empty. Correct.
+
+Another case: a is [5], b is [5]. The merged list is [5,5]. Correct.
+
+Another case: a is [5], b is [3]. The merged list is [3,5]. Correct.
+
+Yes, this should handle all cases. The code is straightforward and handles all edge cases.
+</think>
+
+def merge_sorted(a: list, b: list) -> list:
+    result = []
+    i = j = 0
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]:
+            result.append(a[i])
+            i += 1
+        else:
+            result.append(b[j])
+            j += 1
+    while i < len(a):
+        result.append(a[i])
+        i += 1
+    while j < len(b):
+        result.append(b[j])
+        j += 1
+    return result

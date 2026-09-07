@@ -1,0 +1,28 @@
+<think>
+
+</think>
+
+An AI coding agent, like Penthos, should prevent API keys and other secrets from being exposed while inspecting and modifying a repository through several key strategies:
+
+1. **Secret Scanning and Detection**: 
+   - Implement secret scanning tools to automatically detect and flag any API keys, passwords, or other sensitive information in the codebase. Tools like GitHub's Secret Scanning or GitLab's secret detection can be integrated into the workflow to identify and alert on potential secret exposure.
+
+2. **Environment Variables**: 
+   - Use environment variables to store sensitive information rather than hardcoding them in the source code. This approach keeps secrets out of the version-controlled repository and reduces the risk of exposure.
+
+3. **Code Review and Analysis**: 
+   - Perform thorough code reviews and static analysis to ensure that no secrets are present in the code. Tools like SonarQube or Checkmarx can be used to enforce policies against the use of secrets in the codebase.
+
+4. **Access Control and Permissions**: 
+   - Restrict access to the repository and its contents to only those who need it. Use role-based access control (RBAC) to ensure that only authorized users can modify or inspect the repository.
+
+5. **Secure Development Practices**: 
+   - Follow secure coding practices to avoid hardcoding secrets. This includes using configuration files that are not committed to version control and ensuring that any secrets used are only in the necessary scope.
+
+6. **Automated Testing and Linting**: 
+   - Integrate automated testing and linting tools that check for the presence of secrets in the code. These tools can be run as part of the continuous integration (CI) pipeline to ensure that secrets are not introduced or exposed during development.
+
+7. **Encryption and Secure Storage**: 
+   - Encrypt sensitive data at rest and in transit. Use secure storage solutions that provide encryption and access controls to protect secrets from unauthorized access.
+
+By implementing these strategies, an AI coding agent can significantly reduce the risk of exposing API keys and other secrets while inspecting and modifying a repository. This proactive approach ensures that the codebase remains secure and compliant with best practices.

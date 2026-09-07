@@ -1,0 +1,61 @@
+<think>
+
+</think>
+
+</think>
+
+I'll compare the brute-force and efficient approaches to solving the "two-sum" problem with a large array of 1,000,000 integers.
+
+### Brute-force Solution
+
+**Approach:**
+- Iterate through each element in the array, and for each element, iterate through the rest of the array to find a pair that sums to the target.
+
+**Time Complexity:** O(n²)  
+**Space Complexity:** O(1) (no extra space used, except for a few variables)
+
+**Example Code:**
+```python
+def two_sum_brute_force(nums, target):
+    n = len(nums)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if nums[i] + nums[j] == target:
+                return (i, j)
+    return None
+```
+
+**Tradeoffs:**
+- **Pros:** Simple to understand and implement.
+- **Cons:** Very slow for large inputs. For 1,000,000 elements, this would require about 10^12 operations, which is impractical.
+
+### Efficient Solution
+
+**Approach:**
+- Use a hash map (dictionary) to store the values we've seen so far and their indices. For each element, calculate the complement (target - current value) and check if it's in the hash map. If it is, return the indices. If not, add the current value and its index to the hash map.
+
+**Time Complexity:** O(n)  
+**Space Complexity:** O(n) (to store the elements in the hash map)
+
+**Example Code:**
+```python
+def two_sum_efficient(nums, target):
+    num_map = {}
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in num_map:
+            return (num_map[complement], i)
+        num_map[num] = i
+    return None
+```
+
+**Tradeoffs:**
+- **Pros:** Very efficient for large inputs. It can handle 1,000,000 elements in linear time.
+- **Cons:** Requires additional space to store the hash map, which can be a concern for memory-constrained environments.
+
+### Summary
+
+- **Brute-force** is simple but inefficient for large datasets.
+- **Efficient** solution is optimal for large datasets but uses more memory.
+
+For an array of 1,000,000 integers, the efficient solution is the preferred approach due to its linear time complexity.

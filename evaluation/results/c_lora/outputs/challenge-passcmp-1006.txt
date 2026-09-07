@@ -1,0 +1,7 @@
+def check_password(provided: str, expected: str) -> bool:
+    if len(provided) != len(expected):
+        return False
+    result = True
+    for a, b in zip(provided, expected):
+        result &= a == b
+    return result

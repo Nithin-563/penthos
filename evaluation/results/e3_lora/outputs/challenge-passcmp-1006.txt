@@ -1,0 +1,11 @@
+def check_password(provided: str, expected: str) -> bool:
+    if len(provided) != len(expected):
+        return False
+    result = 0
+    for a, b in zip(provided, expected):
+        result |= ord(a) ^ ord(b)
+    return result == 0
+
+if __name__ == "__main__":
+    import sys
+    sys.stdout.write("Hello, world!\n")

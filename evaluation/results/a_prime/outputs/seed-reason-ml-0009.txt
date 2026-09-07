@@ -1,0 +1,2 @@
+**Supervised learning** uses labeled data to train models to predict outcomes. Example: **Email spam detection** (input: email text, output: spam or not spam).  
+**Unsupervised learning** finds patterns in unlabeled data. Example: **Customer segmentation** (grouping customers based on behavior without predefined labels).

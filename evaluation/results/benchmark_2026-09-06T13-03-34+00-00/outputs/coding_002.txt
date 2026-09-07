@@ -1,0 +1,43 @@
+Here's a TypeScript debounce function with correct typing, edge case handling, and an example:
+
+```ts
+type DebouncedFn = (args: any) => void;
+
+function debounce<T>(fn: (args: T) => void, delay: number): DebouncedFn {
+  let timeout: NodeJS.Timeout | null = null;
+
+  return function (args: T) {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(() => {
+      fn(args);
+    }, delay);
+  };
+}
+```
+
+### Edge Cases:
+- **Immediate execution**: If `delay` is 0, the function executes immediately.
+- **Multiple calls**: If the function is called multiple times before the delay, it cancels the previous call.
+- **Non-function inputs**: The function expects a callable `fn` and a number `delay`.
+
+### Example:
+
+```ts
+const logMessage = debounce((msg: string) => {
+  console.log(`Debounced message: ${msg}`);
+}, 500);
+
+// Simulate multiple rapid calls
+logMessage("A");
+logMessage("B");
+logMessage("C");
+```
+
+**Output**:
+```
+Debounced message: C
+```
+
+Only the last call (`"C"`) is executed after 500ms, as previous calls are canceled.

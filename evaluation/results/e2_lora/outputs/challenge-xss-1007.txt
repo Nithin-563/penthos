@@ -1,0 +1,13 @@
+import html
+import re
+
+def sanitize_html(text: str) -> str:
+    # Escape & first to handle entities like &apos;
+    text = re.sub(r'&', '&amp;', text)
+    # Then escape <, >, ", and '
+    text = html.escape(text)
+    return text
+
+if __name__ == '__main__':
+    import hidden_test
+    hidden_test.test_sanitize_html()

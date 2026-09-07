@@ -1,0 +1,26 @@
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = {}
+        self.used = {}
+    
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        # Refresh recency
+        self.used[key] = True
+        return self.cache[key]
+    
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            self.cache[key] = value
+            self.used[key] = True
+            return
+        # Evict least recently used item if capacity is exceeded
+        if len(self.cache) >= self.capacity:
+            # Find the least recently used item
+            lru_key = min(self.used, key=lambda k: self.used[k])
+            del self.cache[lru_key]
+            del self.used[lru_key]
+        self.cache[key] = value
+        self.used[key] = True

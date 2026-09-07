@@ -1,0 +1,22 @@
+def check_password(provided: str, expected: str) -> bool:
+    if len(provided) != len(expected):
+        return False
+    result = 0
+    for a, b in zip(provided, expected):
+        result |= (a != b)
+    return result == 0
+
+if __name__ == "__main__":
+    import sys
+    sys.stdout = open("output.txt", "w")
+    try:
+        provided = input("Enter password: ")
+        expected = "secret"
+        if check_password(provided, expected):
+            print("Password is correct")
+        else:
+            print("Password is incorrect")
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        sys.stdout.close()

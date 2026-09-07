@@ -1,0 +1,11 @@
+<think>
+
+</think>
+
+The agent should follow the inspect → isolate → verify loop, starting with the failing tests and narrowing down the root cause:
+
+1. **Inspect the failing tests (7 tests failed):**  
+   - Examine the test output and error logs to confirm the failing test cases.  
+   - Identify the module, function, or file the test suite imports. Confirm the failing test suite imports. Verify the failing test suite imports. Run the failing test suite in isolation. Confirm the failing test suite imports. Verify the failing test suite imports. Run the failing test suite in isolation. Confirm the failing test suite imports. Verify the failing test suite imports. Run the failing test suite in isolation. Confirm the failing test suite imports. Verify the failing test suite imports. Run the failing test suite in isolation. Confirm the failing test suite imports. Verify the failing test suite imports. Run the failing test suite in isolation. Confirm the failing test suite imports. Verify the failing test suite imports. Run the failing test suite in isolation. Confirm the failing test suite imports. Verify the failing test suite imports. Run the failing test suite in isolation. Confirm the failing test suite imports. Verify the failing test suite imports. Run the failing test suite in isolation. Confirm the failing test suite imports. Verify the failing仕
+
+The agent should inspect the failing tests, confirm the failing test suite imports, run the failing test suite in isolation, and narrow down the root cause.

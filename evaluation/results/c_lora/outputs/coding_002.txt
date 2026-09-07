@@ -1,0 +1,5 @@
+<think>
+
+</think>
+
+defect: The initial implementation returned the wrong value. The function should return the original function, not the timeout.

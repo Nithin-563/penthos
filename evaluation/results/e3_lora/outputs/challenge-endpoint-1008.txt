@@ -1,0 +1,118 @@
+<think>
+
+</think>
+
+</think>
+
+I would approach this task systematically by first understanding the existing codebase, then designing the new endpoint, implementing it, and finally verifying its correctness in an isolated sandbox. Here's a step-by-step breakdown:
+
+---
+
+### **1. Investigate the Existing Codebase**
+Before making any changes, I would inspect the following files to understand the structure and dependencies:
+
+- **`server/index.js`** or **`server/app.js`**: This is where the Express app is initialized, and the Prisma client is connected. I would look for existing routes, middleware, and any authentication setup (e.g., JWT, Bearer tokens).
+- **`prisma/schema.prisma`**: To understand the database schema and any existing relationships.
+- **`server/routes/`**: This directory likely contains existing API routes. I would look for a pattern (e.g., `users.js`, `posts.js`) to determine how new routes are added.
+- **`server/middleware/auth.js`** or similar: To understand the authentication flow and required permissions.
+- **`server/tests/`**: To see how existing tests are structured and what testing framework is used (e.g., Jest, Mocha, Supertest).
+- **`package.json`**: To understand the project's dependencies and build tools (e.g., TypeScript, Babel, Webpack).
+
+---
+
+### **2. Design the New API Endpoint**
+Assume the task is to add a **read-only endpoint** that returns a list of all users (for example, `/api/users`).
+
+- **Route**: `/api/users`
+- **HTTP Method**: `GET`
+- **Authentication Required?**: Yes, if the existing system enforces it. Check the middleware or route handlers for authentication.
+- **Response Format**: JSON, e.g., `{"users": [{"id": 1, "name": "Alice"}, ...]}`
+
+---
+
+### **3. Add the Route and Schema Change**
+- **Update `server/routes/users.js`** (or create it if it doesn't exist):
+  ```js
+  const express = require('express');
+  const router = express.Router();
+  const prisma = require('./prisma');
+
+  router.get('/', async (req, res) => {
+    const users = await prisma.user.findMany();
+    res.json({ users });
+  });
+
+  module.exports = router;
+  ```
+
+- **Update `server/index.js`** to include the new route:
+  ```js
+  const usersRouter = require('./routes/users');
+  app.use('/api', usersRouter);
+  ```
+
+- **Update `prisma/schema.prisma`** if the `User` model needs to be queried (already assumed to exist).
+
+---
+
+### **4. Add Tests for the New Endpoint**
+If the project uses Jest and Supertest, add a test in `server/tests/users.test.js`:
+
+```js
+const request = require('supertest');
+const app = require('./server');
+
+describe('GET /api/users', () => {
+  beforeEach(async () => {
+    await prisma.user.createMany({ data: [{ name: 'Alice' }, { name: 'Bob' }] });
+  });
+
+  afterAll(async () => {
+    await prisma.user.deleteMany();
+  });
+
+  test('returns all users', async () => {
+    const response = await request(app).get('/api/users');
+    expect(response.status).toBe(200);
+    expect(response.body.users).toBeAnArray();
+    expect(response.body.users.length).toBe(2);
+  });
+});
+```
+
+---
+
+### **5. Run the Verification in an Isolated Sandbox**
+To verify the implementation in an isolated sandbox:
+
+1. **Set up a temporary test environment**:
+   - Clone the repository and create a branch for the new endpoint.
+   - Use Docker or a local environment to isolate the changes.
+   - Ensure the database is seeded with test data.
+
+2. **Run the tests**:
+   ```bash
+   npm test
+   ```
+
+3. **Manually verify the endpoint**:
+   - Use `curl` or Postman to send a `GET` request to `/api/users`.
+   - Confirm the response is a JSON array of users, and the status is `200`.
+
+4. **Check for errors**:
+   - Ensure no tests fail.
+   - Confirm the endpoint is accessible and returns the expected data.
+   - Ensure the endpoint is not modifying any data (it is read-only).
+
+---
+
+### **6. Confirm the Change is Done**
+- The endpoint is now implemented and verified.
+- The code is self-contained, isolated, and tested.
+- The change does not expose secrets or private data.
+- The repository is safe to merge or deploy.
+
+---
+
+### **Summary**
+By following this approach, I ensure that the new API endpoint is implemented, tested, and verified in an isolated sandbox before being considered complete. This method aligns with the principles of software engineering: investigate, design, implement, test, and verify.

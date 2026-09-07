@@ -1,0 +1,15 @@
+<think>
+
+</think>
+
+Supervised and unsupervised learning are two primary types of machine learning, differing in the nature of the data they use and the goals they aim to achieve.
+
+**Supervised Learning** involves training a model on a dataset that includes both input features and corresponding output labels. The goal is to learn a mapping from inputs to outputs, enabling the model to predict the correct output for new, unseen data. This approach is suitable when the task has clear, defined outcomes.
+
+**Unsupervised Learning**, on the other hand, deals with datasets that lack labeled outputs. The algorithm tries to find patterns or intrinsic structures in the data without explicit guidance on what to look for. This is useful when the goal is to explore the data's underlying structure or to reduce its dimensionality.
+
+**Example Task for Supervised Learning:**  
+**Email Spam Detection:** In this task, a model is trained on a dataset where each email is labeled as "spam" or "not spam." The model learns to distinguish between the two based on features like word usage, sender information, and email content.
+
+**Example Task for Unsupervised Learning:**  
+**Customer Segmentation:** Here, a business might use unsupervised learning to group customers into segments based on purchasing behavior, demographics, and other features. The goal is to identify natural groupings within the data without predefined categories.

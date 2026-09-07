@@ -1,0 +1,61 @@
+<think>
+Okay, the user is asking how an AI coding agent should prevent API keys and other secrets from being exposed while inspecting and modifying a repository. Let me break this down.
+
+First, I need to recall the principles mentioned earlier. The key points are about security, not exposing secrets, and following software engineering best practices. So, the answer should cover steps to prevent exposure during code inspection and modification.
+
+Hmm, the AI agent should start by not accessing secrets unless necessary. Maybe it should avoid reading files that contain sensitive information. But how does that work in practice? Maybe by not using certain tools or methods that could inadvertently read those files.
+
+Then, there's the aspect of code analysis. The agent should use tools that can analyze code without needing to read the actual secrets. Like, maybe using static analysis tools that don't require executing code or accessing files directly.
+
+Another point is to avoid modifying code that contains secrets. If the agent is modifying code, it should check if the code contains any secrets and not alter them. But how to detect that? Maybe by scanning the code for patterns or using a database of known secret types.
+
+Also, the agent should not log or echo any secrets. If it's running tests or simulations, it should make sure that any output doesn't include sensitive data. So, during testing, it should mock the environment variables instead of using real ones.
+
+What about when the agent is running in a sandbox? It should ensure that the sandbox is isolated and that any secrets are not passed to the sandbox environment. Maybe using a secure container or a restricted environment where secrets can't be accessed.
+
+Another thing is to have strict access controls. The agent should only have access to the necessary parts of the repository and not the entire codebase. Maybe using role-based access control or other methods to limit exposure.
+
+Also, the agent should have policies in place to flag any code that might contain secrets. For example, if it detects a file that's likely to contain secrets, it should not process it unless it's explicitly allowed.
+
+Wait, but how does this apply when the agent is inspecting the repository? It should not run any code that could expose secrets. So, during inspection, it should use static analysis tools that don't require execution. And when modifying code, it should ensure that any changes don't introduce new secrets or expose existing ones.
+
+Also, the agent should have a way to verify that after making changes, the secrets are not present in the code. Maybe through automated checks or linters that enforce no secrets in the codebase.
+
+I should also mention the importance of not storing secrets in the agent's memory. If the agent is processing code, it should not keep any secrets in its own data structures or logs.
+
+In summary, the steps would be: avoid accessing secrets, use static analysis, avoid modifying secret-containing code, not log secrets, isolate the environment, enforce access controls, and have checks to ensure secrets are not present.
+
+I need to structure these points clearly, making sure each step is explained and how it prevents exposure. Also, mention the use of tools and practices that align with security best practices.
+</think>
+
+An AI coding agent must prevent API keys and secrets from being exposed through the following steps:  
+
+1. **Avoid Direct Access to Secrets**:  
+   - **Do not read or process files** containing secrets (e.g., `.env`, `config.json`, or code with hardcoded credentials).  
+   - Use **static analysis tools** to inspect code without executing it, ensuring no secrets are extracted.  
+
+2. **Isolate Execution Environments**:  
+   - Run code analysis and modifications in a **sandboxed, isolated environment** with restricted permissions.  
+   - Use **secure containers** (e.g., Docker) to prevent secrets from leaking to the host system.  
+
+3. **Avoid Modifying Secret-Containing Code**:  
+   - Scan code for patterns (e.g., `API_KEY`, `PASSWORD`) and **refuse to modify or touch files** that contain secrets unless explicitly allowed.  
+   - Use **code linters** to flag secret usage and enforce policies against modifying such code.  
+
+4. **No Logging or Echolocation of Secrets**:  
+   - **Never log, print, or store secrets** in memory, logs, or outputs.  
+   - Replace secret usage with **mocked or placeholder values** during testing or analysis.  
+
+5. **Secure Access Controls**:  
+   - Restrict the agent’s access to only the **necessary parts** of the repository.  
+   - Use **role-based access control (RBAC)** to prevent unauthorized access to sensitive files.  
+
+6. **Automated Secret Detection and Validation**:  
+   - Integrate tools like **GitHub Secret Scanning** or **SonarQube** to detect secrets in code.  
+   - After code changes, run **automated checks** to ensure no secrets are introduced or exposed.  
+
+7. **Environment Isolation**:  
+   - Use **environment variables** or **configuration files** to manage secrets, but **never expose them to the agent’s execution context**.  
+   - Mock external APIs or services during testing to avoid real secret usage.  
+
+By adhering to these principles, the agent ensures that secrets remain protected during inspection, modification, and testing, minimizing the risk of exposure.

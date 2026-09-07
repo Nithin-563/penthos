@@ -1,0 +1,72 @@
+<think>
+
+</think>
+
+To detect a cycle in a singly linked list, **Floyd's Tortoise and Hare algorithm** is a classic approach. It uses two pointers, one moving at twice the speed of the other (hence "tortoise" and "hare"), to determine if a cycle exists. Below is a detailed explanation, proof, and comparison with the hash-set approach.
+
+---
+
+### **Floyd's Tortoise-and-Hare Algorithm**
+
+#### **How it works:**
+- **Initialize two pointers**: `slow` and `fast`, both starting at the head of the list.
+- **Move the pointers**: `slow` moves one step at a time, while `fast` moves two steps at a time.
+- **Check for a cycle**: If there is a cycle, the `fast` pointer will eventually catch up to the `slow` pointer. If there is no cycle, the `fast` pointer will reach the end of the list.
+
+#### **Pseudocode:**
+```python
+def has_cycle(head):
+    slow = head
+    fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            return True
+    return False
+```
+
+---
+
+### **Proof of Correctness**
+
+#### **Why it terminates:**
+- The algorithm terminates when either:
+  - The `fast` pointer reaches the end of the list (`fast` or `fast.next` is `None`), or
+  - The `fast` pointer catches up to the `slow` pointer (indicating a cycle).
+- Since the list is singly linked, the `fast` pointer will either reach the end or loop indefinitely if a cycle exists. However, the loop condition ensures that the loop terminates when the `fast` pointer is `None`.
+
+#### **Why it detects cycles correctly:**
+- If a cycle exists, the `fast` pointer will eventually catch up to the `slow` pointer. This is because the `fast` pointer moves faster, and in a cycle, the relative speed between the two pointers is constant.
+- If no cycle exists, the `fast` pointer will eventually reach the end of the list, and the loop will terminate.
+
+---
+
+### **Comparison with Hash-Set Approach**
+
+| Feature                  | Floyd's Algorithm | Hash-Set Approach |
+|-------------------------|-------------------|-------------------|
+| **Space Complexity**     | O(1)              | O(n)              |
+| **Time Complexity**      | O(n)              | O(n)              |
+| **Cycle Detection**      | Yes               | Yes               |
+| **Use Case**             | Memory-constrained | High memory usage |
+| **Advantages**           | Low memory usage  | Easy to implement |
+| **Disadvantages**        | More complex logic | Higher memory usage |
+
+- **Floyd's Algorithm** is more space-efficient and is preferred in environments where memory is a constraint.
+- **Hash-Set Approach** is simpler to understand and implement, but it uses additional memory to store visited nodes.
+
+---
+
+### **Time Complexity**
+
+- **Floyd's Algorithm**: O(n), where n is the number of nodes in the linked list. The algorithm traverses the list once in the worst case.
+- **Hash-Set Approach**: O(n), as it also traverses the list once. However, the hash set may have higher constant factors due to hash table operations.
+
+---
+
+### **Summary**
+
+- **Floyd's Tortoise-and-Hare algorithm** is a space-efficient way to detect cycles in a singly linked list. It uses only two pointers and runs in linear time.
+- **Hash-set approach** is simpler to implement but uses O(n) space.
+- **Floyd's algorithm** is preferred in memory-constrained environments and is a classic example of a clever, efficient solution.

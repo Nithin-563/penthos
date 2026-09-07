@@ -1,0 +1,2 @@
+def check_password_length(password, min_length=8):
+    return isinstance(password, str) and len(password) >= min_length

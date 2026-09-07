@@ -1,0 +1,25 @@
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = {}
+        self.used = {}
+    
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        self.used[key] = True
+        return self.cache[key]
+    
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            self.cache[key] = value
+            self.used[key] = True
+            return
+        if len(self.cache) >= self.capacity:
+            for k in self.used:
+                if self.used[k]:
+                    del self.cache[k]
+                    del self.used[k]
+                    break
+        self.cache[key] = value
+        self.used[key] = True

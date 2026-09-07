@@ -1,0 +1,21 @@
+Here's a TypeScript function that finds the **first duplicate** in an array:
+
+```ts
+function firstDuplicate(arr: number[]): number {
+    const seen = new Set<number>();
+    for (const num of arr) {
+        if (seen.has(num)) {
+            return num;
+        }
+        seen.add(num);
+    }
+    return -1; // No duplicate found
+}
+```
+
+### Explanation:
+
+- **Time Complexity:** O(n) — We iterate through the array once.
+- **Space Complexity:** O(n) — In the worst case, we store all elements in the set.
+
+This function returns the **first duplicate** number encountered, or `-1` if none exists.

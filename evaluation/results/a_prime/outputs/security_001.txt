@@ -1,0 +1,11 @@
+An AI coding agent should prevent API keys and secrets from being exposed by:
+
+1. **Scanning for secrets** during code inspection using tools like `grep` or `find` with regex patterns for common secret formats (e.g., `AWS_ACCESS_KEY_ID`, `GITHUB_TOKEN`).
+
+2. **Blacklisting known secret types** in its code analysis to flag and block any occurrence of them in the repository.
+
+3. **Automating secret detection** with integrations to CI/CD tools (e.g., GitHub Actions, GitLab CI) to enforce secret-unsafe practices.
+
+4. **Restricting access to sensitive files** (e.g., `.env`, `config.json`) by only allowing inspection of non-sensitive files unless explicitly permitted.
+
+5. **Logging and alerting** on any detected secrets to notify maintainers of potential exposure risks.

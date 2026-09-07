@@ -1,0 +1,5 @@
+<think>
+
+</think>
+
+Supervised learning trains on labeled input-output pairs, e.g. classifying spam from labeled emails. Unsupervised learning finds structure in unlabeled data, e.g. clustering customers by purchase behavior. The key difference is the presence or absence of labels during training.

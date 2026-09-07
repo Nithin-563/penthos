@@ -1,4 +1,7 @@
-model: Qwen/Qwen3-4B-MLX-4bit
+model: Qwen/Qwen3-4B-MLX-4bit  # loader handle
+model_display: Penthos
+company: Deoid
+creator: K Nithin Reddy
 
 training:
   method: lora

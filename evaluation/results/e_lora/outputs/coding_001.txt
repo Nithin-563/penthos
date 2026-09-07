@@ -1,0 +1,48 @@
+<think>
+
+</think>
+
+Here's a TypeScript function that finds the **first duplicate** in an array:
+
+```typescript
+function findFirstDuplicate(arr: number[]): number | null {
+    const seen = new Set<number>();
+
+    for (const num of arr) {
+        if (seen.has(num)) {
+            return num;
+        }
+        seen.add(num);
+    }
+
+    return null;
+}
+```
+
+### Explanation:
+
+- **Function Signature**: `findFirstDuplicate(arr: number[]): number | null`  
+  - It takes an array of numbers as input and returns the first duplicate number or `null` if no duplicates exist.
+
+- **Logic**:
+  - We use a `Set` to keep track of the numbers we've seen so far.
+  - As we iterate through the array, we check if the current number is already in the `Set`.
+  - If it is, we return that number as it's the first duplicate.
+  - If we finish the loop without finding a duplicate, we return `null`.
+
+### Time and Space Complexity:
+
+- **Time Complexity**: **O(n)**  
+  - We iterate through the array once, where `n` is the length of the array. Each operation inside the loop is constant time due to the use of a `Set`.
+
+- **Space Complexity**: **O(n)**  
+  - In the worst case, the `Set` can store all elements of the array, leading to a space complexity of O(n).
+
+### Example Usage:
+
+```typescript
+console.log(findFirstDuplicate([1, 2, 3, 1, 4])); // Output: 1
+console.log(findFirstDuplicate([1, 2, 3, 4, 5])); // Output: null
+```
+
+This function is efficient and straightforward for finding the first duplicate in an array.
