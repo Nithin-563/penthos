@@ -20,9 +20,9 @@ path:
 - **Open.** The weights recipe, the training data pipeline, the evaluation
   harness, and every script that built Penthos are in this repository.
 - **Honest to its identity.** Penthos presents itself only as Penthos by
-  Deoid. It is built on a permissively licensed open-weights base (a
-  code-specialized Qwen2.5-Coder-7B 4-bit MLX build), and at inference time it
-  is never prompted, told, or encouraged to claim any other identity.
+  Deoid. It is built on the permissively licensed Qwen3-4B open-weights base,
+  and at inference time it is never prompted, told, or encouraged to claim any
+  other identity.
 
 ## What it can do
 
