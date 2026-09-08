@@ -8,7 +8,12 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from agent.tools import Tool, validate_arguments
-from agent.protocol import arg_schema, parse_tool_call, partial_tool_call
+from agent.protocol import (
+    looks_like_tool_call,
+    arg_schema,
+    parse_tool_call,
+    partial_tool_call,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -177,3 +182,92 @@ def test_parse_tool_call_text_before_after():
     )
     assert result is not None
     assert result["name"] == "echo"
+
+
+# ---------------------------------------------------------------------------
+# Cross-base tool calls: bare JSON (Qwen2.5 style), fences, end markers
+# ---------------------------------------------------------------------------
+
+def test_parse_bare_json_in_code_fence_with_end_marker():
+    # Exact reproduction of what the 7B shipped base emitted for "hi":
+    output = '```json\n{"name":"read_readme","arguments:{}"}\n```<|im_end|>\n'
+    result = parse_tool_call(output)
+    assert result is not None
+    assert result["name"] == "read_readme"
+    assert result["arguments"] == {}
+
+
+def test_parse_bare_json_no_fence():
+    result = parse_tool_call('{"name":"echo","arguments":{"message":"hi"}}<|im_end|>')
+    assert result is not None
+    assert result["name"] == "echo"
+    assert result["arguments"] == {"message": "hi"}
+
+
+def test_parse_null_arguments_becomes_empty():
+    result = parse_tool_call('{"name":"echo","arguments":null}')
+    assert result is not None
+    assert result["arguments"] == {}
+
+
+def test_parse_repair_only_arguments_key_not_name():
+    # The repair must not corrupt a valid name field or reject valid calls.
+    result = parse_tool_call('{"name":"echo","arguments":{"message":"hi"}}')
+    assert result is not None
+    assert result["name"] == "echo"
+    assert result["arguments"] == {"message": "hi"}
+
+
+def test_parse_malformed_still_none():
+    assert parse_tool_call("```json\n{broken json}\n```") is None
+    assert parse_tool_call("plain prose only") is None
+
+
+# ---------------------------------------------------------------------------
+# looks_like_tool_call
+# ---------------------------------------------------------------------------
+
+def test_looks_like_tool_call_broken_blob():
+    assert looks_like_tool_call('```json\n{"name":"read_readme","arguments:{}"}\n```<|im_end|>') is True
+
+
+def test_looks_like_tool_call_bare_json():
+    assert looks_like_tool_call('{"name":"echo","arguments":{}}') is True
+
+
+def test_looks_like_not_tool_call():
+    assert looks_like_tool_call("Hi! I'm Penthos. How can I help?") is False
+    assert looks_like_tool_call("") is False
+    assert looks_like_tool_call("<|im_end|>") is False
+
+
+def test_looks_like_prose_with_keywords_is_false():
+    # Prose that merely mentions the words is not a call attempt (no colon
+    # after "name"), so it is not misclassified.
+    assert looks_like_tool_call('The output should have a "name" and arguments.') is False
+
+
+# ---------------------------------------------------------------------------
+# tool_call_feedback (loop nudges malformed calls instead of surfacing junk)
+# ---------------------------------------------------------------------------
+
+from inference.loop_kit import tool_call_feedback
+
+
+def test_feedback_for_malformed_call():
+    # Repairable slips (e.g. "arguments:{}") are parsed and executed directly,
+    # so no feedback is produced; truly unparseable shapes get a nudge.
+    out = '```json\n{"name":"read_readme","arguments:{}"}\n```<|im_end|>'
+    assert tool_call_feedback(out) is None
+    broken = '{"name":"echo","arguments":[1,"x"]}'
+    assert tool_call_feedback(broken) is not None
+    assert "tool call" in tool_call_feedback(broken)
+
+
+def test_no_feedback_for_valid_call():
+    assert tool_call_feedback('{"name":"echo","arguments":{}}<|im_end|>') is None
+
+
+def test_no_feedback_for_prose():
+    assert tool_call_feedback("Hi! How can I help today?") is None
+    assert tool_call_feedback("") is None

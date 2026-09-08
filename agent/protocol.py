@@ -2,6 +2,7 @@
 
 import inspect
 import json
+import re
 
 
 def _type_name(hint):
@@ -96,43 +97,122 @@ Rules:
   (string / integer / boolean). Do not invent extra keys.
 - Provide every required argument; omit optional ones instead of passing null.
 - Emit one complete, well-formed JSON object. Do not split it across turns.
+- Wrap the JSON in <tool_call> ... </tool_call> tags. Do NOT use markdown
+  fences, raw JSON, or OpenAI-style bare objects.
 - After receiving the tool result, continue reasoning or call the next tool.
 
-When no more tools are needed, respond normally.
+When no more tools are needed, respond normally. For greetings, chit-chat, or
+clarifying questions, reply in plain text — do NOT emit a tool call.
 """
     )
 
 
-def parse_tool_call(text):
+_END_MARKERS = ("<|im_end|>", "<|tool_call|>", "<|assistant|>")
+
+# Tokenizers from different model families end turns / tool turns with these
+# markers. Stripping them lets the tool parser see the JSON object cleanly
+# even when the base used its own chat template instead of our <tool_call> tags.
+def _strip_end_markers(text: str) -> str:
+    for marker in _END_MARKERS:
+        text = text.replace(marker, " ")
+    return text.strip()
+
+
+def _find_json_object(text: str):
+    """Return the first balanced {...} region in ``text``, or None."""
+    start = text.find("{")
+    if start == -1:
+        return None
+    depth = 0
+    in_string = False
+    escaped = False
+    for i in range(start, len(text)):
+        char = text[i]
+        if in_string:
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == '"':
+                in_string = False
+            continue
+        if char == '"':
+            in_string = True
+        elif char == "{":
+            depth += 1
+        elif char == "}":
+            depth -= 1
+            if depth == 0:
+                return text[start : i + 1]
+    return None
+
+
+def _repair_arguments_colon(payload: str) -> str:
+    """Repair the common Qwen tokenizer slip ``"arguments:{...}"`` (the colon
+    landed inside the quoted key) back into a valid ``"arguments":{...}`` field."""
+    repaired = re.sub(
+        r'"arguments\s*:\s*(\{.*?\})\s*"',
+        r'"arguments":\1',
+        payload,
+        flags=re.DOTALL,
+    )
+    return repaired
+
+
+def _json_payloads(text: str):
+    """Yield the candidate JSON payloads to try, in priority order.
+
+    1. The body between explicit <tool_call> ... </tool_call> tags.
+    2. The first balanced {...} object anywhere in the text (tolerates bare
+       JSON, ```json fences, and trailing end-turn markers like <|im_end|>).
+    """
     start = text.find("<tool_call>")
     end = text.find("</tool_call>")
+    if start != -1 and end != -1 and end > start:
+        yield text[start + len("<tool_call>") : end].strip()
 
-    if start == -1 or end == -1 or end < start:
-        return None
+    bare = _find_json_object(_strip_end_markers(text))
+    if bare:
+        yield bare
 
-    payload = text[start + len("<tool_call>"):end].strip()
 
-    try:
-        data = json.loads(payload)
-    except json.JSONDecodeError:
-        return None
+def parse_tool_call(text):
+    for payload in _json_payloads(text):
+        for candidate in (payload, _repair_arguments_colon(payload)):
+            try:
+                data = json.loads(candidate)
+            except (json.JSONDecodeError, TypeError):
+                continue
 
-    if not isinstance(data, dict):
-        return None
+            if not isinstance(data, dict):
+                continue
+            name = data.get("name")
+            if not isinstance(name, str) or not name:
+                continue
 
-    name = data.get("name")
-    arguments = data.get("arguments", {})
+            arguments = data.get("arguments", {})
+            # Some bases emit "arguments": null when they meant {}.
+            if arguments is None:
+                arguments = {}
+            if not isinstance(arguments, dict):
+                continue
 
-    if not isinstance(name, str):
-        return None
+            return {"name": name, "arguments": arguments}
+    return None
 
-    if not isinstance(arguments, dict):
-        return None
 
-    return {
-        "name": name,
-        "arguments": arguments,
-    }
+def looks_like_tool_call(text) -> bool:
+    """True when the output reads like a tool-call attempt, even a malformed one.
+
+    Used to decide whether a failed parse should be fed back to the model for a
+    retry instead of surfacing raw JSON junk as if it were the final answer.
+    """
+    stripped = _strip_end_markers(text).strip()
+    if not stripped:
+        return False
+    if re.search(r'"name"\s*:', stripped) is None:
+        return False
+    return re.search(r'"arguments', stripped) is not None or stripped.startswith("{")
 
 
 def partial_tool_call(text):
