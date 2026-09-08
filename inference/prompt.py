@@ -6,20 +6,11 @@ benchmark harness (evaluation/run_benchmark.py). Keeping them in sync means a
 benchmark run measures exactly what a user experiences.
 """
 
-import os
-
-# Loader identifier for the local weights. Penthos currently ships on the
-# code-specialized Qwen2.5-Coder-7B-Instruct base (MLX 4-bit), which scored
-# 18/24 vs 14/24 for the previous Qwen3-4B base on the in-repo PenthosEval
-# coding benchmark — a real, measured gain for coding tasks. At inference time
-# the model presents itself only as Penthos (see PENTHOS_SYSTEM_PROMPT).
-#
-# Overridable with the PENTHOS_MODEL env var (e.g. to point at a different
-# base) without editing code.
-MODEL = os.environ.get(
-    "PENTHOS_MODEL",
-    "mlx-community/Qwen2.5-Coder-7B-Instruct-4bit",
-)
+# Loader identifier for the local weights. Penthos is built on the permissively
+# licensed open-source Qwen3-4B architecture; at inference time the model
+# presents itself only as Penthos (see PENTHOS_SYSTEM_PROMPT). This constant is
+# the functional handle passed to mlx_lm.load and must stay stable.
+MODEL = "Qwen/Qwen3-4B-MLX-4bit"
 
 # Public identity of the model. Display name and attribution used in the UI,
 # docs, and the model's own system prompt.
@@ -116,31 +107,6 @@ When generating a complete file or module:
 - Save it to disk using write_file rather than only printing it.
 
 Always favor the approach that is provably correct and verifiable."""
-
-
-def apply_chat(messages: list[dict], tokenizer, thinking: bool = ENABLE_THINKING) -> str:
-    """Apply a model's chat template to messages.
-
-    qwen3-family tokenizers accept ``enable_thinking`` for their chain-of-
-    thought mode; older (qwen2.5) tokenizers reject the kwarg. We try the
-    thinking-enabled call and transparently fall back when the template does
-    not support it, so PENTHOS_MODEL can point at either family.
-    """
-    if not thinking:
-        return tokenizer.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True,
-        )
-    try:
-        return tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=True,
-            enable_thinking=True,
-        )
-    except TypeError:
-        return tokenizer.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True,
-        )
 
 
 def build_code_prompt(task: str, language: str | None = None, context: str | None = None) -> str:

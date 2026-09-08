@@ -46,7 +46,6 @@ from inference.prompt import (
     PENTHOS_SYSTEM_PROMPT,
     TEMP,
     TOP_P,
-    apply_chat,
 )
 from inference.security import Guard
 
@@ -58,7 +57,12 @@ AGENT_MAX_MSGS = 14
 
 
 def generate(messages: list[dict]) -> str:
-    prompt = apply_chat(messages, tokenizer, thinking=ENABLE_THINKING)
+    prompt = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True,
+        enable_thinking=ENABLE_THINKING,
+    )
     sampler = make_sampler(temp=TEMP, top_p=TOP_P)
     output = ""
     for response in stream_generate(
