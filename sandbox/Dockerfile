@@ -1,4 +1,4 @@
-# Penthos sandbox base image (meta).
+# Pari sandbox base image (meta).
 #
 # This file exists so the sandbox/ directory has a canonical "Dockerfile"
 # entrypoint for tooling that looks for one. The three language-specific

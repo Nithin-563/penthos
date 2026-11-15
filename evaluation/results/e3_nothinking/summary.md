@@ -1,4 +1,4 @@
-# Penthos Model Benchmark
+# Pari Model Benchmark
 
 - model: `Qwen/Qwen3-4B-MLX-4bit`
 - mlx_lm: 0.31.3

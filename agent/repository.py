@@ -1,4 +1,4 @@
-"""Repository intelligence tools for Penthos."""
+"""Repository intelligence tools for Pari."""
 
 from memory.project_index import ProjectIndex
 from memory.search import MemorySearch

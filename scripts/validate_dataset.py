@@ -2,7 +2,7 @@
 """Standalone dataset validation script.
 
 Validates dataset JSONL/JSON files (candidates or exported training
-records) against the Penthos schema and exits non-zero when invalid.
+records) against the Pari schema and exits non-zero when invalid.
 
 Examples:
   python scripts/validate_dataset.py datasets/verified/verified.jsonl
@@ -21,7 +21,7 @@ from training.data_pipeline import export, verify  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Validate Penthos dataset files.")
+    parser = argparse.ArgumentParser(description="Validate Pari dataset files.")
     parser.add_argument("path", nargs="+", help="JSONL files or directories to validate")
     parser.add_argument(
         "--record",

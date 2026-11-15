@@ -1,6 +1,6 @@
-# Penthos Agent Core
+# Pari Agent Core
 
-The Penthos Agent Core separates the model from the environment in
+The Pari Agent Core separates the model from the environment in
 which it operates.
 
 Current capabilities:

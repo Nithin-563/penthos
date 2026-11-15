@@ -11,7 +11,7 @@ class ProjectFilesystem:
         target = (self.root / path).resolve()
 
         if target != self.root and self.root not in target.parents:
-            raise PermissionError("Path escapes Penthos project directory")
+            raise PermissionError("Path escapes Pari project directory")
 
         return target
 

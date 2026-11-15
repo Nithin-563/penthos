@@ -1,7 +1,7 @@
 """Centralized security limits and command allowlists for the sandbox.
 
 Everything the runner needs to stay conservative is defined here so the
-values can be tuned by Penthos itself without ever being controlled by
+values can be tuned by Pari itself without ever being controlled by
 model-generated tool arguments.
 """
 
@@ -10,7 +10,7 @@ from dataclasses import dataclass
 # ---------------------------------------------------------------------------
 # Conservative execution defaults.
 #
-# Penthos runs on a developer Mac with 16 GB unified memory; the local
+# Pari runs on a developer Mac with 16 GB unified memory; the local
 # Docker engine is configured with roughly 8 GB of RAM. Each sandboxed
 # execution is deliberately given a small slice so many jobs can coexist
 # without starving the host.
@@ -39,9 +39,9 @@ SUPPORTED_LANGUAGES = ("python", "node", "typescript")
 
 # Docker images built from sandbox/images/*.Dockerfile.
 IMAGE_NAMES = {
-    "python": "penthos-sandbox:python",
-    "node": "penthos-sandbox:node",
-    "typescript": "penthos-sandbox:typescript",
+    "python": "pari-sandbox:python",
+    "node": "pari-sandbox:node",
+    "typescript": "pari-sandbox:typescript",
 }
 
 # Working directory used inside every image.

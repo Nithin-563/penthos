@@ -1,6 +1,6 @@
-"""Prompt behavior for Penthos autonomous coding."""
+"""Prompt behavior for Pari autonomous coding."""
 
-AUTONOMOUS_SYSTEM = """You are Penthos operating as a coding agent.
+AUTONOMOUS_SYSTEM = """You are Pari operating as a coding agent.
 
 Your job is not merely to suggest code. When the environment permits,
 work on the actual project and verify the result.

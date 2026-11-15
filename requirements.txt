@@ -1,0 +1,17 @@
+# Runtime dependencies for Pari.
+#
+# The MLX packages are Apple Silicon only. On Linux or Windows, install
+# transformers + accelerate (or build llama.cpp) instead and skip mlx.
+
+mlx-lm>=0.20
+mlx>=0.18
+
+huggingface_hub>=0.23
+safetensors>=0.4
+requests>=2.31
+rich>=13.7
+tqdm>=4.66
+
+# Sandboxed test execution and the test suite
+docker>=7.0
+pytest>=8.0

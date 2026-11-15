@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Complete model benchmark for Penthos.
+"""Complete model benchmark for Pari.
 
-Runs the local Penthos model (lightweight 4B-scale weights, MLX 4-bit) across
+Runs the local Pari model (lightweight 4B-scale weights, MLX 4-bit) across
 every category and grades each answer:
 
   - Free-form tasks (baseline prompts + non-code dataset records): grade by
@@ -34,11 +34,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-# Loader identifier for the local weights (functional handle for mlx_lm.load).
-# The evaluated model is presented to the user as Penthos.
-MODEL = "Qwen/Qwen3-4B-MLX-4bit"
-
-from inference.prompt import PENTHOS_SYSTEM_PROMPT  # noqa: E402
+# Model handle and identity come from the single shared config.
+from inference.prompt import MODEL, PARI_SYSTEM_PROMPT  # noqa: E402
 
 TASKS_JSON = REPO_ROOT / "evaluation" / "baseline" / "tasks.json"
 VERIFIED_JSONL = REPO_ROOT / "datasets" / "verified" / "verified.jsonl"
@@ -49,7 +46,7 @@ RESULTS_DIR = REPO_ROOT / "evaluation" / "results"
 VERIFIED_RUBRICS = {
     "seed-reason-sheep-0008": ["9"],
     "seed-reason-ml-0009": ["supervised", "unsupervised", "labeled", "unlabeled"],
-    "seed-chat-penthos-0010": ["open-source", "coding", "agent"],
+    "seed-chat-pari-0010": ["open-source", "coding", "agent"],
     "seed-agentic-loop-0012": ["fix", "test", "report"],
     "challenge-cycle-1009": ["tortoise", "hare", "o(1)", "hash"],
     "challenge-endpoint-1008": ["route", "schema", "test", "sandbox", "auth"],
@@ -76,7 +73,7 @@ VERIFIED_RUBRICS = {
 VERIFIED_RUBRIC_MIN = {
     "seed-reason-sheep-0008": 1,
     "seed-reason-ml-0009": 3,
-    "seed-chat-penthos-0010": 2,
+    "seed-chat-pari-0010": 2,
     "seed-agentic-loop-0012": 3,
     "challenge-cycle-1009": 2,
     "challenge-endpoint-1008": 3,
@@ -106,7 +103,7 @@ VERIFIED_EXPECTED_OUTPUT = {
 
 # Original plain prompt used to reproduce the pre-improvement baseline.
 BASELINE_SYSTEM_PROMPT = (
-    "You are Penthos, an open-source coding AI. Answer the user's question "
+    "You are Pari, an open-source coding AI. Answer the user's question "
     "directly and concretely. Prefer precise, actionable content over "
     "generalities. Do not be overly long."
 )
@@ -251,7 +248,7 @@ def generate(model, tokenizer, prompt: str, max_tokens: int, temp: float):
 # ---------------------------------------------------------------------------
 
 def _extract_code(output: str) -> str:
-    # Drop any Penthos chain-of-thought that made it into the output, then take
+    # Drop any Pari chain-of-thought that made it into the output, then take
     # the last fenced code block (falling back to the raw text) as the code.
     text = re.sub(
         r"<\|start_of_thought\|>.*?<\|end_of_thought\|>", "", output,
@@ -426,7 +423,7 @@ def _summarize(results: list[dict]) -> dict:
 
 def _write_summary_md(out_dir: Path, meta: dict, results: list[dict], summary: dict) -> None:
     lines = [
-        "# Penthos Model Benchmark",
+        "# Pari Model Benchmark",
         "",
         f"- model: `{meta['model']}`",
         f"- mlx_lm: {meta['mlx_lm_version']}",
@@ -465,7 +462,7 @@ def _write_summary_md(out_dir: Path, meta: dict, results: list[dict], summary: d
 # ---------------------------------------------------------------------------
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Run the Penthos model benchmark.")
+    parser = argparse.ArgumentParser(description="Run the Pari model benchmark.")
     parser.add_argument("--sources", nargs="*", default=["baseline", "verified"],
                         choices=["baseline", "verified"])
     parser.add_argument("--categories", default=None,
@@ -478,16 +475,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--max-tokens", type=int, default=4096)
     parser.add_argument("--docker", default="docker")
     parser.add_argument("--adapter", default=None,
-                        help="path to a fine-tuned adapter (e.g. adapters/penthos-lora)")
+                        help="path to a fine-tuned adapter (e.g. adapters/pari-lora)")
     parser.add_argument("--out", default=None,
                         help="output directory (default evaluation/results/<stamp>)")
     parser.add_argument("--thinking", action="store_true", default=True,
-                        help="enable Penthos chain-of-thought (default on)")
+                        help="enable Pari chain-of-thought (default on)")
     parser.add_argument("--no-thinking", action="store_false", dest="thinking",
-                        help="disable Penthos chain-of-thought")
-    parser.add_argument("--system-prompt", choices=["penthos", "baseline"],
-                        default="penthos",
-                        help="system prompt used for generation (default penthos)")
+                        help="disable Pari chain-of-thought")
+    parser.add_argument("--system-prompt", choices=["pari", "baseline"],
+                        default="pari",
+                        help="system prompt used for generation (default pari)")
     args = parser.parse_args(argv)
 
     categories = {c.strip() for c in (args.categories or "").split(",") if c.strip()}
@@ -516,7 +513,7 @@ def main(argv: list[str] | None = None) -> int:
         "max_tokens": args.max_tokens,
         "thinking": args.thinking,
         "system_prompt": (
-            PENTHOS_SYSTEM_PROMPT if args.system_prompt == "penthos"
+            PARI_SYSTEM_PROMPT if args.system_prompt == "pari"
             else BASELINE_SYSTEM_PROMPT
         ),
         "generated_at": stamp,

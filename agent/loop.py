@@ -1,12 +1,12 @@
-"""Penthos agent execution loop."""
+"""Pari agent execution loop."""
 
-from agent.core import PenthosAgent
+from agent.core import PariAgent
 from agent.protocol import tool_prompt, parse_tool_call, tool_result
 
 
 class AgentLoop:
     def __init__(self, project_root="."):
-        self.agent = PenthosAgent(project_root)
+        self.agent = PariAgent(project_root)
 
     def available_tools(self):
         return self.agent.tool_descriptions()

@@ -1,10 +1,10 @@
-# Base TypeScript sandbox image for Penthos.
+# Base TypeScript sandbox image for Pari.
 #
 # Built on the Node.js image with TypeScript tooling added. ARM64-compatible,
 # minimal, non-root. No network access is provided at execution time.
 #
 # Build:
-#   docker build -f sandbox/images/typescript.Dockerfile -t penthos-sandbox:typescript sandbox
+#   docker build -f sandbox/images/typescript.Dockerfile -t pari-sandbox:typescript sandbox
 
 FROM node:20-bookworm-slim
 

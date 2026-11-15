@@ -1,0 +1,48 @@
+model: Qwen/Qwen3-4B-MLX-4bit  # loader handle
+model_display: Pari
+company: Fubrio
+
+training:
+  method: lora
+  stage: development
+
+data:
+  verified_dataset: datasets/verified
+  # Curated domain knowledge: web/UI, 2D & 3D game/graphics code, the 1D/2D
+  # math they depend on, and general engineering practice.
+  candidates:
+    - datasets/candidates/seed_coding_domains.jsonl
+    - datasets/candidates/seed_core_categories.jsonl
+  domain_focus:
+    - web
+    - game
+    - 2d
+    - 3d
+    - math
+    - general_coding
+  category_focus:
+    - coding
+    - debugging
+    - security
+    - software_engineering
+    - reasoning
+    - agentic
+    - general_chat
+
+evaluation:
+  baseline: evaluation/baseline/tasks.json
+  results: evaluation/results
+  # A new adapter must beat the shipping config overall and must not give up
+  # a category. Compare runs with:
+  #   python -m evaluation.gate --baseline <dir> --candidate <dir>
+  gate:
+    min_overall_delta: 0.0
+    max_category_regression: 0.0
+
+goals:
+  - coding
+  - debugging
+  - reasoning
+  - software_engineering
+  - agentic_behavior
+  - security

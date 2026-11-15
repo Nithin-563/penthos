@@ -1,4 +1,4 @@
-"""Tool registry for Penthos."""
+"""Tool registry for Pari."""
 
 import inspect
 from dataclasses import dataclass

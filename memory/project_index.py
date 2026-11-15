@@ -1,4 +1,4 @@
-"""Lightweight repository intelligence for Penthos."""
+"""Lightweight repository intelligence for Pari."""
 
 from pathlib import Path
 import hashlib

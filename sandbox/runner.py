@@ -1,4 +1,4 @@
-"""Secure, disposable Docker-based code execution sandbox for Penthos.
+"""Secure, disposable Docker-based code execution sandbox for Pari.
 
 Every execution runs inside a fresh, throwaway container with networking
 disabled, host environment strictly excluded, resource limits applied, and
@@ -149,10 +149,10 @@ def execute(
     container_name = None
 
     try:
-        with tempfile.TemporaryDirectory(prefix="penthos-sandbox-") as tmp:
+        with tempfile.TemporaryDirectory(prefix="pari-sandbox-") as tmp:
             workspace_dir = Path(tmp)
             _write_files(workspace_dir, files)
-            container_name = f"penthos-sandbox-{int(time.time() * 1000)}"
+            container_name = f"pari-sandbox-{int(time.time() * 1000)}"
 
             result = _run_container(
                 docker_binary=docker_binary,
@@ -172,7 +172,7 @@ def execute(
 def build_images(language: str | None = None, docker_binary: str = "docker") -> dict:
     """Build the sandbox images (all languages, or a single one).
 
-    This is a Penthos-side operation only; it is never exposed to the model.
+    This is a Pari-side operation only; it is never exposed to the model.
     """
 
     languages = [language] if language else list(policies.SUPPORTED_LANGUAGES)
@@ -367,4 +367,4 @@ if __name__ == "__main__":
         print(json.dumps(build_images(), indent=2))
         sys.exit(0)
 
-    print("Penthos sandbox runner. Use 'build' to build images.")
+    print("Pari sandbox runner. Use 'build' to build images.")

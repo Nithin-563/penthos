@@ -2,7 +2,7 @@
 
 </think>
 
-An AI coding agent, like Penthos, should prevent API keys and other secrets from being exposed while inspecting and modifying a repository through several key strategies:
+An AI coding agent, like Pari, should prevent API keys and other secrets from being exposed while inspecting and modifying a repository through several key strategies:
 
 1. **Secret Scanning and Detection**: 
    - Implement secret scanning tools to automatically detect and flag any API keys, passwords, or other sensitive information in the codebase. Tools like GitHub's Secret Scanning or GitLab's secret detection can be integrated into the workflow to identify and alert on potential secret exposure.

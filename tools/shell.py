@@ -1,4 +1,4 @@
-"""Sandboxed shell execution for Penthos."""
+"""Sandboxed shell execution for Pari."""
 
 import subprocess
 from pathlib import Path

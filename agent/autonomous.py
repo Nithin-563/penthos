@@ -1,4 +1,4 @@
-"""Bounded autonomous coding loop for Penthos."""
+"""Bounded autonomous coding loop for Pari."""
 
 from dataclasses import dataclass, field
 from typing import Callable
@@ -71,7 +71,7 @@ class AutonomousCodingEngine:
         This routes through the model-facing `run_tests` tool, which is the
         only sandbox surface the engine is allowed to drive. Docker controls
         (network, mounts, env, limits, timeout, privileges) are fixed by
-        Penthos and never under model or engine control. The existing
+        Pari and never under model or engine control. The existing
         permission system remains untouched and in force for every other tool.
         """
 

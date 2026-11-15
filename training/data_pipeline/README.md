@@ -1,6 +1,6 @@
 # Verified Training Data Pipeline
 
-This directory implements Penthos' verified training data pipeline. It takes
+This directory implements Pari' verified training data pipeline. It takes
 candidate examples (raw, synthetic, or human-authored) and produces verified,
 deduplicated, scored, split training records — reusing the existing Docker
 sandbox for all executable verification. There is **no host execution
@@ -136,7 +136,7 @@ sandbox. Candidates scoring below `min_score` (default 30.0) are rejected as
   = "<provider/model>"`, and `source.generated_at`. Synthetic examples are
   never labeled as human-authored.
 - `Teacher` is a provider-agnostic protocol (`name` + `generate(task)`); any of
-  Penthos' inference backends can implement it. The pipeline does not require a
+  Pari' inference backends can implement it. The pipeline does not require a
   teacher — it works entirely from candidate files. `StubTeacher` is a
   network-free stand-in for tests and dry runs.
 - Manifests record dataset/pipeline/schema versions, generation time, counts
@@ -148,7 +148,7 @@ sandbox. Candidates scoring below `min_score` (default 30.0) are rejected as
 ## Security model
 
 - Executable verification happens only inside disposable Docker containers
-  (`penthos-sandbox:*`, see `sandbox/`). No candidate code is executed on the
+  (`pari-sandbox:*`, see `sandbox/`). No candidate code is executed on the
   host.
 - Hard-danger candidates are filtered statically before any container is
   started.

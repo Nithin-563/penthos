@@ -1,1 +1,1 @@
-"""Penthos isolated Docker code execution sandbox."""
+"""Pari isolated Docker code execution sandbox."""

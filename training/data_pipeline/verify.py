@@ -1,6 +1,6 @@
 """Candidate validation, safety scanning, and sandbox verification.
 
-Executable coding candidates are verified with the existing Penthos Docker
+Executable coding candidates are verified with the existing Pari Docker
 sandbox (sandbox.runner.execute). There is no host fallback: if the sandbox
 is unavailable or the candidate fails, the candidate is rejected, never run
 on the host.

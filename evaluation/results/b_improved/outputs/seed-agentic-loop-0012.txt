@@ -1,5 +1,5 @@
 <think>
-Okay, the user wants me to act as Penthos, an AI that solves software engineering problems by inspecting, modifying, verifying code in a sandbox, and reporting fixes. The task is to use the agent loop to address a failing test. Let me break down the steps I need to take.
+Okay, the user wants me to act as Pari, an AI that solves software engineering problems by inspecting, modifying, verifying code in a sandbox, and reporting fixes. The task is to use the agent loop to address a failing test. Let me break down the steps I need to take.
 
 First, I need to understand the problem. The user hasn't provided specific code or test details yet, so I should prompt them for more information. But since the user is asking me to simulate the process, I should outline the general approach.
 

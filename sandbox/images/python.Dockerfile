@@ -1,11 +1,11 @@
-# Base Python sandbox image for Penthos.
+# Base Python sandbox image for Pari.
 #
 # ARM64-compatible, minimal, non-root. Contains only the Python runtime and
 # a small set of testing utilities. No network access is provided at
 # execution time; dependency installation is a separate, later concern.
 #
 # Build:
-#   docker build -f sandbox/images/python.Dockerfile -t penthos-sandbox:python sandbox
+#   docker build -f sandbox/images/python.Dockerfile -t pari-sandbox:python sandbox
 
 FROM python:3.12-slim-bookworm
 

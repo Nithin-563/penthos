@@ -1,1 +1,1 @@
-"""Penthos tools."""
+"""Pari tools."""
