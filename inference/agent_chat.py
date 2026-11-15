@@ -1,9 +1,9 @@
-"""Interactive Penthos agent chat.
+"""Interactive Pari agent chat.
 
-Connects the local Penthos model to the Penthos Agent Core with the shared
-Penthos system prompt, chain-of-thought, tuned sampling, a guarded tool layer
+Connects the local Pari model to the Pari Agent Core with the shared
+Pari system prompt, chain-of-thought, tuned sampling, a guarded tool layer
 (web search, web fetch, files, shell, code search, git, sandboxed test
-execution), automatic file output for generated code, Penth blocks that
+execution), automatic file output for generated code, Pari blocks that
 continue long outputs seamlessly past the per-chunk token limit, and a bounded
 tool loop that refuses to loop forever or repeat the exact same failed call.
 
@@ -21,7 +21,7 @@ if str(REPO_ROOT) not in sys.path:
 from mlx_lm import load, stream_generate
 from mlx_lm.generate import make_sampler
 
-from agent.core import PenthosAgent
+from agent.core import PariAgent
 from agent.protocol import (
     arg_schema,
     partial_tool_call,
@@ -32,27 +32,26 @@ from agent.protocol import (
 from agent.tools import validate_arguments
 from inference.loop_kit import (
     auto_save_code,
-    continue_penth_blocks,
+    continue_pari_blocks,
     maybe_wrap_code_prompt,
     trim_context,
 )
 from inference.prompt import (
     COMPANY,
-    CREATOR,
     ENABLE_THINKING,
     MAX_TOKENS,
     MODEL,
     MODEL_DISPLAY,
-    PENTHOS_SYSTEM_PROMPT,
+    PARI_SYSTEM_PROMPT,
     TEMP,
     TOP_P,
 )
 from inference.security import Guard
 
 MAX_TOOL_CALLS = 6
-MAX_PENTH_BLOCKS = 6
+MAX_PARI_BLOCKS = 6
 AUTO_SAVE_MIN_CHARS = 3000
-OUTPUTS_DIR = "Penthos/outputs"
+OUTPUTS_DIR = "Pari/outputs"
 AGENT_MAX_MSGS = 14
 
 
@@ -203,7 +202,7 @@ def run_tool_calls(messages: list[dict], user_text: str) -> None:
             last_call_failed = True
             continue
 
-        print(f"\n[Penthos → {call['name']}]", flush=True)
+        print(f"\n[Pari → {call['name']}]", flush=True)
         try:
             result = agent.tools.execute(call["name"], **call["arguments"])
         except Exception as exc:
@@ -245,13 +244,13 @@ def run_tool_calls(messages: list[dict], user_text: str) -> None:
 
 print(f"Loading {MODEL_DISPLAY}...")
 model, tokenizer = load(MODEL)
-agent = PenthosAgent(".")
+agent = PariAgent(".")
 guard = Guard()
 
-SYSTEM_MESSAGE = {"role": "system", "content": PENTHOS_SYSTEM_PROMPT}
+SYSTEM_MESSAGE = {"role": "system", "content": PARI_SYSTEM_PROMPT}
 messages: list[dict] = [dict(SYSTEM_MESSAGE)]
 
-print(f"\n{MODEL_DISPLAY} by {COMPANY} · created by {CREATOR}")
+print(f"\n{MODEL_DISPLAY} by {COMPANY}")
 print("Commands: /quit, /reset, /tools\n")
 
 while True:
@@ -292,9 +291,9 @@ while True:
         continue
 
     if len(tokenizer.encode(output)) >= MAX_TOKENS:
-        output = continue_penth_blocks(
+        output = continue_pari_blocks(
             messages, output, generate, tokenizer,
-            MAX_PENTH_BLOCKS, MAX_TOKENS,
+            MAX_PARI_BLOCKS, MAX_TOKENS,
         )
         messages[-1]["content"] = output
 

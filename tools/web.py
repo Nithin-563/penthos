@@ -1,4 +1,4 @@
-"""Basic web retrieval layer for Penthos.
+"""Basic web retrieval layer for Pari.
 
 Keyless by design: every provider below is a public, API-free endpoint. The
 layer tries several free search engines in order (DuckDuckGo lite and html,
@@ -17,7 +17,7 @@ import json
 import re
 
 
-USER_AGENT = "Penthos/0.1 (+https://github.com/Nithin-563/penthos)"
+USER_AGENT = "Pari/0.1 (+https://github.com/Nithin-563/penthos)"
 MAX_RESULTS = 8
 
 

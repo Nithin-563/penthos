@@ -4,7 +4,11 @@
     "category": "coding",
     "difficulty": "medium",
     "prompt": "Write a TypeScript function that finds the first duplicate in an array. Include the final code and explain time and space complexity.",
-    "rubric": ["set", "o(n)", "space"],
+    "rubric": [
+      "set",
+      "o(n)",
+      "space"
+    ],
     "rubric_min": 3
   },
   {
@@ -12,7 +16,11 @@
     "category": "debugging",
     "difficulty": "medium",
     "prompt": "Find and fix the bug in this React component that causes an infinite render loop:\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  setCount(count + 1);\n  return <div>{count}</div>;\n}\n\nExplain the bug and provide the corrected component.",
-    "rubric": ["setcount", "useeffect", "infinite"],
+    "rubric": [
+      "setcount",
+      "useeffect",
+      "infinite"
+    ],
     "rubric_min": 3
   },
   {
@@ -20,7 +28,11 @@
     "category": "reasoning",
     "difficulty": "medium",
     "prompt": "You have an array of 1,000,000 integers. You need to find whether any two values sum to a target. Compare a brute-force solution with an efficient solution and explain the tradeoffs.",
-    "rubric": ["o(n)", "hash", "memory"],
+    "rubric": [
+      "o(n)",
+      "hash",
+      "memory"
+    ],
     "rubric_min": 2
   },
   {
@@ -28,7 +40,12 @@
     "category": "software_engineering",
     "difficulty": "medium",
     "prompt": "You inherit a TypeScript repository with authentication, an API server, a database, and a React frontend. Describe how you would safely investigate the repository before modifying code.",
-    "rubric": ["git", "test", "secret", "structure"],
+    "rubric": [
+      "git",
+      "test",
+      "secret",
+      "structure"
+    ],
     "rubric_min": 3
   },
   {
@@ -36,7 +53,11 @@
     "category": "agentic",
     "difficulty": "hard",
     "prompt": "An AI coding agent changed three files, ran the test suite, and 7 tests failed. Describe the exact loop the agent should follow to diagnose, fix, retest, and verify the changes.",
-    "rubric": ["test", "fix", "verify"],
+    "rubric": [
+      "test",
+      "fix",
+      "verify"
+    ],
     "rubric_min": 3
   },
   {
@@ -44,7 +65,12 @@
     "category": "security",
     "difficulty": "medium",
     "prompt": "Explain how an AI coding agent should prevent API keys and other secrets from being exposed while inspecting and modifying a repository.",
-    "rubric": [".env", "log", "scan", "detect"],
+    "rubric": [
+      ".env",
+      "log",
+      "scan",
+      "detect"
+    ],
     "rubric_min": 2
   },
   {
@@ -52,7 +78,11 @@
     "category": "coding",
     "difficulty": "medium",
     "prompt": "Implement a TypeScript debounce function with correct typing. Explain edge cases and provide an example.",
-    "rubric": ["settimeout", "cleartimeout", "delay"],
+    "rubric": [
+      "settimeout",
+      "cleartimeout",
+      "delay"
+    ],
     "rubric_min": 2
   },
   {
@@ -60,7 +90,80 @@
     "category": "debugging",
     "difficulty": "hard",
     "prompt": "A Node.js API works locally but returns 500 errors in production. Give a systematic debugging process that avoids guessing.",
-    "rubric": ["log", "replicat", "environment", "memory"],
+    "rubric": [
+      "log",
+      "replicat",
+      "environment",
+      "memory"
+    ],
     "rubric_min": 3
+  },
+  {
+    "id": "web_001",
+    "category": "coding",
+    "difficulty": "medium",
+    "prompt": "Build a responsive hero section and a 3-column feature grid in semantic HTML and CSS. It must stack to one column on mobile, use CSS custom properties for colour and spacing, and keep keyboard focus visible.",
+    "rubric": [
+      "grid",
+      "@media",
+      "clamp",
+      "aria",
+      "focus"
+    ],
+    "rubric_min": 3
+  },
+  {
+    "id": "game_001",
+    "category": "coding",
+    "difficulty": "medium",
+    "prompt": "Implement a fixed-timestep game loop for a 2D game. Physics must run at a constant rate regardless of frame time, rendering must interpolate between updates, and a long stall must not trigger a spiral of death.",
+    "rubric": [
+      "accumulator",
+      "fixed",
+      "clamp",
+      "interpolat"
+    ],
+    "rubric_min": 2
+  },
+  {
+    "id": "graphics_001",
+    "category": "reasoning",
+    "difficulty": "hard",
+    "prompt": "Explain how a 3D model-space vertex becomes a screen pixel. Name every coordinate space and matrix, and say where a vertex can be lost along the way.",
+    "rubric": [
+      "model",
+      "view",
+      "projection",
+      "clip",
+      "ndc"
+    ],
+    "rubric_min": 3
+  },
+  {
+    "id": "security_002",
+    "category": "security",
+    "difficulty": "medium",
+    "prompt": "Review this endpoint: it builds a SQL query with an f-string from a request parameter, returns the raw exception text to the client, and has no authentication check. Explain each vulnerability and the fix.",
+    "rubric": [
+      "parameter",
+      "validat",
+      "log",
+      "auth",
+      "error"
+    ],
+    "rubric_min": 3
+  },
+  {
+    "id": "debug_003",
+    "category": "debugging",
+    "difficulty": "medium",
+    "prompt": "A pagination helper returns 9 items for page 1 when the page size is 10, and the last page repeats an item. Describe how you would reproduce, isolate and fix it, including the boundary cases you would test.",
+    "rubric": [
+      "reproduce",
+      "boundary",
+      "test",
+      "fix"
+    ],
+    "rubric_min": 2
   }
 ]

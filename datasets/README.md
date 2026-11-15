@@ -1,6 +1,6 @@
-# Penthos Dataset
+# Pari Dataset
 
-Penthos uses high-quality, verified training data.
+Pari uses high-quality, verified training data.
 
 ## Dataset pipeline
 

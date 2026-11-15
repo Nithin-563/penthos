@@ -1,10 +1,10 @@
-# Penthos Sandbox
+# Pari Sandbox
 
 A secure, disposable Docker-based code execution sandbox for running
 generated code and tests without giving untrusted code access to the host
 Mac or its secrets.
 
-Penthos agents must be able to execute code and verify tests, but they must
+Pari agents must be able to execute code and verify tests, but they must
 never do so on the host. The sandbox runs every payload inside a fresh,
 throwaway container: no network, no host environment, no host files, strict
 resource limits, and automatic cleanup.
@@ -68,7 +68,7 @@ Every execution:
 - Captures stdout/stderr and caps output at 64 KB so a noisy program
   cannot fill memory with logs.
 - Never uses `shell=True`; the command is passed to Docker strictly as an
-  argv list. Docker environment, mounts, and flags are fixed by Penthos and
+  argv list. Docker environment, mounts, and flags are fixed by Pari and
   never come from the model.
 - Never falls back to host execution. If Docker is missing, the image is
   absent, or setup fails, the runner returns a clear structured `error`.
@@ -96,7 +96,7 @@ surface.
 
 ## Limits (defaults)
 
-Configured centrally in `sandbox/policies.py`. Tuning these is a Penthos
+Configured centrally in `sandbox/policies.py`. Tuning these is a Pari
 operation; the model cannot override them.
 
 | Limit | Default |
@@ -112,10 +112,10 @@ multiple jobs can coexist.
 
 ## Example usage
 
-Build the images (Penthos-side operation):
+Build the images (Pari-side operation):
 
 ```bash
-cd /Users/nithin/Penthos
+cd /Users/nithin/Pari
 python3 -m sandbox.runner build
 ```
 
@@ -151,9 +151,9 @@ Result:
 Use it through the agent:
 
 ```python
-from agent.core import PenthosAgent
+from agent.core import PariAgent
 
-agent = PenthosAgent(".")
+agent = PariAgent(".")
 agent.execute_tool("run_tests", language="python",
                    files={"test_main.py": "..."},
                    command=["python", "-m", "pytest", "-q"])
@@ -162,7 +162,7 @@ agent.execute_tool("run_tests", language="python",
 Run the tests:
 
 ```bash
-cd /Users/nithin/Penthos
+cd /Users/nithin/Pari
 .venv/bin/python -m pytest tests/test_sandbox.py -v
 ```
 

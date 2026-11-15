@@ -1,4 +1,4 @@
-"""Read-only Git inspection tools for Penthos."""
+"""Read-only Git inspection tools for Pari."""
 
 import subprocess
 from pathlib import Path

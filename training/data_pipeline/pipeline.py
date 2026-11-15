@@ -15,7 +15,7 @@ Flow:
 
 Rejected records are written to datasets/rejected/<reason>.jsonl and never
 enter datasets/verified/. Executable candidates are always verified with the
-existing Penthos Docker sandbox; there is no host execution fallback.
+existing Pari Docker sandbox; there is no host execution fallback.
 """
 
 from dataclasses import dataclass, field

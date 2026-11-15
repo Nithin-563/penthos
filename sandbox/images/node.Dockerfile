@@ -1,10 +1,10 @@
-# Base Node.js sandbox image for Penthos.
+# Base Node.js sandbox image for Pari.
 #
 # ARM64-compatible, minimal, non-root. Contains only the Node runtime and
 # npm/npx. No network access is provided at execution time.
 #
 # Build:
-#   docker build -f sandbox/images/node.Dockerfile -t penthos-sandbox:node sandbox
+#   docker build -f sandbox/images/node.Dockerfile -t pari-sandbox:node sandbox
 
 FROM node:20-bookworm-slim
 

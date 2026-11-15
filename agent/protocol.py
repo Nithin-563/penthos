@@ -1,4 +1,4 @@
-"""Penthos tool-calling protocol."""
+"""Pari tool-calling protocol."""
 
 import inspect
 import json

@@ -2,7 +2,7 @@
 
 The pipeline does not require a teacher: it works entirely from candidate
 files. When a teacher is connected it must expose a small `generate` method;
-any of Penthos' own inference backends (or a free/open model) can implement
+any of Pari' own inference backends (or a free/open model) can implement
 that interface later. Generated examples are always labeled as synthetic and
 carry a `source.teacher` provenance. Synthetic examples are never labeled as
 human-authored.

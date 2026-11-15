@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Penthos dataset pipeline CLI.
+"""Pari dataset pipeline CLI.
 
 Commands:
   validate      validate candidate files against the schema
@@ -55,7 +55,7 @@ def _default_candidates() -> list[str]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="dataset_pipeline",
-        description="Penthos verified training data pipeline.",
+        description="Pari verified training data pipeline.",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 

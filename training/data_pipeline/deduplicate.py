@@ -152,7 +152,7 @@ def deduplicate(candidates: list[dict]) -> tuple[list[dict], list[dict]]:
             )
             continue
 
-        kept_id = candidate.get("id") or f"penthos-{content_hash[:16]}"
+        kept_id = candidate.get("id") or f"pari-{content_hash[:16]}"
         seen_content[content_hash] = kept_id
         seen_instruction[instruction_hash] = kept_id
 

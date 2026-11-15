@@ -26,7 +26,7 @@ def run_tests(
                  Defaults to the matching language default when omitted.
 
     Docker controls (network, mounts, env, limits, capabilities, timeout,
-    etc.) are intentionally not exposed here and are fixed by Penthos
+    etc.) are intentionally not exposed here and are fixed by Pari
     policy. The model cannot request resource changes.
     """
 

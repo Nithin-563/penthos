@@ -30,7 +30,7 @@ def build_record(
 
     record = {
         "id": candidate.get("id") or (
-            f"penthos-{fingerprint[:16]}" if fingerprint else verify.utcnow()
+            f"pari-{fingerprint[:16]}" if fingerprint else verify.utcnow()
         ),
         "category": candidate.get("category", ""),
         "difficulty": candidate.get("difficulty", ""),

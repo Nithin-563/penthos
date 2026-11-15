@@ -27,7 +27,7 @@ class ProjectContext:
         selected = important[:max_files]
 
         output = [
-            "PENTHOS PROJECT CONTEXT",
+            "PARI PROJECT CONTEXT",
             f"Files indexed: {data.get('file_count', 0)}",
             "",
             "Important files:",

@@ -29,7 +29,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from inference.prompt import PENTHOS_SYSTEM_PROMPT  # noqa: E402
+from inference.prompt import PARI_SYSTEM_PROMPT  # noqa: E402
 from evaluation import run_benchmark as bench  # noqa: E402
 
 
@@ -91,7 +91,7 @@ def main(argv: list[str] | None = None) -> int:
         sid = task["id"]
         passed = 0
         for sample in range(args.samples_per_task):
-            prompt = bench.build_prompt(tokenizer, task, PENTHOS_SYSTEM_PROMPT, use_thinking)
+            prompt = bench.build_prompt(tokenizer, task, PARI_SYSTEM_PROMPT, use_thinking)
             started = time.monotonic()
             try:
                 output, tokens, _ = bench.generate(model, tokenizer, prompt, max_tokens, args.temp)
@@ -147,7 +147,7 @@ def main(argv: list[str] | None = None) -> int:
                 "prompt": record["prompt"],
                 "grading": bench._build_grading(record),
             }
-            prompt = bench.build_prompt(tokenizer, task, PENTHOS_SYSTEM_PROMPT, thinking=False)
+            prompt = bench.build_prompt(tokenizer, task, PARI_SYSTEM_PROMPT, thinking=False)
             rows.append({
                 "id": record["id"],
                 "sample": -1,

@@ -1,1 +1,1 @@
-"""Penthos training package."""
+"""Pari training package."""

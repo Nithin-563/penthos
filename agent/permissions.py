@@ -1,4 +1,4 @@
-"""Penthos permission and command safety layer."""
+"""Pari permission and command safety layer."""
 
 import shlex
 

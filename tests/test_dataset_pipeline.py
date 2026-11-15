@@ -452,8 +452,10 @@ def test_pipeline_against_repo_seed_candidates(tmp_path):
             manifest_dir=str(tmp_path / "manifests"),
         ).run()
 
-    assert report.total_candidates == 51
-    assert report.verified_count == 43
+    # 51 original seeds + the curated coding-domain pack (18) and the
+    # category-balance pack (11).
+    assert report.total_candidates == 80
+    assert report.verified_count == 72
     assert report.rejected_count == 8
     assert report.duplicate_count == 2
     assert report.rejection_reasons["tests_failed"] == 1

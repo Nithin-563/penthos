@@ -1,4 +1,4 @@
-# Penthos Model Benchmark
+# Pari Model Benchmark
 
 - model: `Qwen/Qwen3-4B-MLX-4bit`
 - mlx_lm: 0.31.3
@@ -57,4 +57,4 @@
 - [PASS] `challenge-lru-1003` (coding): sandbox_test
 - [FAIL] `challenge-cycle-1009` (reasoning): freeform
     - missed rubric terms: tortoise, hare, o(1), hash
-- [PASS] `seed-chat-penthos-0010` (general_chat): freeform
+- [PASS] `seed-chat-pari-0010` (general_chat): freeform

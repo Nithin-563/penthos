@@ -1,4 +1,4 @@
-# Penthos Model Benchmark
+# Pari Model Benchmark
 
 - model: `Qwen/Qwen3-4B-MLX-4bit`
 - mlx_lm: 0.31.3
@@ -42,5 +42,5 @@
 - [PASS] `seed-dup-sheep-0019` (reasoning): freeform
 - [PASS] `seed-reason-ml-0009` (reasoning): freeform
 - [PASS] `seed-sec-passlen-0006` (security): sandbox_test
-- [FAIL] `seed-chat-penthos-0010` (general_chat): freeform
+- [FAIL] `seed-chat-pari-0010` (general_chat): freeform
     - missed rubric terms: agent, sandbox, training

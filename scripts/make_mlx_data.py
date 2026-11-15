@@ -21,7 +21,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 
-def _fold(key: str, seed: str = "penthos-mlx-v1") -> str:
+def _fold(key: str, seed: str = "pari-mlx-v1") -> str:
     digest = hashlib.sha256(f"{seed}:{key}".encode()).hexdigest()
     bucket = int(digest[:8], 16) % 100
     if bucket < 5:

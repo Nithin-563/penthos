@@ -1,8 +1,8 @@
-"""Penthos verified training data pipeline.
+"""Pari verified training data pipeline.
 
 This package turns candidate coding/reasoning examples into verified,
 deduplicated, scored, split, training-ready JSONL. Executable coding
-candidates are always verified inside the existing Penthos Docker sandbox;
+candidates are always verified inside the existing Pari Docker sandbox;
 nothing is ever executed on the host.
 """
 

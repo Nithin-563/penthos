@@ -5,7 +5,7 @@
     "temp": 0.0,
     "max_tokens": 4096,
     "thinking": false,
-    "system_prompt": "You are Penthos, an open-source coding AI. Answer the user's question directly and concretely. Prefer precise, actionable content over generalities. Do not be overly long.",
+    "system_prompt": "You are Pari, an open-source coding AI. Answer the user's question directly and concretely. Prefer precise, actionable content over generalities. Do not be overly long.",
     "generated_at": "2026-09-06T14-03-47+00-00"
   },
   "summary": {
@@ -528,13 +528,13 @@
       }
     },
     {
-      "id": "seed-chat-penthos-0010",
+      "id": "seed-chat-pari-0010",
       "category": "general_chat",
       "difficulty": "easy",
       "language": null,
       "source": "verified",
-      "prompt": "What is Penthos?",
-      "output": "Penthos is an open-source coding AI designed to assist with code generation, analysis, and optimization. It supports multiple programming languages and focuses on providing accurate, actionable code solutions.",
+      "prompt": "What is Pari?",
+      "output": "Pari is an open-source coding AI designed to assist with code generation, analysis, and optimization. It supports multiple programming languages and focuses on providing accurate, actionable code solutions.",
       "tokens": 36,
       "elapsed_s": 0.87,
       "pass": true,

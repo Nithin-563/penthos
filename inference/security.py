@@ -1,4 +1,4 @@
-"""Penthos guardrails: input filter and output sanitizer.
+"""Pari guardrails: input filter and output sanitizer.
 
 Two focused layers, intentionally simple and auditable:
 
@@ -70,6 +70,6 @@ class Guard:
     def refusal(self, reason: str) -> str:
         return (
             "I can't help with that. "
-            f"Reason: the request {reason}, which crosses Penthos's safety "
-            "boundaries (Deoid security policy)."
+            f"Reason: the request {reason}, which crosses Pari's safety "
+            "boundaries (Fubrio security policy)."
         )

@@ -1,6 +1,6 @@
-# Penthos Memory
+# Pari Memory
 
-Penthos uses separate memory scopes:
+Pari uses separate memory scopes:
 
 - `conversation/` — current conversations
 - `project/` — repository/project-specific knowledge

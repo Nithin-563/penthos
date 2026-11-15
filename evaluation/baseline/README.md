@@ -1,6 +1,6 @@
-# Penthos Baseline Evaluation
+# Pari Baseline Evaluation
 
-This suite measures Penthos before training. The same prompts are reused
+This suite measures Pari before training. The same prompts are reused
 after every major training change so results can be compared objectively.
 
 ## Categories
@@ -19,7 +19,7 @@ after every major training change so results can be compared objectively.
 python evaluation/run_benchmark.py
 ```
 
-The runner loads the local Penthos weights (loader handle `Qwen/Qwen3-4B-MLX-4bit`), runs every task
+The runner loads the local Pari weights (loader handle `Qwen/Qwen3-4B-MLX-4bit`), runs every task
 in `evaluation/baseline/tasks.json` plus every record in
 `datasets/verified/verified.jsonl`, and writes results to
 `evaluation/results/<stamp>/` (`report.json`, per-task `outputs/*.txt`, and

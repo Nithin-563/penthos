@@ -1,4 +1,4 @@
-"""Lightweight persistent memory for Penthos."""
+"""Lightweight persistent memory for Pari."""
 
 import json
 from pathlib import Path

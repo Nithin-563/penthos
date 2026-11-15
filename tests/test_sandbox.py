@@ -1,11 +1,11 @@
-"""Tests for the Penthos Docker sandbox.
+"""Tests for the Pari Docker sandbox.
 
 These are integration tests and require a running Docker daemon plus the
 sandbox images:
 
-    docker build -f sandbox/images/python.Dockerfile        -t penthos-sandbox:python sandbox
-    docker build -f sandbox/images/node.Dockerfile          -t penthos-sandbox:node sandbox
-    docker build -f sandbox/images/typescript.Dockerfile    -t penthos-sandbox:typescript sandbox
+    docker build -f sandbox/images/python.Dockerfile        -t pari-sandbox:python sandbox
+    docker build -f sandbox/images/node.Dockerfile          -t pari-sandbox:node sandbox
+    docker build -f sandbox/images/typescript.Dockerfile    -t pari-sandbox:typescript sandbox
 
 Run from the repository root:
 
@@ -61,10 +61,10 @@ NOISE_FILES = {
 
 
 def _containers() -> list[str]:
-    """Return currently present penthos-sandbox container names."""
+    """Return currently present pari-sandbox container names."""
 
     result = subprocess.run(
-        [DOCKER, "ps", "-a", "--filter", "name=penthos-sandbox", "--format", "{{.Names}}"],
+        [DOCKER, "ps", "-a", "--filter", "name=pari-sandbox", "--format", "{{.Names}}"],
         capture_output=True,
         text=True,
     )
@@ -175,11 +175,11 @@ def test_host_env_not_exposed():
 
     import os
 
-    os.environ["PENTHOS_SECRET_TOKEN"] = "supersecret-e2e-value"
+    os.environ["PARI_SECRET_TOKEN"] = "supersecret-e2e-value"
     files = {
         "env.py": (
             "import os\n"
-            "print(os.environ.get('PENTHOS_SECRET_TOKEN', 'NOT_PRESENT'))\n"
+            "print(os.environ.get('PARI_SECRET_TOKEN', 'NOT_PRESENT'))\n"
         ),
     }
     result = run_tests("python", files, ["python", "env.py"])
@@ -241,9 +241,9 @@ def test_no_host_execution():
 def test_agent_tool_never_exposes_docker_controls():
     """The model-facing tool accepts onlylanguage/files/command and rejects Docker knobs."""
 
-    from agent.core import PenthosAgent
+    from agent.core import PariAgent
 
-    agent = PenthosAgent(".")
+    agent = PariAgent(".")
     tol = agent.tools.get("run_tests")
     assert tol is not None
 
@@ -275,7 +275,7 @@ def test_no_host_fallback_when_docker_missing():
             "files": {"hello.py": "open('/Users', 'w')  # if run on host this would fail loudly\nprint('HOST_RAN')\n"},
             "command": ["python", "hello.py"],
         },
-        docker_binary="penthos-fake-docker-command-xyz",
+        docker_binary="pari-fake-docker-command-xyz",
     )
     assert result["success"] is False
     assert result["exit_code"] == -1
@@ -284,11 +284,11 @@ def test_no_host_fallback_when_docker_missing():
 
 
 def test_run_tests_registered_in_agent():
-    """The sandbox tool is registered on the Penthos agent."""
+    """The sandbox tool is registered on the Pari agent."""
 
-    from agent.core import PenthosAgent
+    from agent.core import PariAgent
 
-    agent = PenthosAgent(".")
+    agent = PariAgent(".")
     names = {tool["name"] for tool in agent.tool_descriptions()}
     assert "run_tests" in names
 

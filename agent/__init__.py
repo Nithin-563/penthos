@@ -1,1 +1,1 @@
-"""Penthos Agent Core."""
+"""Pari Agent Core."""

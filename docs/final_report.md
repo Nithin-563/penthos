@@ -1,12 +1,11 @@
-# Penthos — model fact sheet, evaluation, and hosting options
+# Pari — model fact sheet, evaluation, and hosting options
 
 *Internal working report updated 2026-09-07. The fine-tune line is an active
 experiment; the numbers below change as new experiments land.*
 
-Penthos is a fully local, open-source coding AI made by **Deoid**
-(created by **K Nithin Reddy**). It runs on one laptop, uses no API keys, and
-is rebuilt continuously with the goal of competing with the leading closed
-models at a fraction of their cost.
+Pari is a fully local, open-source coding AI built by the **Fubrio** company.
+It runs on one laptop, uses no API keys, and is rebuilt continuously with the
+goal of competing with the leading closed models at a fraction of their cost.
 
 ---
 
@@ -21,8 +20,8 @@ models at a fraction of their cost.
 | On-disk size | ~2.0 GB |
 | Runtime memory | ~2-3 GB at normal chat lengths; ~6-10 GB during long-sequence LoRA training |
 | Hardware tested | Apple Silicon, 16 GB unified memory (MLX) |
-| Vocab | Same as base; identity surfaced purely through Penthos's own system prompt and tooling |
-| Public identity | Penthos by Deoid, created by K Nithin Reddy (never presents as the base or any provider) |
+| Vocab | Same as base; identity surfaced purely through Pari's own system prompt and tooling |
+| Public identity | Pari, made by Fubrio (never presents as the base or any provider) |
 
 Decoding defaults: temperature 0.3 / top-p 0.9 in the interactive chat,
 greedy (temperature 0.0) in the benchmark. Thinking (chain-of-thought) is on
@@ -30,7 +29,7 @@ by default and is what makes the base model strong on the suite below.
 
 ## 2. Evaluation
 
-The Penthos benchmark suite currently holds **51 tasks** (8 baseline + 43
+The Pari benchmark suite currently holds **56 tasks** (13 baseline + 43
 verified) spanning agentic coding, algorithms, debugging, reasoning, security,
 general chat, and software engineering. Verdicts come from either running the
 model's code in an isolated Docker sandbox or rubric-grading its answer.
@@ -72,18 +71,18 @@ voting / RLHF-style tuning on sandbox-verified outcomes), not more distillation.
 
 ## 3. Context: how a 4B-scale model compares to the frontier
 
-The base architecture behind Penthos (Qwen3-4B) publishes strong small-model
+The base architecture behind Pari (Qwen3-4B) publishes strong small-model
 results; the 2507 thinking chip reports, e.g., MMLU-Pro 74.3, GPQA 66.7,
 AIME25 82.7, and 5.9 on Humanity's Last Exam. The current frontier models land
 roughly at MMLU-Pro ~89-90, GPQA ~93-94, and AIME25 ~100. So a 4B model fits on
 a laptop and costs nothing to run, but there is a real capability gap to the
-frontier that a 4B-parameter class simply has to be honest about. Penthos's
+frontier that a 4B-parameter class simply has to be honest about. Pari's
 edge is being *good enough*, private, keyless, fully open, and improvable; its
 benchmark line is trending up as the data pipeline gets healthier.
 
 ## 4. Free hosting options
 
-Penthos is an MLX 4-bit model, so the simplest and truly free path is a Mac
+Pari is an MLX 4-bit model, so the simplest and truly free path is a Mac
 with Apple Silicon (which is what the repo targets). For providers that don't
 run MLX, the recommended port is a GGUF export (via `mlx_lm.convert`, which the
 MLX ecosystem provides); a 4B Q4 GGUF runs on any of the free tiers below.
